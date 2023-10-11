@@ -2,7 +2,6 @@
 
 import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
 
-
 export async function getStaticProps() {
   let client = await connectToDb();
 
@@ -30,7 +29,7 @@ export default function RecipeList(props) {
         {recipes.map((recipe) => (
           <li key={recipe._id}>
             {recipe.images.length > 0 && (
-              <img src={recipe.images[0]} alt={recipe.title} height="250" width="250" /> // Display the first image
+              <img src={recipe.images[0]} alt={recipe.title} /> // Display the first image
             )}
             <h2>{recipe.title}</h2>
             <p>{recipe.description}</p>
