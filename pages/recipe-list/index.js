@@ -19,9 +19,6 @@ export async function getStaticProps() {
       recipes: recipeDocuments,
     },
   };
-      recipes: recipeDocuments,
-    },
-  };
 }
 
 export default function RecipeList(props) {
