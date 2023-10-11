@@ -23,7 +23,7 @@ export async function getStaticProps () {
 
 export default function RecipeList(props) {
   const { recipes } = props;
-
+  if ( !recipes ) return <p>Loading...</p>
   return (
     <div>
       <h1>Recipe List</h1>
