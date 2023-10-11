@@ -2,6 +2,7 @@
 
 // import Image from "next/image";
 import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
+import MainNavigation from "../../components/layout/main-navigation"; // Import your navigation component
 
 
 export async function getStaticProps() {
@@ -18,6 +19,9 @@ export async function getStaticProps() {
       recipes: recipeDocuments,
     },
   };
+      recipes: recipeDocuments,
+    },
+  };
 }
 
 export default function RecipeList(props) {
@@ -27,6 +31,7 @@ export default function RecipeList(props) {
 
   return (
     <div>
+      <MainNavigation /> {/* Include the navigation bar here */}
       <h1>Recipe List</h1>
       <ul className="flex grid center px-4 py-3">
         {recipes.map((recipe) => (
