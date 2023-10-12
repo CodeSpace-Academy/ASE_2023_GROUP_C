@@ -47,14 +47,13 @@ export default function RecipeList(props) {
           .slice(0, visibleRecipes)
           .map((recipe) => (
             <li key={recipe._id} className={styles.recipeItem}>
-              {recipe.images.map((imageUrl, index) => (
+              
                 <img
-                  key={index}
-                  src={imageUrl}
+                  src={recipe.images[0]}
                   alt={recipe.title}
                   className={styles.recipeImage}
                 />
-              ))}
+              
               <h2 className={styles.recipeTitle}>{recipe.title}</h2>
               <p className={styles.recipeDescription}>{recipe.description}</p>
             </li>
