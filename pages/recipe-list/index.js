@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { connectToDb, getAllRecipes } from '../../utils/mongodb-utils';
 import MainNavigation from '../../components/layout/main-navigation';
@@ -5,12 +6,13 @@ import styles from './recipe-list.module.css';
 import TagsDisplay from '../../components/tags/tags-display';
 import Instructions from '../../components/instructions/instructions';
 
+
 export async function getStaticProps() {
   let client = await connectToDb();
 
   const recipeDocuments = await getAllRecipes(
     client,
-    'recipes',
+    "recipes",
     { _id: -1 },
     1
   );
@@ -23,16 +25,21 @@ export async function getStaticProps() {
 }
 
 export default function RecipeList(props) {
-  const { recipes } = props;
+  const { recipes: initialRecipes } = props; // Rename the prop to avoid conflicts
+  const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(4);
   const [remainingRecipes, setRemainingRecipes] = useState(
-    recipes ? recipes.length - visibleRecipes : 0
+    initialRecipes ? initialRecipes.length - visibleRecipes : 0
   );
+
+  useEffect(() => {
+    setRecipes(initialRecipes); // Initialize recipes with the prop data
+  }, [initialRecipes]);
 
   if (!recipes) return <p>Loading...</p>;
 
   const loadMore = () => {
-    const additionalRecipes = 4;
+    const additionalRecipes = 4;https://github.com/CodeSpace-Academy/ASE_2023_GROUP_C/pull/73/conflict?name=pages%252Frecipe-list%252Findex.js&ancestor_oid=29fa2ca5d83cc183506328075874f663cc9a1faa&base_oid=c5d3ae38c1345b53b9b47e4204961d3ae764d8f8&head_oid=e3c47b6ad6e479e81f6417bacf6e069e44f54b3c
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     const newRemainingRecipes = recipes.length - newVisibleRecipes;
 
@@ -42,7 +49,7 @@ export default function RecipeList(props) {
 
   return (
     <div className={styles.recipeListContainer}>
-      <MainNavigation />
+      <MainNavigation recipes={recipes} setRecipes={setRecipes} />
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
       <ul className={styles.recipeGrid}>
         {recipes
