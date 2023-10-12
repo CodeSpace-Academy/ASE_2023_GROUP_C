@@ -1,13 +1,33 @@
-import MainNavigation from '../../components/layout/main-navigation'
-import RecipeList from '../../components/recipe-list'
+// pages/RecipeList.js
+
+// import Image from "next/image";
+import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
 
 
-function RecipeCards() {
-  return (
-   <div>
-    <RecipeList/>
-   </div>
-  )
+
+export async function getStaticProps() {
+  let client = await connectToDb();
+  const recipeDocuments = await getAllRecipes(
+    client,
+    "recipes",
+    { _id: -1 },
+    1
+  );
+
+  return {
+    props: {
+      recipes: recipeDocuments,
+    },
+  };
 }
 
-export default RecipeCards
+import React from 'react'
+import RecipeList from "../../components/recipe-list";
+
+export default function RecipeCards() {
+  return (
+    <div>
+      <RecipeList />
+    </div>
+  )
+}
