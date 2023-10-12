@@ -3,6 +3,10 @@ import { useState } from "react";
 import classes from "./main-navigation.module.css";
 
 const MainNavigation = ({ recipes, setRecipes }) => {
+  // State for the search input
+  const [searchInput, setSearchInput] = useState("");
+
+  // Function to handle sorting change based on user selection
   const handleSortingChange = (e) => {
     const selectedOption = e.target.value;
     let sortedRecipes = [...recipes];
@@ -25,10 +29,25 @@ const MainNavigation = ({ recipes, setRecipes }) => {
     setRecipes(sortedRecipes);
   };
 
+  // Function to handle search input change
+  const handleSearchChange = (e) => {
+    const userInput = e.target.value;
+    setSearchInput(userInput);
+
+    // Filter recipes based on the user's input
+    const filteredRecipes = recipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(userInput.toLowerCase())
+    );
+
+    setRecipes(filteredRecipes);
+  };
+
+  // Function to sort recipes by date
   const sortRecipesByDate = (recipes) => {
     return [...recipes].sort((a, b) => a.date - b.date);
   };
 
+  // Function to sort recipes by difficulty
   const sortRecipesByDifficulty = (recipes) => {
     return [...recipes].sort(
       (a, b) => a.instructions.length - b.instructions.length
@@ -38,6 +57,7 @@ const MainNavigation = ({ recipes, setRecipes }) => {
   return (
     <nav className={classes["main-nav"]}>
       <div className={classes["home-button"]}>
+        {/* Navigate to the home page */}
         <Link href="/">
           <h1>Recipe App</h1>
         </Link>
@@ -47,6 +67,8 @@ const MainNavigation = ({ recipes, setRecipes }) => {
           type="text"
           placeholder="Search for recipes"
           className={classes["search-input"]}
+          value={searchInput}
+          onChange={handleSearchChange} 
         />
         <button type="submit" className={classes["search-button"]}>
           Search
@@ -59,20 +81,16 @@ const MainNavigation = ({ recipes, setRecipes }) => {
           className={classes["sorting-select"]}
           onChange={handleSortingChange}
         >
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
-          <option value="difficulty">Difficulty</option>
+          <option value="resent">Recent</option>
+          <option value="old">Old</option>
+          <option value="easy">Easy</option>
+          <option value="hard">Hard</option>
         </select>
       </div>
       <ul className={classes["nav-links"]}>
         <li>
+          {/* Navigate to the recipe list page */}
           <Link href="/recipe-list">Recipe List</Link>
-        </li>
-        <li>
-          <Link href="/about">About</Link>
-        </li>
-        <li>
-          <Link href="/contact">Contact</Link>
         </li>
       </ul>
     </nav>

@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { connectToDb, getAllRecipes } from '../../utils/mongodb-utils';
-import MainNavigation from '../../components/layout/main-navigation';
-import styles from './recipe-list.module.css';
+import { useState, useEffect } from "react";
+import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
+import MainNavigation from "../../components/layout/main-navigation";
+import styles from "./recipe-list.module.css";
 
 export async function getStaticProps() {
   let client = await connectToDb();
 
   const recipeDocuments = await getAllRecipes(
     client,
-    'recipes',
+    "recipes",
     { _id: -1 },
     1
   );
@@ -21,11 +21,16 @@ export async function getStaticProps() {
 }
 
 export default function RecipeList(props) {
-  const { recipes } = props;
+  const { recipes: initialRecipes } = props; // Rename the prop to avoid conflicts
+  const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(4);
   const [remainingRecipes, setRemainingRecipes] = useState(
-    recipes ? recipes.length - visibleRecipes : 0
+    initialRecipes ? initialRecipes.length - visibleRecipes : 0
   );
+
+  useEffect(() => {
+    setRecipes(initialRecipes); // Initialize recipes with the prop data
+  }, [initialRecipes]);
 
   if (!recipes) return <p>Loading...</p>;
 
@@ -40,24 +45,21 @@ export default function RecipeList(props) {
 
   return (
     <div className={styles.recipeListContainer}>
-      <MainNavigation />
+      <MainNavigation recipes={recipes} setRecipes={setRecipes} />
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
       <ul className={styles.recipeGrid}>
-        {recipes
-          .slice(0, visibleRecipes)
-          .map((recipe) => (
-            <li key={recipe._id} className={styles.recipeItem}>
-              
-                <img
-                  src={recipe.images[0]}
-                  alt={recipe.title}
-                  className={styles.recipeImage}
-                />
-              
-              <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-              <p className={styles.recipeDescription}>{recipe.description}</p>
-            </li>
-          ))}
+        {recipes.slice(0, visibleRecipes).map((recipe) => (
+          <li key={recipe._id} className={styles.recipeItem}>
+            <img
+              src={recipe.images[0]}
+              alt={recipe.title}
+              className={styles.recipeImage}
+            />
+
+            <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+            <p className={styles.recipeDescription}>{recipe.description}</p>
+          </li>
+        ))}
       </ul>
       {remainingRecipes > 0 && (
         <div className={styles.loadMoreButton}>
