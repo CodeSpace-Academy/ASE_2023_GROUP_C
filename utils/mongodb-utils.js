@@ -9,8 +9,10 @@ const mongodb = process.env.MONGODB_DATABASE;
  */
 
 export async function connectToDb() {
-    const client = await MongoClient.connect(connectionString)
-    return client
+    const client = await MongoClient.connect(connectionString, {
+        useNewUrlParser: true,  // Add any additional connection options here
+    });
+    return client;
 }
 
 /**
@@ -23,8 +25,8 @@ export async function connectToDb() {
  * @returns {Promise<Array>} A Promise that resolves to an array of recipe documents.
  */
 
-export async function getAllRecipes(client, collection, sort, pageNumber, filter ={}) {
-    const pageSize = 20
+export async function getAllRecipes(client, collection, sort, pageNumber, filter = {}) {
+    const pageSize = 20;
     const skipPage = (pageNumber - 1) * pageSize;
 
     const db = client.db(mongodb);
@@ -50,3 +52,5 @@ export async function getRecipeDetails(client, collection, uniqueIdentifier) {
     console.log(document)
     return document
 }
+
+

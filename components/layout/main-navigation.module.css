@@ -1,0 +1,108 @@
+/* main-navigation.module.css */
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* Change the background color as needed */
+    color: white; /* Change the text color as needed */
+    padding: 20px;
+}
+
+
+/* Reduce banner size for smaller screens */
+@media (max-width: 768px) {
+  .main-nav {
+    padding: 0.5rem;
+  }
+
+  .home-button {
+    font-size: 1.2rem;
+  }
+
+  .search-input {
+    padding: 0.3rem;
+    width: 150px;
+  }
+
+  .search-button {
+    padding: 0.3rem 0.7rem;
+  }
+
+  .sorting-options {
+    margin-left: 5px;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+
+  .sorting-select {
+    padding: 0.3rem;
+  }
+
+  .nav-links li {
+    font-size: 1rem;
+  }
+}
+
+.home-button a {
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: white; /* Change the text color as needed */
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+.search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.sorting-options {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.sorting-select {
+    padding: 0.5rem;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    background-color: white;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-links li {
+    font-size: 1.2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white; /* Change the text color as needed */
+}
