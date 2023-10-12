@@ -1,6 +1,7 @@
-// pages/RecipeList.js
-
-import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
+import { useState } from 'react';
+import { connectToDb, getAllRecipes } from '../../utils/mongodb-utils';
+import MainNavigation from '../../components/layout/main-navigation';
+import styles from './recipe-list.module.css';
 
 export async function getStaticProps() {
   let client = await connectToDb();
@@ -21,21 +22,50 @@ export async function getStaticProps() {
 
 export default function RecipeList(props) {
   const { recipes } = props;
+  const [visibleRecipes, setVisibleRecipes] = useState(4);
+  const [remainingRecipes, setRemainingRecipes] = useState(
+    recipes ? recipes.length - visibleRecipes : 0
+  );
+
   if (!recipes) return <p>Loading...</p>;
+
+  const loadMore = () => {
+    const additionalRecipes = 4;
+    const newVisibleRecipes = visibleRecipes + additionalRecipes;
+    const newRemainingRecipes = recipes.length - newVisibleRecipes;
+
+    setVisibleRecipes(newVisibleRecipes);
+    setRemainingRecipes(newRemainingRecipes);
+  };
+
   return (
-    <div>
-      <h1>Recipe List</h1>
-      <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe._id}>
-            {recipe.images.length > 0 && (
-              <img src={recipe.images[0]} alt={recipe.title} /> // Display the first image
-            )}
-            <h2>{recipe.title}</h2>
-            <p>{recipe.description}</p>
-          </li>
-        ))}
+    <div className={styles.recipeListContainer}>
+      <MainNavigation />
+      <h1 className={styles.recipeListTitle}>Recipe List</h1>
+      <ul className={styles.recipeGrid}>
+        {recipes
+          .slice(0, visibleRecipes)
+          .map((recipe) => (
+            <li key={recipe._id} className={styles.recipeItem}>
+              {recipe.images.length > 0 && (
+                <img
+                  src={recipe.images[0]}
+                  alt={recipe.title}
+                  className={styles.recipeImage}
+                />
+              )}
+              <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+              <p className={styles.recipeDescription}>{recipe.description}</p>
+            </li>
+          ))}
       </ul>
+      {remainingRecipes > 0 && (
+        <div className={styles.loadMoreButton}>
+          <button onClick={loadMore} className={styles.button}>
+            Load More Recipes ({remainingRecipes} left)
+          </button>
+        </div>
+      )}
     </div>
   );
 }
