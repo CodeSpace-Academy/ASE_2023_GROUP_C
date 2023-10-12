@@ -1,6 +1,7 @@
 //mongodb-utils.js
 
 import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
 const mongodb = process.env.MONGODB_DATABASE;
@@ -43,3 +44,16 @@ export async function getAllRecipes(client, collection, sort, pageNumber, filter
 
     return documents;
 }
+
+export async function getRecipeDetails(client, collection, uniqueIdentifier) {
+    const db = client.db(mongodb);
+
+    const document = await db
+        .collection(collection)
+        .findOne(uniqueIdentifier)
+
+    console.log(document)
+    return document
+}
+
+
