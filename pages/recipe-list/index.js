@@ -21,13 +21,15 @@ export async function getStaticProps() {
   };
 }
 
-import React from 'react'
+
 import RecipeList from "../../components/recipe-list";
 
-export default function RecipeCards() {
+export default function RecipeCards(props) {
+  const { recipes } = props;
+
   return (
     <div>
-      <RecipeList />
+      <RecipeList recipes={recipes} />
     </div>
-  )
+  );
 }
