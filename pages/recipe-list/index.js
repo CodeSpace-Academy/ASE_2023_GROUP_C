@@ -22,7 +22,7 @@ export async function getStaticProps() {
 
 export default function RecipeList(props) {
   const { recipes } = props;
-  const [visibleRecipes, setVisibleRecipes] = useState(4);
+  const [visibleRecipes, CsetVisibleRecipes] = useState(4);
   const [remainingRecipes, setRemainingRecipes] = useState(
     recipes ? recipes.length - visibleRecipes : 0
   );
@@ -38,6 +38,23 @@ export default function RecipeList(props) {
     setRemainingRecipes(newRemainingRecipes);
   };
 
+  // Function to handle saving edited description
+  const saveDescription = (recipeId, editedDescription) => {
+    // Create a copy of recipes to avoid mutating state directly
+    const updatedRecipes = [...recipes];
+    
+    // Find the index of the edited recipe
+    const index = updatedRecipes.findIndex((recipe) => recipe._id === recipeId);
+
+    if (index !== -1) {
+      // Update the description of the selected recipe
+      updatedRecipes[index].description = editedDescription;
+      
+      // Update the state with the edited data
+      setVisibleRecipes(updatedRecipes);
+    }
+  };
+
   return (
     <div className={styles.recipeListContainer}>
       <MainNavigation />
@@ -46,17 +63,11 @@ export default function RecipeList(props) {
         {recipes
           .slice(0, visibleRecipes)
           .map((recipe) => (
-            <li key={recipe._id} className={styles.recipeItem}>
-              {recipe.images.length > 0 && (
-                <img
-                  src={recipe.images[0]}
-                  alt={recipe.title}
-                  className={styles.recipeImage}
-                />
-              )}
-              <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-              <p className={styles.recipeDescription}>{recipe.description}</p>
-            </li>
+            <RecipeItem
+              key={recipe._id}
+              recipe={recipe}
+              saveDescription={saveDescription}
+            />
           ))}
       </ul>
       {remainingRecipes > 0 && (
@@ -67,5 +78,46 @@ export default function RecipeList(props) {
         </div>
       )}
     </div>
+  );
+}
+
+function RecipeItem({ recipe, saveDescription }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedDescription, setEditedDescription] = useState(recipe.description);
+
+  const handleSave = () => {
+    // Call the saveDescription function to update the description
+    saveDescription(recipe._id, editedDescription);
+    
+    // Exit edit mode
+    setIsEditing(false);
+  };
+
+  return (
+    <li className={styles.recipeItem}>
+      {recipe.images.length > 0 && (
+        <img
+          src={recipe.images[0]}
+          alt={recipe.title}
+          className={styles.recipeImage}
+        />
+      )}
+      <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+      {isEditing ? (
+        <div>
+          <input
+            type="text"
+            value={editedDescription}
+            onChange={(e) => setEditedDescription(e.target.value)}
+          />
+          <button onClick={handleSave}>Save</button>
+        </div>
+      ) : (
+        <>
+          <p className={styles.recipeDescription}>{recipe.description}</p>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        </>
+      )}
+    </li>
   );
 }
