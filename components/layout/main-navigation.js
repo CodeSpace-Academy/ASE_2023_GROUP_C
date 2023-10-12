@@ -68,7 +68,7 @@ const MainNavigation = ({ recipes, setRecipes }) => {
           placeholder="Search for recipes"
           className={classes["search-input"]}
           value={searchInput}
-          onChange={handleSearchChange} 
+          onChange={handleSearchChange}
         />
         <button type="submit" className={classes["search-button"]}>
           Search
