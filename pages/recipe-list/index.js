@@ -89,6 +89,7 @@ export default function RecipeList(props) {
 function RecipeItem({ recipe, saveDescription }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(recipe.description);
+  
 
   const handleSave = () => {
     // Call the saveDescription function to update the description
