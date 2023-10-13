@@ -1,27 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./recipe-list.module.css";
 import SearchBar from "./layout/search-bar";
 import NoResultsMessage from "./layout/no-results-message";
+import LoadMoreButton from "./ui-utils/load-more-button";
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
 
-  // State for storing the recipes
-  const [recipes, setRecipes] = useState(initialRecipes);
+  const [recipes, setRecipes] = useState(initialRecipes); // State for storing the recipes
 
-  // State for controlling the number of visible recipes
-  const [visibleRecipes, setVisibleRecipes] = useState(4);
+  const [visibleRecipes, setVisibleRecipes] = useState(4); // State for controlling the number of visible recipes
 
   // State for tracking the number of remaining recipes
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? initialRecipes.length - visibleRecipes : 0
   );
 
-  // State for the search input
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(""); // State for the search input
 
-  // State to track whether no results were found
-  const [noResults, setNoResults] = useState(false);
+  const [noResults, setNoResults] = useState(false); // State to track whether no results were found
 
   useEffect(() => {
     // Initialize the recipes when initialRecipes change
@@ -46,8 +43,8 @@ export default function RecipeList(props) {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
 
-  // Function to load more recipes
   const loadMore = () => {
+    // Function to load more recipes
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
 
@@ -58,14 +55,12 @@ export default function RecipeList(props) {
 
   return (
     <div className={styles.recipeListContainer}>
-      {/* Use the SearchBar component here */}
       <SearchBar onSearch={setSearchInput} />
 
-      {noResults && <NoResultsMessage />} {/* Use the NoResultsMessage component here */}
+      {noResults && <NoResultsMessage />}
 
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
       <ul className={styles.recipeGrid}>
-        {/* Display visible recipes */}
         {recipes.slice(0, visibleRecipes).map((recipe) => (
           <li key={recipe._id} className={styles.recipeItem}>
             <img
@@ -79,12 +74,10 @@ export default function RecipeList(props) {
         ))}
       </ul>
       {remainingRecipes > 0 && (
-        // Load more button
-        <div className={styles.loadMoreButton}>
-          <button onClick={loadMore} className={styles.button}>
-            Load More Recipes ({remainingRecipes} left)
-          </button>
-        </div>
+        <LoadMoreButton
+          onClick={loadMore}
+          remainingRecipes={remainingRecipes}
+        />
       )}
     </div>
   );

@@ -1,7 +1,5 @@
 import Link from "next/link";
-
 import classes from "./main-navigation.module.css";
-
 
 const MainNavigation = ({ onSearch }) => {
   return (
