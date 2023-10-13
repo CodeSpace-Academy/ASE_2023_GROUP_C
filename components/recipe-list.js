@@ -4,35 +4,43 @@ import TagsDisplay from "./tags/tags-display";
 import Instructions from "./instructions/instructions";
 
 export default function RecipeList(props) {
-  // Destructure the 'initialRecipes' prop from the 'props' object
+  // Destructure the 'initialRecipes' prop from 'props'
   const { recipes: initialRecipes } = props;
 
-  // Initialize the 'recipes' state using 'initialRecipes' from the prop
-  const [recipes, setRecipes] = useState(initialRecipes);
-
-  // Initialize 'visibleRecipes' state to limit the number of visible recipes
-  const [visibleRecipes, setVisibleRecipes] = useState(4);
-
-  // Calculate the number of remaining recipes to load
+  // Define state variables using the 'useState' hook
+  const [recipes, setRecipes] = useState(initialRecipes); // Store the recipes
+  const [visibleRecipes, setVisibleRecipes] = useState(4); // Number of recipes initially visible
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? initialRecipes.length - visibleRecipes : 0
-  );
+  ); // Calculate remaining recipes not shown
 
-  // useEffect to update 'recipes' when 'initialRecipes' prop changes
+  // Use the 'useEffect' hook to update 'recipes' when 'initialRecipes' changes
   useEffect(() => {
     setRecipes(initialRecipes);
   }, [initialRecipes]);
 
-  // If 'recipes' is not available, display a loading message
+  // If 'recipes' is still loading, display a loading message
   if (!recipes) return <p>Loading...</p>;
 
-  // Function to load more recipes when the "Load More" button is clicked
+  // Function to slice the description of a recipe if it's too long
+  const sliceDescription = (recipe) => {
+    const words = recipe.description.split(' ');
+
+    if (words.length <= 30) {
+      return recipe.description;
+    } else {
+      const slicedDescription = words.slice(0, 30).join(' ');
+      return `${slicedDescription}...`;
+    }
+  };
+
+  // Function to load more recipes when the button is clicked
   const loadMore = () => {
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     const newRemainingRecipes = recipes.length - newVisibleRecipes;
 
-    // Update the 'visibleRecipes' and 'remainingRecipes' states
+    // Update the state variables
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(newRemainingRecipes);
   };
@@ -40,31 +48,30 @@ export default function RecipeList(props) {
   return (
     <div className={styles.recipeListContainer}>
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
-
-      {/* Render a list of recipes with limited visibility */}
       <ul className={styles.recipeGrid}>
         {recipes.slice(0, visibleRecipes).map((recipe) => (
           <li key={recipe._id} className={styles.recipeItem}>
+            {/* Display recipe image */}
             <img
               src={recipe.images[0]}
               alt={recipe.title}
               className={styles.recipeImage}
             />
+            {/* Display recipe title */}
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-            <p className={styles.recipeDescription}>{recipe.description}</p>
-
-            {/* Render tags for the recipe using 'TagsDisplay' component */}
+            {/* Display a sliced description of the recipe */}
+            <p className={styles.recipeDescription}>
+              {sliceDescription(recipe)}
+            </p>
+            {/* Display tags for the recipe */}
             <TagsDisplay recipe={recipe} />
-
-            {/* Render recipe instructions using 'Instructions' component */}
-            <Instructions recipe={recipe} />
           </li>
         ))}
       </ul>
-
-      {/* Display the "Load More" button if there are remaining recipes */}
-      {remainingRecipes > 0 && (
+      {/* Display a "Load More" button if there are remaining recipes */
+      remainingRecipes > 0 && (
         <div className={styles.loadMoreButton}>
+          {/* Button to load more recipes when clicked */}
           <button onClick={loadMore} className={styles.button}>
             Load More Recipes ({remainingRecipes} left)
           </button>
