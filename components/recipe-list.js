@@ -4,7 +4,8 @@ import SearchBar from "./layout/search-bar";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
-import Instructions from "./instructions/instructions";
+
+
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
   const [recipes, setRecipes] = useState(initialRecipes); // State for storing the recipes
@@ -20,6 +21,7 @@ export default function RecipeList(props) {
     setRecipes(initialRecipes);
     updateNoResults(initialRecipes, searchInput);
   }, [initialRecipes]);
+
   useEffect(() => {
     // Filter recipes based on the user's input in the title
     const filteredRecipes = initialRecipes.filter((recipe) =>
@@ -33,6 +35,19 @@ export default function RecipeList(props) {
   const updateNoResults = (filteredRecipes, input) => {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
+
+ // Function to slice the description of a recipe if it's too long
+  const sliceDescription = (recipe) => {
+    const words = recipe.description.split(' ');
+
+    if (words.length <= 30) {
+      return recipe.description;
+    } else {
+      const slicedDescription = words.slice(0, 30).join(' ');
+      return `${slicedDescription}...`;
+    }
+  };
+
   // Function to load more recipes
   const loadMore = () => {
     const additionalRecipes = 4;
@@ -55,7 +70,9 @@ export default function RecipeList(props) {
               className={styles.recipeImage}
             />
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-            <p className={styles.recipeDescription}>{recipe.description}</p>
+            <p className={styles.recipeDescription}>
+              {sliceDescription(recipe)}
+            </p>
             <TagsDisplay recipe={recipe} />
           </li>
         ))}
