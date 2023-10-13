@@ -1,10 +1,9 @@
-import MainNavigation from '../components/layout/main-navigation'; // Import the MainNavigation component
-
+import MainNavigation from "../components/layout/main-navigation";
 
 export default function HomePage() {
   return (
     <div>
-      <MainNavigation /> {/* Display the navigation bar */}
+      <MainNavigation />
 
     </div>
   );
