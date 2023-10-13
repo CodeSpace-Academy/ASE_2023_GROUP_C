@@ -36,18 +36,6 @@ export default function RecipeList(props) {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
 
- // Function to slice the description of a recipe if it's too long
-  const sliceDescription = (recipe) => {
-    const words = recipe.description.split(' ');
-
-    if (words.length <= 30) {
-      return recipe.description;
-    } else {
-      const slicedDescription = words.slice(0, 30).join(' ');
-      return `${slicedDescription}...`;
-    }
-  };
-
   // Function to load more recipes
   const loadMore = () => {
     const additionalRecipes = 4;
@@ -70,9 +58,8 @@ export default function RecipeList(props) {
               className={styles.recipeImage}
             />
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-            <p className={styles.recipeDescription}>
-              {sliceDescription(recipe)}
-            </p>
+            <p>Prep Time: {recipe.prep} minutes</p>
+            <p>Cook Time: {recipe.cook} minutes</p>
             <TagsDisplay recipe={recipe} />
           </li>
         ))}
