@@ -3,6 +3,8 @@ import styles from "./recipe-list.module.css";
 import SearchBar from "./layout/search-bar";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
+import TagsDisplay from "./tags/tags-display";
+import Instructions from "./instructions/instructions";
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
@@ -43,8 +45,9 @@ export default function RecipeList(props) {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
 
+  // Function to load more recipes
   const loadMore = () => {
-    // Function to load more recipes
+ 
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
 
@@ -70,6 +73,9 @@ export default function RecipeList(props) {
             />
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
             <p className={styles.recipeDescription}>{recipe.description}</p>
+
+            <TagsDisplay recipe={recipe} /> 
+            <Instructions recipe={recipe} /> 
           </li>
         ))}
       </ul>
