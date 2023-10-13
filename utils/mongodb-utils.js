@@ -27,7 +27,7 @@ export async function connectToDb() {
  */
 
 export async function getAllRecipes(client, collection, sort, pageNumber, filter = {}) {
-    const pageSize = 20;
+    const pageSize = 100;
     const skipPage = (pageNumber - 1) * pageSize;
 
     const db = client.db(mongodb);
@@ -53,5 +53,3 @@ export async function getRecipeDetails(client, collection, uniqueIdentifier) {
     console.log(document)
     return document
 }
-
-
