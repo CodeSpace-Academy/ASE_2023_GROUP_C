@@ -26,6 +26,10 @@
     box-shadow: 5px 5px 5px rgb(113, 108, 108);
   }
   
+  .recipeItem a {
+    text-decoration: none;
+    color: black;
+  }
   .recipeImage {
    width: 230px;
     height: 150px;
