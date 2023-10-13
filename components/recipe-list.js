@@ -36,14 +36,16 @@ export default function RecipeList(props) {
 
   // Function to load more recipes when the button is clicked
   const loadMore = () => {
+ 
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     const newRemainingRecipes = recipes.length - newVisibleRecipes;
 
     // Update the state variables
     setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(newRemainingRecipes);
+    setRemainingRecipes(recipes.length - newVisibleRecipes);
   };
+
 
   return (
     <div className={styles.recipeListContainer}>
@@ -80,3 +82,4 @@ export default function RecipeList(props) {
     </div>
   );
 }
+
