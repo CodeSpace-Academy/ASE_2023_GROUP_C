@@ -1,85 +1,71 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./recipe-list.module.css";
+import SearchBar from "./layout/search-bar";
+import NoResultsMessage from "./layout/no-results-message";
+import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Instructions from "./instructions/instructions";
-
 export default function RecipeList(props) {
-  // Destructure the 'initialRecipes' prop from 'props'
   const { recipes: initialRecipes } = props;
-
-  // Define state variables using the 'useState' hook
-  const [recipes, setRecipes] = useState(initialRecipes); // Store the recipes
-  const [visibleRecipes, setVisibleRecipes] = useState(4); // Number of recipes initially visible
+  const [recipes, setRecipes] = useState(initialRecipes); // State for storing the recipes
+  const [visibleRecipes, setVisibleRecipes] = useState(4); // State for controlling the number of visible recipes
+  // State for tracking the number of remaining recipes
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? initialRecipes.length - visibleRecipes : 0
-  ); // Calculate remaining recipes not shown
-
-  // Use the 'useEffect' hook to update 'recipes' when 'initialRecipes' changes
+  );
+  const [searchInput, setSearchInput] = useState(""); // State for the search input
+  const [noResults, setNoResults] = useState(false); // State to track whether no results were found
   useEffect(() => {
+    // Initialize the recipes when initialRecipes change
     setRecipes(initialRecipes);
+    updateNoResults(initialRecipes, searchInput);
   }, [initialRecipes]);
-
-  // If 'recipes' is still loading, display a loading message
-  if (!recipes) return <p>Loading...</p>;
-
-  // Function to slice the description of a recipe if it's too long
-  const sliceDescription = (recipe) => {
-    const words = recipe.description.split(' ');
-
-    if (words.length <= 30) {
-      return recipe.description;
-    } else {
-      const slicedDescription = words.slice(0, 30).join(' ');
-      return `${slicedDescription}...`;
-    }
+  useEffect(() => {
+    // Filter recipes based on the user's input in the title
+    const filteredRecipes = initialRecipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    // Update the displayed recipes and remaining recipes count
+    setRecipes(filteredRecipes);
+    setRemainingRecipes(filteredRecipes.length - visibleRecipes);
+    updateNoResults(filteredRecipes, searchInput);
+  }, [searchInput]);
+  const updateNoResults = (filteredRecipes, input) => {
+    setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
-
-  // Function to load more recipes when the button is clicked
+  // Function to load more recipes
   const loadMore = () => {
- 
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
-    const newRemainingRecipes = recipes.length - newVisibleRecipes;
-
-    // Update the state variables
+    // Update the number of visible recipes and remaining recipes count
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(recipes.length - newVisibleRecipes);
   };
-
-
   return (
     <div className={styles.recipeListContainer}>
+      <SearchBar onSearch={setSearchInput} />
+      {noResults && <NoResultsMessage />}
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
       <ul className={styles.recipeGrid}>
         {recipes.slice(0, visibleRecipes).map((recipe) => (
           <li key={recipe._id} className={styles.recipeItem}>
-            {/* Display recipe image */}
             <img
               src={recipe.images[0]}
               alt={recipe.title}
               className={styles.recipeImage}
             />
-            {/* Display recipe title */}
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-            {/* Display a sliced description of the recipe */}
-            <p className={styles.recipeDescription}>
-              {sliceDescription(recipe)}
-            </p>
-            {/* Display tags for the recipe */}
+            <p className={styles.recipeDescription}>{recipe.description}</p>
             <TagsDisplay recipe={recipe} />
           </li>
         ))}
       </ul>
-      {/* Display a "Load More" button if there are remaining recipes */
-      remainingRecipes > 0 && (
-        <div className={styles.loadMoreButton}>
-          {/* Button to load more recipes when clicked */}
-          <button onClick={loadMore} className={styles.button}>
-            Load More Recipes ({remainingRecipes} left)
-          </button>
-        </div>
+      {remainingRecipes > 0 && (
+        <LoadMoreButton
+          onClick={loadMore}
+          remainingRecipes={remainingRecipes}
+        />
       )}
     </div>
   );
 }
-
