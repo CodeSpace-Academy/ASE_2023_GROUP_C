@@ -1,65 +1,53 @@
-// import styles from './recipe-list.module.css'
-
-// export default function RecipeList(props) {
-    
-//     const { recipes } = props;
-  
-//     return (
-//       <div className={styles.recipeListContainer}>
-        
-//         <h1 className={styles.recipeListTitle}>Recipe List</h1>
-//         <ul className={styles.recipeGrid}>
-//           {recipes.slice(0, visibleRecipes).map((recipe) => (
-//             <li key={recipe._id} className={styles.recipeItem}>
-//               <img
-//                 src={recipe.images[0]}
-//                 alt={recipe.title}
-//                 className={styles.recipeImage}
-//               />
-  
-//               <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-//               <p className={styles.recipeDescription}>{recipe.description}</p>
-//             </li>
-//           ))}
-//         </ul>
-//         {remainingRecipes > 0 && (
-//           <div className={styles.loadMoreButton}>
-//             <button onClick={loadMore} className={styles.button}>
-//               Load More Recipes ({remainingRecipes} left)
-//             </button>
-//           </div>
-//         )}
-//       </div>
-//     );
-//   }
-  
-import { useState, useEffect } from "react";
-// import MainNavigation from "../../components/layout/main-navigation";
+import React, { useState, useEffect } from "react";
 import styles from "./recipe-list.module.css";
+import SearchBar from "./layout/search-bar";
+import NoResultsMessage from "./layout/no-results-message";
+import LoadMoreButton from "./ui-utils/load-more-button";
+import TagsDisplay from "./tags/tags-display";
 
 
 export default function RecipeList(props) {
-  const { recipes: initialRecipes } = props; // Rename the prop to avoid conflicts
-  const [recipes, setRecipes] = useState(initialRecipes);
-  const [visibleRecipes, setVisibleRecipes] = useState(4);
+  const { recipes: initialRecipes } = props;
+  const [recipes, setRecipes] = useState(initialRecipes); // State for storing the recipes
+  const [visibleRecipes, setVisibleRecipes] = useState(4); // State for controlling the number of visible recipes
+  // State for tracking the number of remaining recipes
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? initialRecipes.length - visibleRecipes : 0
   );
+  const [searchInput, setSearchInput] = useState(""); // State for the search input
+  const [noResults, setNoResults] = useState(false); // State to track whether no results were found
+  useEffect(() => {
+    // Initialize the recipes when initialRecipes change
+    setRecipes(initialRecipes);
+    updateNoResults(initialRecipes, searchInput);
+  }, [initialRecipes]);
 
   useEffect(() => {
-    setRecipes(initialRecipes); // Initialize recipes with the prop data
-  }, [initialRecipes]);
-  if (!recipes) return <p>Loading...</p>;
+    // Filter recipes based on the user's input in the title
+    const filteredRecipes = initialRecipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    // Update the displayed recipes and remaining recipes count
+    setRecipes(filteredRecipes);
+    setRemainingRecipes(filteredRecipes.length - visibleRecipes);
+    updateNoResults(filteredRecipes, searchInput);
+  }, [searchInput]);
+  const updateNoResults = (filteredRecipes, input) => {
+    setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
+  };
+
+  // Function to load more recipes
   const loadMore = () => {
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
-    const newRemainingRecipes = recipes.length - newVisibleRecipes;
+    // Update the number of visible recipes and remaining recipes count
     setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(newRemainingRecipes);
+    setRemainingRecipes(recipes.length - newVisibleRecipes);
   };
   return (
     <div className={styles.recipeListContainer}>
-      {/* <MainNavigation recipes={recipes} setRecipes={setRecipes} /> */}
+      <SearchBar onSearch={setSearchInput} />
+      {noResults && <NoResultsMessage />}
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
       <ul className={styles.recipeGrid}>
         {recipes.slice(0, visibleRecipes).map((recipe) => (
@@ -70,18 +58,18 @@ export default function RecipeList(props) {
               className={styles.recipeImage}
             />
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-            <p className={styles.recipeDescription}>{recipe.description}</p>
+            <p>Prep Time: {recipe.prep} minutes</p>
+            <p>Cook Time: {recipe.cook} minutes</p>
+            <TagsDisplay recipe={recipe} />
           </li>
         ))}
       </ul>
       {remainingRecipes > 0 && (
-        <div className={styles.loadMoreButton}>
-          <button onClick={loadMore} className={styles.button}>
-            Load More Recipes ({remainingRecipes} left)
-          </button>
-        </div>
+        <LoadMoreButton
+          onClick={loadMore}
+          remainingRecipes={remainingRecipes}
+        />
       )}
     </div>
   );
 }
-  
