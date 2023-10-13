@@ -6,11 +6,11 @@ import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Instructions from "./instructions/instructions";
-import EditableDescription from "./editableDescription";
+import EditableDescription from "./EditableDescription";
+import Link from "next/link"; // Import Link from Next.js
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
-
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(4);
   const [remainingRecipes, setRemainingRecipes] = useState(
@@ -31,7 +31,6 @@ export default function RecipeList(props) {
 
     setRecipes(filteredRecipes);
     setRemainingRecipes(filteredRecipes.length - visibleRecipes);
-
     updateNoResults(filteredRecipes, searchInput);
   }, [searchInput]);
 
@@ -69,6 +68,13 @@ export default function RecipeList(props) {
     }
   };
 
+  const loadMore = () => {
+    const additionalRecipes = 4;
+    const newVisibleRecipes = visibleRecipes + additionalRecipes;
+    setVisibleRecipes(newVisibleRecipes);
+    setRemainingRecipes(recipes.length - newVisibleRecipes);
+  };
+
   return (
     <div className={styles.recipeListContainer}>
       <SearchBar onSearch={setSearchInput} />
@@ -90,11 +96,14 @@ export default function RecipeList(props) {
             />
             <TagsDisplay recipe={recipe} />
             <Instructions recipe={recipe} />
+            <Link href={`/recipe-list/${recipe._id}`}>
+              <a>View Recipe</a>
+            </Link>
           </li>
         ))}
       </ul>
       {remainingRecipes > 0 && (
-        <LoadMoreButton onClick={() => setVisibleRecipes(visibleRecipes + 4)} />
+        <LoadMoreButton onClick={loadMore} />
       )}
       <button onClick={handleSaveDescription}>Save Descriptions</button>
     </div>
