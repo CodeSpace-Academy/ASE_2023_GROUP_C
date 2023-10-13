@@ -1,3 +1,4 @@
+// RecipeList.js
 import React, { useState, useEffect } from "react";
 import styles from "./recipe-list.module.css";
 import SearchBar from "./layout/search-bar";
@@ -5,36 +6,29 @@ import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Instructions from "./instructions/instructions";
+import EditableDescription from "./editableDescription";
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
 
-  const [recipes, setRecipes] = useState(initialRecipes); // State for storing the recipes
-
-  const [visibleRecipes, setVisibleRecipes] = useState(4); // State for controlling the number of visible recipes
-
-  // State for tracking the number of remaining recipes
+  const [recipes, setRecipes] = useState(initialRecipes);
+  const [visibleRecipes, setVisibleRecipes] = useState(4);
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? initialRecipes.length - visibleRecipes : 0
   );
-
-  const [searchInput, setSearchInput] = useState(""); // State for the search input
-
-  const [noResults, setNoResults] = useState(false); // State to track whether no results were found
+  const [searchInput, setSearchInput] = useState("");
+  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
-    // Initialize the recipes when initialRecipes change
     setRecipes(initialRecipes);
     updateNoResults(initialRecipes, searchInput);
   }, [initialRecipes]);
 
   useEffect(() => {
-    // Filter recipes based on the user's input in the title
     const filteredRecipes = initialRecipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchInput.toLowerCase())
     );
 
-    // Update the displayed recipes and remaining recipes count
     setRecipes(filteredRecipes);
     setRemainingRecipes(filteredRecipes.length - visibleRecipes);
 
@@ -45,23 +39,40 @@ export default function RecipeList(props) {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
 
-  // Function to load more recipes
-  const loadMore = () => {
- 
-    const additionalRecipes = 4;
-    const newVisibleRecipes = visibleRecipes + additionalRecipes;
+  const handleEditDescription = (recipeId, editedDescription) => {
+    const updatedRecipes = [...recipes];
+    const index = updatedRecipes.findIndex((recipe) => recipe._id === recipeId);
 
-    // Update the number of visible recipes and remaining recipes count
-    setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(recipes.length - newVisibleRecipes);
+    if (index !== -1) {
+      updatedRecipes[index].editedDescription = editedDescription;
+      setRecipes(updatedRecipes);
+    }
+  };
+
+  const handleSaveDescription = () => {
+    const recipesWithSavedDescriptions = recipes.map((recipe) => ({
+      ...recipe,
+      description: recipe.editedDescription,
+    }));
+
+    setRecipes(recipesWithSavedDescriptions);
+    // You can also save the recipes to your database here
+  };
+
+  const handleCancelEdit = (recipeId) => {
+    const updatedRecipes = [...recipes];
+    const index = updatedRecipes.findIndex((recipe) => recipe._id === recipeId);
+
+    if (index !== -1) {
+      updatedRecipes[index].editedDescription = updatedRecipes[index].description;
+      setRecipes(updatedRecipes);
+    }
   };
 
   return (
     <div className={styles.recipeListContainer}>
       <SearchBar onSearch={setSearchInput} />
-
       {noResults && <NoResultsMessage />}
-
       <h1 className={styles.recipeListTitle}>Recipe List</h1>
       <ul className={styles.recipeGrid}>
         {recipes.slice(0, visibleRecipes).map((recipe) => (
@@ -72,19 +83,20 @@ export default function RecipeList(props) {
               className={styles.recipeImage}
             />
             <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-            <p className={styles.recipeDescription}>{recipe.description}</p>
-
-            <TagsDisplay recipe={recipe} /> 
-            <Instructions recipe={recipe} /> 
+            <EditableDescription
+              recipe={recipe}
+              onEditDescription={handleEditDescription}
+              onCancelEdit={handleCancelEdit}
+            />
+            <TagsDisplay recipe={recipe} />
+            <Instructions recipe={recipe} />
           </li>
         ))}
       </ul>
       {remainingRecipes > 0 && (
-        <LoadMoreButton
-          onClick={loadMore}
-          remainingRecipes={remainingRecipes}
-        />
+        <LoadMoreButton onClick={() => setVisibleRecipes(visibleRecipes + 4)} />
       )}
+      <button onClick={handleSaveDescription}>Save Descriptions</button>
     </div>
   );
 }
