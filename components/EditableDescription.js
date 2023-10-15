@@ -1,4 +1,3 @@
-// EditableDescription.js
 import React, { useState, useEffect } from "react";
 
 export default function EditableDescription({ recipe, onEditDescription, onCancelEdit }) {
@@ -12,6 +11,9 @@ export default function EditableDescription({ recipe, onEditDescription, onCance
   const handleSave = () => {
     onEditDescription(recipe._id, editedDescription);
     setIsEditing(false);
+
+    // Save the edited description to local storage
+    localStorage.setItem(`editedDescription_${recipe._id}`, editedDescription);
   };
 
   const handleCancel = () => {
