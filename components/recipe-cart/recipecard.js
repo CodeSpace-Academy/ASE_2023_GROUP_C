@@ -1,5 +1,7 @@
 import React from 'react'
 import styles from './recipecart.module.css'
+import RecipeDescription from '../recipe-description/recipe-description'
+
 
 export default function RecipeCard(prop) {
     const { recipe } = prop
@@ -11,6 +13,7 @@ export default function RecipeCard(prop) {
         className={styles.recipeImage}
       />
       <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+      <RecipeDescription recipe={recipe} />
       <p>Prep Time: {recipe.prep} </p>
       <p>Cook Time: {recipe.cook} </p>
     {recipe.instructions && recipe.instructions.length > 0 && (

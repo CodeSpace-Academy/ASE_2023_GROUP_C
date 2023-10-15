@@ -1,0 +1,30 @@
+/* Styles for the main container */
+.home-container {
+  display: flex;                  /* Use flexbox for layout */
+  flex-direction: column;         /* Stack children in a column */
+  align-items: center;            /* Center children horizontally */
+  justify-content: center;        /* Center children vertically */
+  height: 100vh;                  /* Set the height to cover the full viewport height */
+}
+
+/* Styles for the title element */
+.title {
+  font-size: 2rem;                /* Set the font size to 2rem */
+  margin-bottom: 20px;            /* Add margin at the bottom to create space */
+  color: #333;                  /* Set the text color to a shade of gray (#333) */
+}
+
+/* Styles for the button element */
+.btn {
+  padding: 10px 20px;             /* Set padding for the button */
+  background-color: #007BFF;    /* Set the background color to a blue shade */
+  color: #fff;                  /* Set the text color to white */
+  border: none;                   /* Remove button border */
+  border-radius: 5px;             /* Add border radius for rounded corners */
+  cursor: pointer;                /* Change cursor to a pointer on hover */
+}
+
+/* Styles for the button on hover */
+.btn:hover {
+  background-color: #0056b3;    /* Darken the background color on hover */
+}
