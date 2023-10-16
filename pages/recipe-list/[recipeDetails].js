@@ -1,5 +1,7 @@
 import React from 'react'
 import { connectToDb, getRecipeDetails } from '../../utils/mongodb-utils';
+import TagsDisplay from '../../components/tags/tags-display';
+import RecipeCard from '../../components/recipe-cart/recipecard';
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
@@ -34,6 +36,9 @@ export async function getServerSideProps(context) {
 export default function RecipeDetails({recipeDocuments}) {
 
   return (
-    <div>RecipeDetails</div>
+    <div><h1>RecipeDetails</h1>
+      <RecipeCard recipe={recipeDocuments} />
+      <TagsDisplay recipe={recipeDocuments} />
+    </div>
   )
 }
