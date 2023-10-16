@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import styles from "./recipe-description.module.css";
-import EditableDescription from "./update-description/update-description";
+// import styles from "./recipe-description.module.css";
+// import EditableDescription from "./EditableDescription";
 
 function RecipeDescription(props) {
   const { recipe } = props;
@@ -37,3 +37,4 @@ function RecipeDescription(props) {
 }
 
 export default RecipeDescription;
+
