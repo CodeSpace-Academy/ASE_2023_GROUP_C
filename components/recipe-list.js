@@ -80,6 +80,7 @@ export default function RecipeList(props) {
                 <h2 className={styles.recipeTitle}>{recipe.title}</h2>
                 <p>Prep Time: {convertToHours(recipe.prep)} </p>
                 <p>Cook Time: {convertToHours(recipe.cook)} </p>
+                <p>Total Time: {convertToHours(recipe.prep + recipe.cook)} </p> {/* Calculate total time */}
                 <TagsDisplay recipe={recipe} />
               </div>
             </Link>
