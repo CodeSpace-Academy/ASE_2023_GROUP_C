@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./recipe-description.module.css";
 import EditableDescription from "./EditableDescription";
 
@@ -9,9 +9,19 @@ function RecipeDescription(props) {
 
   const handleEditDescription = (newDescription) => {
 
+    localStorage.setItem(`editedDescription-${recipe._id}`, newDescription);
+
     setEditedDescription(newDescription); 
     setIsEditing(false);
   };
+
+  useEffect(() => {
+
+    const storedDescription = localStorage.getItem(`editedDescription-${recipe._id}`);
+    if (storedDescription) {
+      setEditedDescription(storedDescription);
+    }
+  }, [recipe._id]);
 
   return (
     <div>
@@ -23,13 +33,13 @@ function RecipeDescription(props) {
             onChange={(e) => setEditedDescription(e.target.value)}
             className={styles.description}
           />
-          <button onClick={() => handleEditDescription(editedDescription)}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
+          <button className={styles.saveButton} onClick={() => handleEditDescription(editedDescription)}>Save</button>
+          <button className={styles.cancelButton} onClick={() => setIsEditing(false)}>Cancel</button>
         </div>
       ) : (
         <div>
           <p className={styles.description}>{editedDescription}</p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button className={styles.editButton} onClick={() => setIsEditing(true)}>Edit</button>
         </div>
       )}
     </div>
