@@ -32,5 +32,3 @@ export default function RecipeCards(props) {
     </div>
   );
 }
-//<tags recipes = {recipes}/>
-//<instructions .../>
