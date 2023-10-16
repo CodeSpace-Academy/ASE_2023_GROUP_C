@@ -4,11 +4,11 @@ import SearchBar from "./layout/search-bar";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
-import Link from 'next/link'; 
+import Link from 'next/link';
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
-  
+
   const [recipes, setRecipes] = useState(initialRecipes); // State for storing the recipes
 
   const [visibleRecipes, setVisibleRecipes] = useState(4); // State for controlling the number of visible recipes
@@ -53,6 +53,15 @@ export default function RecipeList(props) {
     setRemainingRecipes(recipes.length - newVisibleRecipes);
   };
 
+  const convertToHours = (minutes) => {
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+      return `${hours} hours ${remainingMinutes} minutes`;
+    }
+    return `${minutes} minutes`;
+  };
+
   return (
     <div className={styles.recipeListContainer}>
       <SearchBar onSearch={setSearchInput} />
@@ -61,7 +70,7 @@ export default function RecipeList(props) {
       <ul className={styles.recipeGrid}>
         {recipes.slice(0, visibleRecipes).map((recipe) => (
           <li key={recipe._id} className={styles.recipeItem}>
-            <Link href={`/recipe-list/${recipe._id}`}> 
+            <Link href={`/recipe-list/${recipe._id}`}>
               <div>
                 <img
                   src={recipe.images[0]}
@@ -69,8 +78,9 @@ export default function RecipeList(props) {
                   className={styles.recipeImage}
                 />
                 <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-                <p>Prep Time: {recipe.prep} </p>
-                <p>Cook Time: {recipe.cook} </p>
+                <p>Prep Time: {convertToHours(recipe.prep)} </p>
+                <p>Cook Time: {convertToHours(recipe.cook)} </p>
+                <p>Total Time: {convertToHours(recipe.prep + recipe.cook)} </p> {/* Calculate total time */}
                 <TagsDisplay recipe={recipe} />
               </div>
             </Link>
