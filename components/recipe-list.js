@@ -53,6 +53,16 @@ export default function RecipeList(props) {
     setRemainingRecipes(recipes.length - newVisibleRecipes);
   };
 
+  const convertToHours = (minutes) => {
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+      return `${hours} hours ${remainingMinutes} minutes`;
+    }
+    return `${minutes} minutes`;
+  };
+
+
   return (
     <div className={styles.recipeListContainer}>
       <SearchBar onSearch={setSearchInput} />
@@ -69,8 +79,8 @@ export default function RecipeList(props) {
                   className={styles.recipeImage}
                 />
                 <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-                <p>Prep Time: {recipe.prep} </p>
-                <p>Cook Time: {recipe.cook} </p>
+                <p>Prep Time: {convertToHours(recipe.prep)} </p>
+            <p>Cook Time: {convertToHours(recipe.cook)} </p>
                 <TagsDisplay recipe={recipe} />
               </div>
             </Link>
