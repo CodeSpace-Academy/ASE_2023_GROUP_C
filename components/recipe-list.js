@@ -11,7 +11,7 @@ export default function RecipeList(props) {
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(4);
   const [remainingRecipes, setRemainingRecipes] = useState(
-    initialRecipes ? initialRecipes.length - visibleRecipes : 0
+    initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
   );
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
@@ -27,9 +27,10 @@ export default function RecipeList(props) {
     );
 
     setRecipes(filteredRecipes);
-    setRemainingRecipes(filteredRecipes.length - visibleRecipes);
+    const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
+    setRemainingRecipes(Math.max(filteredRecipes.length - newVisibleRecipes, 0));
     updateNoResults(filteredRecipes, searchInput);
-  }, [searchInput]);
+  }, [searchInput, visibleRecipes]);
 
   const updateNoResults = (filteredRecipes, input) => {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
@@ -39,7 +40,9 @@ export default function RecipeList(props) {
     const additionalRecipes = 4;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(recipes.length - newVisibleRecipes);
+    setRemainingRecipes(
+      Math.max(recipes.length - newVisibleRecipes, 0)
+    );
   };
 
   const convertToHours = (minutes) => {
@@ -51,12 +54,39 @@ export default function RecipeList(props) {
     return `${minutes} minutes`;
   };
 
+  const handleSearch = () => {
+    // Handle the search when the user clicks the "Search" button.
+    // You can add your search logic here.
+    const filteredRecipes = initialRecipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(searchInput.toLowerCase())
+    );
+
+    setRecipes(filteredRecipes);
+    const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
+    setRemainingRecipes(Math.max(filteredRecipes.length - newVisibleRecipes, 0));
+    updateNoResults(filteredRecipes, searchInput);
+  };
+
   return (
-    <div className="bg-gray-900 text-white h-screen p-4 flex flex-col justify-center items-center">
+    <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
       <h1 className="text-3xl font-bold text-white mb-4">Recipe List</h1>
-      <SearchBar onSearch={setSearchInput} />
+      <div className="search-bar-container flex items-center mb-4">
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search..."
+          className="w-3/4 p-2 border rounded-l text-black"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-700 text-white p-2 rounded-r hover:bg-blue-800"
+        >
+          Search
+        </button>
+      </div>
       {noResults && <NoResultsMessage />}
-      <div className="recipe-list-container overflow-y-auto">
+      <div className="recipe-list-container overflow-y-auto flex-grow">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
@@ -78,12 +108,12 @@ export default function RecipeList(props) {
           ))}
         </ul>
       </div>
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+      <div className="bg-gray-900 p-4 flex justify-center items-center">
         {remainingRecipes > 0 && (
           <LoadMoreButton
             onClick={loadMore}
             remainingRecipes={remainingRecipes}
-            className="bg-blue-700 text-white px-2 py-1 rounded-full hover:bg-white-800"
+            className="bg-blue-700 text-white px-2 py-1 rounded-full hover:bg-blue-800"
           />
         )}
       </div>
