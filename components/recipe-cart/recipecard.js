@@ -29,11 +29,11 @@ export default function RecipeCard(prop) {
     {recipe.instructions && recipe.instructions.length > 0 && (
       <div className={styles.instructionsContainer}>
         <h3>Instructions</h3>
-        <ol>
+        <ul>
           {recipe.instructions.map((instruction, index) => (
             <li key={index}>{instruction}</li>
           ))}
-        </ol>
+        </ul>
       </div>
     )}</div>
   )
