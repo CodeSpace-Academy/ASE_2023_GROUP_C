@@ -1,7 +1,8 @@
 import React from 'react'
-import { connectToDb, getRecipeDetails } from '../../utils/mongodb-utils';
+import { connectToDb, getRecipeDetails, getAllergens  } from '../../utils/mongodb-utils';
 import TagsDisplay from '../../components/tags/tags-display';
 import RecipeCard from '../../components/recipe-cart/recipecard';
+import RecipeDescription from '../../components/recipe-description/recipe-description';
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
@@ -16,15 +17,22 @@ export async function getServerSideProps(context) {
         notFound: true, 
     }
   }
-  let recipeDocuments
+  let recipeDocuments;
+  let allergens;
 
   try {
       recipeDocuments = await getRecipeDetails(
           client,
           'recipes',
           {_id: recipeId},
-      )
-      return { props: { recipeDocuments } }
+      );
+      allergens = await getAllergens(
+        client, 
+        'allergens',
+         { recipeId },
+         );
+
+      return { props: { recipeDocuments, allergens } }
   } catch (error) {
       console.error('Getting recipes failed')
       return {
@@ -33,12 +41,13 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function RecipeDetails({recipeDocuments}) {
+export default function RecipeDetails({recipeDocuments, allergens}) {
 
   return (
     <div><h1>RecipeDetails</h1>
       <RecipeCard recipe={recipeDocuments} />
       <TagsDisplay recipe={recipeDocuments} />
+      <RecipeDescription allergens={allergens} />
     </div>
   )
 }
