@@ -1,25 +1,24 @@
 import Link from "next/link";
-import classes from "./main-navigation.module.css";
 
 const MainNavigation = ({ onSearch }) => {
   return (
-    <nav className={classes["main-nav"]}>
-      <div className={classes["home-button"]}>
-        {/* Navigate to the home page */}
+    <nav className="bg-blue-700 text-white p-4 flex justify-between items-center">
+            <ul className="flex space-x-4">
+      <div className="flex items-center">
         <Link href="/">
-          <h1>Recipe App</h1>
+          <h1 className="text-3xl font-semibold cursor-pointer">Recipe App</h1>
         </Link>
       </div>
-      <form className={classes["search-form"]}>
-        {/*Please make Use the SearchBar component here */}
-      </form>
 
-      <ul className={classes["nav-links"]}>
-        <li>
-          {/* Navigate to the recipe list page */}
-          <Link href="/recipe-list">Recipe List</Link>
+        <li className="pl-4">
+          <Link href="/recipe-list">
+            <h1 className="text-3xl font-semibold cursor-pointer">
+              Recipe List
+            </h1>
+          </Link>
         </li>
       </ul>
+
     </nav>
   );
 };
