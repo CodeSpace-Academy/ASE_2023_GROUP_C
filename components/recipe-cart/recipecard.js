@@ -5,6 +5,16 @@ import RecipeDescription from '../recipe-description/recipe-description'
 
 export default function RecipeCard(prop) {
     const { recipe } = prop
+
+    const convertToHours = (minutes) => {
+      if (minutes >= 60) {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+        return `${hours} hours ${remainingMinutes} minutes`;
+      }
+      return `${minutes} minutes`;
+    };
+
   return (
     <div>
       <img
@@ -14,8 +24,8 @@ export default function RecipeCard(prop) {
       />
       <h2 className={styles.recipeTitle}>{recipe.title}</h2>
       <RecipeDescription recipe={recipe} />
-      <p>Prep Time: {recipe.prep} </p>
-      <p>Cook Time: {recipe.cook} </p>
+      <p>Prep Time: {convertToHours(recipe.prep)} </p>
+      <p>Cook Time: {convertToHours(recipe.cook)} </p>
     {recipe.instructions && recipe.instructions.length > 0 && (
       <div className={styles.instructionsContainer}>
         <h3>Instructions</h3>
