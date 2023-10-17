@@ -11,7 +11,7 @@ function RecipeHomePage() {
       <Link href="/recipe-list/">
         <button className={styles.btn}>
           View Recipes List
-          {<FontAwesomeIcon icon={faPizzaSlice}/>}
+          {<FontAwesomeIcon icon={faPizzaSlice} beatFade/>}
           </button> {/* Apply 'btn' style */}
       </Link>
     </div>

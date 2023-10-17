@@ -1,6 +1,8 @@
 import React from 'react'
 import styles from './recipecart.module.css'
 import RecipeDescription from '../recipe-description/recipe-description'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function RecipeCard(prop) {
@@ -25,7 +27,7 @@ export default function RecipeCard(prop) {
       <h2 className={styles.recipeTitle}>{recipe.title}</h2>
       <RecipeDescription recipe={recipe} />
       <p>Prep Time: {convertToHours(recipe.prep)} </p>
-      <p>Cook Time: {convertToHours(recipe.cook)} </p>
+      <p><FontAwesomeIcon icon={faStopwatch}/>: {convertToHours(recipe.cook)} </p>
     {recipe.instructions && recipe.instructions.length > 0 && (
       <div className={styles.instructionsContainer}>
         <h3>Instructions</h3>
