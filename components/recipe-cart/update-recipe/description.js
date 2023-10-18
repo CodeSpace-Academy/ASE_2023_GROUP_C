@@ -47,6 +47,8 @@ function RecipeDescription(props) {
     </div>
     </div>
   );
-}
+  }
+
+
 
 export default RecipeDescription;
