@@ -5,7 +5,7 @@ export default function Layout(props) {
   return (
     <Fragment>
       <div className=' bg-slate-900 '>
-      <MainNavigation  />
+      {/* <MainNavigation  /> */}
       {props.children}
       </div>
     </Fragment>
