@@ -1,34 +1,35 @@
 import React, { useState } from "react";
+import EditRecipeContent from "./editable-text";
 // import styles from "./recipe-description.module.css";
-// import EditableDescription from "./EditableDescription";
+// import EditableDescription from "./update-description/update-description";
 
 function RecipeDescription(props) {
-  const { recipe } = props;
+  const { recipe, onEdit } = props;
+
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(recipe.description);
 
   const handleEditDescription = (newDescription) => {
-
-    setEditedDescription(newDescription); 
+    console.log("New Description:", newDescription);
+    
+    setEditedDescription(newDescription);
     setIsEditing(false);
+
+    onEdit()
   };
 
   return (
     <div>
       <h3>Description</h3>
       {isEditing ? (
-        <div>
-          <textarea
-            value={editedDescription}
-            onChange={(e) => setEditedDescription(e.target.value)}
-            className={styles.description}
-          />
-          <button onClick={() => handleEditDescription(editedDescription)}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
-        </div>
+        <EditRecipeContent
+          initialValue={editedDescription}
+          onSave={handleEditDescription}
+          onCancel={() => setIsEditing(false)}
+        />
       ) : (
         <div>
-          <p className={styles.description}>{editedDescription}</p>
+          <p >{editedDescription}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </div>
       )}
@@ -37,4 +38,3 @@ function RecipeDescription(props) {
 }
 
 export default RecipeDescription;
-
