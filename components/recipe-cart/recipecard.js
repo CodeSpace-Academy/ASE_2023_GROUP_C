@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './recipecart.module.css'
-import RecipeDescription from '../recipe-description/recipe-description'
+import RecipeDescription from './update-recipe/description';
+import RecipeInstruction from './update-recipe/instructions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHourglass, faMitten, faStopwatch, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import TagsDisplay from '../tags/tags-display';
@@ -8,6 +9,13 @@ import TagsDisplay from '../tags/tags-display';
 
 export default function RecipeCard(prop) {
     const { recipe } = prop
+
+    const [isEdited, setIsEdited] = useState(false);
+
+    const handleDescriptionEdit = () => {
+      setIsEdited(true);
+    };
+  
 
     const convertToHours = (minutes) => {
       if (minutes >= 60) {
@@ -19,12 +27,18 @@ export default function RecipeCard(prop) {
     };
 
   return (
+    <div>
+      {isEdited && <p>Recipe was edited</p>}
     <div className='p-4 flex flex-col bg-slate-900 text-red-100 '>
       <img
         src={recipe.images[0]}
         alt={recipe.title}
         className=" w-60 place-self-center rounded-lg"
       />
+      <h2 className={styles.recipeTitle}>{recipe.title}</h2>
+      <RecipeDescription recipe={recipe} onEdit={handleDescriptionEdit}/>
+      <p>Prep Time: {convertToHours(recipe.prep)} </p>
+      <p>Cook Time: {convertToHours(recipe.cook)} </p>
       <h2 
         className= 'text-3xl font-bold text-center p-5'
       >
@@ -38,6 +52,7 @@ export default function RecipeCard(prop) {
       </div>
     {recipe.instructions && recipe.instructions.length > 0 && (
       <div className={styles.instructionsContainer}>
+        <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit}/>
         <h3
         className="text-2xl font-semibold pb-2 pt-2 "
         >Instructions</h3>
