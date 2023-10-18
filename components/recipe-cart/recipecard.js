@@ -29,16 +29,13 @@ export default function RecipeCard(prop) {
   return (
     <div>
       {isEdited && <p>Recipe was edited</p>}
-    <div className='p-4 flex flex-col bg-slate-900 text-red-100 '>
+    <div className='p-4 flex flex-col bg-slate-900 text-red-100 justify-center'>
       <img
         src={recipe.images[0]}
         alt={recipe.title}
-        className=" w-60 place-self-center rounded-lg"
+        className=" place-self-center rounded-lg"
       />
-      <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-      <RecipeDescription recipe={recipe} onEdit={handleDescriptionEdit}/>
-      <p>Prep Time: {convertToHours(recipe.prep)} </p>
-      <p>Cook Time: {convertToHours(recipe.cook)} </p>
+      
       <h2 
         className= 'text-3xl font-bold text-center p-5'
       >
@@ -46,16 +43,21 @@ export default function RecipeCard(prop) {
         </h2>
 
       <RecipeDescription recipe={recipe} />
-      <div className='flex space-x-4'>
+      <TagsDisplay recipe={recipe} />
+
+      <div className='flex space-x-4 justify-center gap-8'>
        <p><FontAwesomeIcon icon={faUtensils} size='xl'/> : {convertToHours(recipe.prep)} </p>
        <p><FontAwesomeIcon icon={faMitten} size='xl'/> : {convertToHours(recipe.cook)} </p>
       </div>
+      
     {recipe.instructions && recipe.instructions.length > 0 && (
-      <div className={styles.instructionsContainer}>
-        <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit}/>
+      <div className=''>
+  
         <h3
         className="text-2xl font-semibold pb-2 pt-2 "
-        >Instructions</h3>
+        >
+          Instructions
+          </h3>
         <ol >
           {recipe.instructions.map((instruction, index) => (
             <li key={index} className='pb-2'>{index + 1}. {instruction}</li>
@@ -63,7 +65,8 @@ export default function RecipeCard(prop) {
         </ol>
       </div>
     )}
-    <TagsDisplay recipe={recipe} />
+    
+        </div>
         </div>
   )
 }

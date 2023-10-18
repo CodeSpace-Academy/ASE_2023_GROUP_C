@@ -37,7 +37,7 @@ export default function RecipeDetails({recipeDocuments}) {
 
   return (
     <div>
-      <h1 className=' text-center font-bold p-5 text-5xl bg-slate-900 '>RecipeDetails</h1>
+      <h1 className=' text-center font-bold p-5 text-5xl bg-slate-900 text-white'>RecipeDetails</h1>
       <RecipeCard recipe={recipeDocuments} />
     </div>
   )

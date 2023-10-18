@@ -4,10 +4,8 @@ import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faStopwatch, faKitchenSet, faTags, faHourglass } from '@fortawesome/free-solid-svg-icons';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStopwatch, faKitchenSet, faTags, faHourglass } from '@fortawesome/free-solid-svg-icons';
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
