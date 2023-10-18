@@ -10,8 +10,9 @@ function RecipeDescription(props) {
   const [editedDescription, setEditedDescription] = useState(recipe.description);
 
   const handleEditDescription = (newDescription) => {
-
-    setEditedDescription(newDescription); 
+    console.log("New Description:", newDescription);
+    
+    setEditedDescription(newDescription);
     setIsEditing(false);
   };
 
@@ -33,6 +34,11 @@ function RecipeDescription(props) {
           <button onClick={() => setIsEditing(false)}>Cancel</button>
           </div>
         </div>
+        <EditableDescription
+          initialDescription={editedDescription}
+          onSave={handleEditDescription}
+          onCancel={() => setIsEditing(false)}
+        />
       ) : (
         <div>
           <p className={styles.description}>{editedDescription}</p>

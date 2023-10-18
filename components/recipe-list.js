@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import SearchBar from "./layout/search-bar";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStopwatch, faKitchenSet, faTags, faHourglass } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
@@ -71,7 +72,11 @@ export default function RecipeList(props) {
 
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
-      <h1 className="text-3xl font-bold text-white mb-4">Recipe List</h1>
+<Link href="/">
+  <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
+</Link>
+
+
       <div className="search-bar-container flex items-center mb-4">
         <input
           type="text"
