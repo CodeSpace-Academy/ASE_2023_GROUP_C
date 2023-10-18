@@ -11,7 +11,7 @@ export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
 
   const [recipes, setRecipes] = useState(initialRecipes);
-  const [visibleRecipes, setVisibleRecipes] = useState(4);
+  const [visibleRecipes, setVisibleRecipes] = useState(20);
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
   );
@@ -39,7 +39,7 @@ export default function RecipeList(props) {
   };
 
   const loadMore = () => {
-    const additionalRecipes = 4;
+    const additionalRecipes = 20;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(
