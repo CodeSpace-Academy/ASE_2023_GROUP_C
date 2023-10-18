@@ -10,13 +10,16 @@ function EditRecipeContent(props) {
   };
   
   return (
-    <div>
+    <div className=" flex flex-col mt-2 mb-4 ">
       <textarea
         ref={textareaRef}
         defaultValue={initialValue} // Use defaultValue instead of value
+        className=" text-black"
       />
-      <button onClick={handleSave}>Save</button>
+       <div className=" flex flex-col mt-2 mb-4 gap-4" >
+       <button onClick={handleSave}>Save</button>
       <button onClick={onCancel}>Cancel</button>
+       </div>
     </div>
   );
 }

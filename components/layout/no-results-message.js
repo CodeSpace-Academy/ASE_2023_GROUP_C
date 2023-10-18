@@ -1,9 +1,8 @@
 import React from "react";
-import styles from "../recipe-list.module.css";
 
 export default function NoResultsMessage() {
   return (
-    <p className={styles.noResultsMessage}>
+    <p className="bg-gray-800 text-white p-4">
       No results found. Please try a different recipe.
     </p>
   );
