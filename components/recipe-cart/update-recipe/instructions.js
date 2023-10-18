@@ -34,7 +34,7 @@ function RecipeInstruction(props) {
           <h3>Instructions</h3>
           <ol>
             {editedInstruction.map((instruction, index) => (
-              <li key={index}>{instruction}</li>
+              <li key={index}>{`${index + 1}.${instruction}`}</li>
             ))}
           </ol>
           <button onClick={() => setIsEditing(true)}>Edit Instructions</button>
