@@ -21,6 +21,6 @@ if (Array.isArray(allergensList)){
     </div>
   );
 }
-}
+
 
  
