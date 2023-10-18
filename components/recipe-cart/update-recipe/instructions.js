@@ -17,7 +17,7 @@ function RecipeInstruction(props) {
     
     setIsEditing(false);
 
-    onEdit
+    onEdit()
   };
 
   return (
