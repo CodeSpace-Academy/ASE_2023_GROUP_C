@@ -27,6 +27,7 @@ function RecipeHomePage() {
         <div className="text-center">
           <h1 className="text-5xl font-bold text-white mb-6"> {/* Increased text size */}
             Welcome to The Recipe App <FontAwesomeIcon icon={faCoffee} />
+          </h1>
           <div className="flex justify-center space-x-4">
             <Link href="/api/auth/login">
               <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600"> {/* Increased button size */}
