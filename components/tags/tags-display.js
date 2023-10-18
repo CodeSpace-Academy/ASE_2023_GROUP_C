@@ -2,11 +2,12 @@ import React from "react";
 
 export default function TagsDisplay(prop) {
   const { recipe } = prop;
+
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
+      <div className="max-w-full p-4">
         {recipe.tags.map((tag) => (
-          <span key={tag} className="px-2 py-1 rounded bg-blue-500 text-white">
+          <span key={tag} className="bg-blue-500 text-white px-2 py-1 m-1 rounded">
             {tag}
           </span>
         ))}
