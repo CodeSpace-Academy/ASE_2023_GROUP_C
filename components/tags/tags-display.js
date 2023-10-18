@@ -1,13 +1,12 @@
 import React from "react";
-import styles from './tags-list.module.css';
 
 export default function TagsDisplay(prop) {
-  const { recipe } = prop
+  const { recipe } = prop;
   return (
     <div>
-      <div className={styles.tagsContainer}>
+      <div className="flex flex-wrap gap-2">
         {recipe.tags.map((tag) => (
-          <span key={tag} className={styles.tag}>
+          <span key={tag} className="px-2 py-1 rounded bg-blue-500 text-white">
             {tag}
           </span>
         ))}
