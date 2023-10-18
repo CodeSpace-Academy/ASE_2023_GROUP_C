@@ -5,11 +5,11 @@ export default function TagsDisplay(prop) {
   const { recipe } = prop
   return (
     <div>
-      <div className={styles.tagsContainer}>
+      <div className='flex mb-4 gap-8'>
         {recipe.tags.map((tag) => (
-          <span key={tag} className={styles.tag}>
+          <div key={tag} className=''>
             {tag}
-          </span>
+          </div>
         ))}
       </div>
     </div>

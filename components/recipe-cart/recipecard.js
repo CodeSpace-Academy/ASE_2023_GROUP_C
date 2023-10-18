@@ -46,8 +46,8 @@ export default function RecipeCard(prop) {
       <TagsDisplay recipe={recipe} />
 
       <div className='flex space-x-4 justify-center gap-8'>
-       <p><FontAwesomeIcon icon={faUtensils} size='xl'/> : {convertToHours(recipe.prep)} </p>
-       <p><FontAwesomeIcon icon={faMitten} size='xl'/> : {convertToHours(recipe.cook)} </p>
+       <p><FontAwesomeIcon icon={faUtensils} size='xl'/> Prep: {convertToHours(recipe.prep)} </p>
+       <p><FontAwesomeIcon icon={faMitten} size='xl'/> Cook: {convertToHours(recipe.cook)} </p>
       </div>
       
     {recipe.instructions && recipe.instructions.length > 0 && (
