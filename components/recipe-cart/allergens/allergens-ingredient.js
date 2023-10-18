@@ -21,7 +21,7 @@ export default function Allergens(props) {
       <Allergens recipe={recipe} allergensList={allergensList} />
       <RecipeDescription
         recipe={recipe}
-        ingredientsWithAllergens={ingredientsWithAllergens} // Corrected prop name
+        ingredientsWithAllergens={ingredientsWithAllergens} 
       />
     </div>
   );
