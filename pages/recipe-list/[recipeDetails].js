@@ -6,7 +6,6 @@ import {
 } from "../../utils/mongodb-utils";
 import TagsDisplay from "../../components/tags/tags-display";
 import RecipeCard from "../../components/recipe-cart/recipecard";
-import RecipeDescription from "../../components/recipe-description/recipe-description";
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;

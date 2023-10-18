@@ -1,5 +1,3 @@
-import RecipeDescription from "../../recipe-description/recipe-description";
-
 export default function Allergens(props) {
 
      const { recipe, allergensList } = props;
