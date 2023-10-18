@@ -1,26 +1,21 @@
-export default function Allergens(props) {
 
-     const { recipe, allergensList } = props;
-  const ingredients = recipe.ingredients;
-  const ingredientsWithAllergens = [];
-    for (let key in ingredients) {
-      for (let allergen of allergensList) {
-        if (key.toLowerCase().includes(allergen)) {
-          ingredientsWithAllergens.push(key);
-          
-        }
+export default function Allergens({ recipe, allergensList }) {
+
+  const ingredients = recipe.ingredients
+  const ingredientsWithAllergensInRecipe = [];
+
+  for (let key in ingredients) {
+    for (let allergen of allergensList) {
+      if (key.toLowerCase().includes(allergen)) {
+        ingredientsWithAllergensInRecipe.push(key);
+        
       }
     }
-  
-    console.log(ingredientsWithAllergens)
+  }
 
-    return (
-        <div>
-      <Allergens recipe={recipe} allergensList={allergensList} />
-      <RecipeDescription
-        recipe={recipe}
-        ingredientsWithAllergens={ingredientsWithAllergens} 
-      />
+  return (
+    <div>
+      {ingredientsWithAllergensInRecipe}
     </div>
   );
 }
