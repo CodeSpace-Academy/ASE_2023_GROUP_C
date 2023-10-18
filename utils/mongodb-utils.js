@@ -106,11 +106,11 @@ export async function getCategories(client, collection, filter = {}) {
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
 
-export async function insertDocument(client, collection, document) {
+export async function insertUserRecipeList(client, collection, document) {
     const db = client.db(mongodb);
   
     const result = await db.collection(collection).insertOne(document);
   
     return result;
-  }
+}
   
