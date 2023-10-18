@@ -37,18 +37,26 @@ export default function RecipeCard(prop) {
         className=" place-self-center rounded-lg"
       />
       
-      <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-      <RecipeDescription 
-        recipe={recipe} 
-        onEdit={handleDescriptionEdit}
-        allergensList={allergensList}
-      />
-      <p>Prep Time: {convertToHours(recipe.prep)} </p>
-      <p>Cook Time: {convertToHours(recipe.cook)} </p>
+      
+      
+      
+      
+
+      
+    </div>
+      <h2 
+        className= 'text-3xl font-bold text-center p-5'
+      >
+        {recipe.title}
+        </h2>
+
+      <RecipeDescription recipe={recipe} allergensList ={allergensList}/>
+      
+      <TagsDisplay recipe={recipe} />
 
       {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
         <div className={styles.ingredientsContainer}>
-          <h3>Ingredients:</h3>
+          <h3 className="text-2xl font-semibold pb-2 pt-2 ">Ingredients:</h3>
           <ul>
             {Object.keys(recipe.ingredients).map((ingredientKey, index) => (
               <li key={index}>{ingredientKey} : { 
@@ -57,21 +65,6 @@ export default function RecipeCard(prop) {
           </ul>
         </div>
       )}
-
-      {recipe.instructions && recipe.instructions.length > 0 && (
-        <div>
-          <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit}/>
-        </div>
-      )}
-    </div>
-      <h2 
-        className= 'text-3xl font-bold text-center p-5'
-      >
-        {recipe.title}
-        </h2>
-
-      <RecipeDescription recipe={recipe} />
-      <TagsDisplay recipe={recipe} />
 
       <div className='flex space-x-4 justify-center gap-8'>
        <p><FontAwesomeIcon icon={faUtensils} size='xl'/> Prep: {convertToHours(recipe.prep)} </p>
