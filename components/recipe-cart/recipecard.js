@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import styles from './recipecart.module.css'
-import RecipeDescription from './update-recipe/description';
 import RecipeInstruction from './update-recipe/instructions';
 import RecipeDescription from './update-recipe/description';
-import RecipeInstruction from './update-recipe/instructions';
-import RecipeDescription from '../recipe-description/recipe-description'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHourglass, faMitten, faStopwatch, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import TagsDisplay from '../tags/tags-display';
@@ -96,7 +93,6 @@ export default function RecipeCard(prop) {
         </ol>
       </div>
     )}
-    
         </div>
         </div>
   )

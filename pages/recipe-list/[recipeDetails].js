@@ -51,7 +51,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList}) {
         <h1 className=' text-center font-bold p-5 text-5xl bg-slate-900 text-white'>RecipeDetails</h1>
         </div>
       
-      <RecipeCard recipe={recipeDocuments} />
+      <RecipeCard recipe={recipeDocuments} allergensList = />
     </div>
   );
 }
