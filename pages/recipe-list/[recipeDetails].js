@@ -6,7 +6,7 @@ import {
 } from "../../utils/mongodb-utils";
 import TagsDisplay from "../../components/tags/tags-display";
 import RecipeCard from "../../components/recipe-cart/recipecard";
-import RecipeDescription from "../../components/recipe-description/recipe-description";
+import Allergens from "../../components/recipe-cart/allergens/allergens-ingredient";
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
@@ -32,8 +32,6 @@ export async function getServerSideProps(context) {
 
     const allergensList = allergens[0].allergens
 
-    // console.log(allergensList)
-
     return { props: { recipeDocuments, allergensList } };
   } catch (error) {
     console.error("Getting recipes failed");
@@ -43,26 +41,15 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function RecipeDetails({ recipeDocuments, allergensList }) {
-
-  const ingredients = recipeDocuments.ingredients
-  const ingredientsWithAllergensInRecipe = [];
-
-  for (let key in ingredients) {
-    for (let allergen of allergensList) {
-      if (key.toLowerCase().includes(allergen)) {
-        ingredientsWithAllergensInRecipe.push(key);
-        
-      }
-    }
-  }
-
-  console.log(ingredientsWithAllergensInRecipe)
+export default function RecipeDetails({ recipeDocuments, allergensList}) {
 
   return (
     <div>
       <h1>RecipeDetails</h1>
-      <RecipeCard recipe={recipeDocuments} />
+      <RecipeCard 
+        recipe={recipeDocuments} 
+        allergensList = {allergensList}
+      />
       <TagsDisplay recipe={recipeDocuments} />
     </div>
   );
