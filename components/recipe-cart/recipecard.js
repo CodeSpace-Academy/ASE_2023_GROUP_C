@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './recipecart.module.css'
-import RecipeDescription from './update-recipe/descption';
+import RecipeDescription from './update-recipe/description';
 import RecipeInstruction from './update-recipe/instructions';
 
 
