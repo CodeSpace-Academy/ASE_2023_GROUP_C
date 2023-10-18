@@ -12,10 +12,7 @@ export default function HomePage() {
 
   return (
     <div>
-      {
-        !user &&
-        <h1><Link href="/api/auth/login" legacyBehavior><a>Login</a></Link></h1>
-      }
+
       {
         user && 
         <> 

@@ -12,31 +12,34 @@ export async function getServerSideProps(context) {
   let client;
 
   try {
-      client = await connectToDb()
-  } catch(error) {
-      console.error('Database connection failed')
-      return {
-        notFound: true, 
-    }
+    client = await connectToDb();
+  } catch (error) {
+    console.error("Database connection failed");
+    return {
+      notFound: true,
+    };
   }
-  let recipeDocuments
+  let recipeDocuments;
+  let allergens;
 
   try {
-      recipeDocuments = await getRecipeDetails(
-          client,
-          'recipes',
-          {_id: recipeId},
-      )
-      return { props: { recipeDocuments } }
+    recipeDocuments = await getRecipeDetails(client, "recipes", {
+      _id: recipeId,
+    });
+    allergens = await getAllergens(client, "allergens");
+
+    const allergensList = allergens[0].allergens
+
+    return { props: { recipeDocuments, allergensList } };
   } catch (error) {
-      console.error('Getting recipes failed')
-      return {
-        notFound: true, 
-      }
+    console.error("Getting recipes failed");
+    return {
+      notFound: true,
+    };
   }
 }
 
-export default function RecipeDetails({recipeDocuments}) {
+export default function RecipeDetails({ recipeDocuments, allergensList}) {
 
   return (
     <div>
@@ -50,5 +53,5 @@ export default function RecipeDetails({recipeDocuments}) {
       
       <RecipeCard recipe={recipeDocuments} />
     </div>
-  )
+  );
 }
