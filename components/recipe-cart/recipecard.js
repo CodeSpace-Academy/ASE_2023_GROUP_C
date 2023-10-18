@@ -5,7 +5,7 @@ import RecipeInstruction from './update-recipe/instructions';
 
 
 export default function RecipeCard(prop) {
-    const { recipe } = prop
+    const { recipe, allergensList } = prop
 
     const [isEdited, setIsEdited] = useState(false);
 
@@ -32,13 +32,31 @@ export default function RecipeCard(prop) {
         className={styles.recipeImage}
       />
       <h2 className={styles.recipeTitle}>{recipe.title}</h2>
-      <RecipeDescription recipe={recipe} onEdit={handleDescriptionEdit}/>
+      <RecipeDescription 
+        recipe={recipe} 
+        onEdit={handleDescriptionEdit}
+        allergensList={allergensList}
+      />
       <p>Prep Time: {convertToHours(recipe.prep)} </p>
       <p>Cook Time: {convertToHours(recipe.cook)} </p>
-    {recipe.instructions && recipe.instructions.length > 0 && (
-      <div className={styles.instructionsContainer}>
-        <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit}/>
-      </div>
-    )}</div>
+
+      {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
+        <div className={styles.ingredientsContainer}>
+          <h3>Ingredients:</h3>
+          <ul>
+            {Object.keys(recipe.ingredients).map((ingredientKey, index) => (
+              <li key={index}>{ingredientKey} : { 
+             recipe.ingredients[ingredientKey]}</li>)
+            )}
+          </ul>
+        </div>
+      )}
+
+      {recipe.instructions && recipe.instructions.length > 0 && (
+        <div>
+          <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit}/>
+        </div>
+      )}
+    </div>
   )
 }
