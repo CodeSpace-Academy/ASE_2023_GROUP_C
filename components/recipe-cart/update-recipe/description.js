@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import styles from "./recipe-description.module.css";
-import EditableDescription from "./update-description/update-description";
+import EditRecipeContent from "./editable-text";
+// import styles from "./recipe-description.module.css";
+// import EditableDescription from "./update-description/update-description";
 
 function RecipeDescription(props) {
-  const { recipe } = props;
+  const { recipe, onEdit } = props;
+
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(recipe.description);
 
@@ -12,20 +14,22 @@ function RecipeDescription(props) {
     
     setEditedDescription(newDescription);
     setIsEditing(false);
+
+    onEdit()
   };
 
   return (
     <div>
       <h3>Description</h3>
       {isEditing ? (
-        <EditableDescription
-          initialDescription={editedDescription}
+        <EditRecipeContent
+          initialValue={editedDescription}
           onSave={handleEditDescription}
           onCancel={() => setIsEditing(false)}
         />
       ) : (
         <div>
-          <p className={styles.description}>{editedDescription}</p>
+          <p >{editedDescription}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </div>
       )}
