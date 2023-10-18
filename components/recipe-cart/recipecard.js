@@ -39,8 +39,21 @@ export default function RecipeCard(prop) {
       />
       <p>Prep Time: {convertToHours(recipe.prep)} </p>
       <p>Cook Time: {convertToHours(recipe.cook)} </p>
+
+      {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
+        <div className={styles.ingredientsContainer}>
+          <h3>Ingredients:</h3>
+          <ul>
+            {Object.keys(recipe.ingredients).map((ingredientKey, index) => (
+              <li key={index}>{ingredientKey} : { 
+             recipe.ingredients[ingredientKey]}</li>)
+            )}
+          </ul>
+        </div>
+      )}
+
       {recipe.instructions && recipe.instructions.length > 0 && (
-        <div className={styles.instructionsContainer}>
+        <div>
           <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit}/>
         </div>
       )}

@@ -7,6 +7,7 @@ export default function Allergens({ recipe, allergensList }) {
   for (let key in ingredients) {
     for (let allergen of allergensList) {
       if (key.toLowerCase().includes(allergen)) {
+        const allergenWords = key.split(' ').join(' ');
         ingredientsWithAllergensInRecipe.push(key);
         
       }
@@ -15,7 +16,7 @@ export default function Allergens({ recipe, allergensList }) {
 
   return (
     <div>
-      {ingredientsWithAllergensInRecipe}
+       {ingredientsWithAllergensInRecipe.join(', ')}
     </div>
   );
 }
