@@ -97,3 +97,20 @@ export async function getCategories(client, collection, filter = {}) {
 
     return documents;
 }
+
+/**
+ * Inserts a document into a MongoDB collection.
+ * @param {MongoClient} client - The MongoDB client.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {object} document - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+
+export async function insertDocument(client, collection, document) {
+    const db = client.db(mongodb);
+  
+    const result = await db.collection(collection).insertOne(document);
+  
+    return result;
+  }
+  
