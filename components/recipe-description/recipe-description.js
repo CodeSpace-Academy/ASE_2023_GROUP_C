@@ -23,17 +23,6 @@ function RecipeDescription(props) {
       >Description
       </h3>
       {isEditing ? (
-        <div className=" flex flex-col">
-          <textarea
-            value={editedDescription}
-            onChange={(e) => setEditedDescription(e.target.value)}
-            className='resize-none w-60 rounded-lg border-gray-300 place-self-center text-black'
-          />
-          <div>
-          <button onClick={() => handleEditDescription(editedDescription)}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
-          </div>
-        </div>
         <EditableDescription
           initialDescription={editedDescription}
           onSave={handleEditDescription}
