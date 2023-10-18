@@ -8,8 +8,9 @@ function RecipeDescription(props) {
   const [editedDescription, setEditedDescription] = useState(recipe.description);
 
   const handleEditDescription = (newDescription) => {
-
-    setEditedDescription(newDescription); 
+    console.log("New Description:", newDescription);
+    
+    setEditedDescription(newDescription);
     setIsEditing(false);
   };
 
@@ -17,15 +18,11 @@ function RecipeDescription(props) {
     <div>
       <h3>Description</h3>
       {isEditing ? (
-        <div>
-          <textarea
-            value={editedDescription}
-            onChange={(e) => setEditedDescription(e.target.value)}
-            className={styles.description}
-          />
-          <button onClick={() => handleEditDescription(editedDescription)}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
-        </div>
+        <EditableDescription
+          initialDescription={editedDescription}
+          onSave={handleEditDescription}
+          onCancel={() => setIsEditing(false)}
+        />
       ) : (
         <div>
           <p className={styles.description}>{editedDescription}</p>

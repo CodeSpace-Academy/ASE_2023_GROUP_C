@@ -5,9 +5,10 @@ export default function LoadMoreButton({ onClick, remainingRecipes }) {
     <div className="my-4">
       <button
         onClick={onClick}
-        className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded cursor-pointer"
+        className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded cursor-pointer"
+        style={{ fontSize: "15px" }}
       >
-        Load More Recipes ({remainingRecipes} left)
+        More Recipes ({remainingRecipes} left)
       </button>
     </div>
   );
