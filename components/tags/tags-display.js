@@ -5,11 +5,11 @@ export default function TagsDisplay(prop) {
 
   return (
     <div>
-      <div className="max-w-full p-4">
+      <div className='flex mb-4 gap-8'>
         {recipe.tags.map((tag) => (
-          <span key={tag} className="bg-blue-500 text-white px-2 py-1 m-1 rounded">
+          <div key={tag} className=''>
             {tag}
-          </span>
+          </div>
         ))}
       </div>
     </div>

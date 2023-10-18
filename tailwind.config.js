@@ -3,6 +3,8 @@ module.exports = {
   content: [
    
     './components/recipe-list.js', 
+    './components/layout/layout.js',
+    './components/recipe-cart/recipecard.js'
    
   ],
   theme: {
