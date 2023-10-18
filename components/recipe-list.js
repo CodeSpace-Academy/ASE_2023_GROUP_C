@@ -4,6 +4,8 @@ import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStopwatch, faKitchenSet, faTags, faHourglass } from '@fortawesome/free-solid-svg-icons';
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes } = props;
@@ -98,10 +100,10 @@ export default function RecipeList(props) {
                     className="w-full h-48 object-cover"
                   />
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
-                  <p>Prep Time: {convertToHours(recipe.prep)} </p>
-                  <p>Cook Time: {convertToHours(recipe.cook)} </p>
-                  <p>Total Time: {convertToHours(recipe.prep + recipe.cook)} </p>
-                  <TagsDisplay recipe={recipe} />
+                  <p><FontAwesomeIcon icon={faStopwatch}/>: {convertToHours(recipe.prep)} </p>
+                  <p><FontAwesomeIcon icon={faKitchenSet} />: {convertToHours(recipe.cook)} </p>
+                  <p><FontAwesomeIcon icon={faHourglass} />: {convertToHours(recipe.prep + recipe.cook)} </p>
+                  <span><FontAwesomeIcon icon={faTags} /><TagsDisplay recipe={recipe} /></span> 
                 </div>
               </Link>
             </li>
