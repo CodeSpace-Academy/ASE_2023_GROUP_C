@@ -11,7 +11,7 @@ function Pagination(props) {
 
     const handlePageClick = (page) => {
         if (page === firstPage) {
-        setCenterPage(1);
+            setCenterPage(1);
         } else if (page === 'prev') {
         if (centerPage > 1) {
             setCenterPage(centerPage - 1);
@@ -21,9 +21,9 @@ function Pagination(props) {
             setCenterPage(centerPage + 1);
         }
         } else if (page === totalPages) {
-        setCenterPage(totalPages);
+            setCenterPage(totalPages);
         } else {
-        setCenterPage(parseInt(page, 10));
+            setCenterPage(parseInt(page, 10));
         }
     };
 
