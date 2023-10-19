@@ -97,3 +97,36 @@ export async function getCategories(client, collection, filter = {}) {
 
     return documents;
 }
+
+
+
+
+/**
+ * Retrieves a paginated list of user descriptions from the "UsersDescription" collection.
+ * @param {MongoClient} client - The MongoDB client.
+ * @param {Object} sort - The sorting criteria for the user descriptions.
+ * @param {number} pageNumber - The page number to retrieve (1-based).
+ * @param {Object} filter - The filter criteria for the user descriptions.
+ * @returns {Promise<Array>} A Promise that resolves to an array of user description documents.
+ */
+export async function getUsersDescription(client, sort, pageNumber, filter = {}) {
+    const pageSize = 100;
+    const skipPage = (pageNumber - 1) * pageSize;
+
+    const db = client.db(mongodb);
+
+    const documents = await db
+        .collection("UsersDescription")
+        .find(filter)
+        .sort(sort)
+        .skip(skipPage)
+        .limit(pageSize)
+        .toArray();
+
+    return documents;
+}
+
+
+
+//function 
+//insect  (collec store)
