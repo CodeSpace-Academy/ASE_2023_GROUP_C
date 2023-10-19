@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import styles from './Pagination.module.css';
+import styles from './pagination.module.css';
 
 function Pagination(props) {
     const { totalRecipeInDb } = props;
