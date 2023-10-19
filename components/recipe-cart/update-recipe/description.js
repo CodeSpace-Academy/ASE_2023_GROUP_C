@@ -35,8 +35,6 @@ function RecipeDescription(props) {
         <div>
           <p >{editedDescription}</p>
           <button onClick={() => setIsEditing(true)}>Edit Description</button>
-          <p className="mb-4 font-semibold text-2">{editedDescription}</p>
-          <button  className= 'mb-4'onClick={() => setIsEditing(true)}>Edit</button>
 
         </div>
       )}

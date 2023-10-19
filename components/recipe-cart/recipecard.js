@@ -45,7 +45,7 @@ export default function RecipeCard(prop) {
         {recipe.title}
         </h2>
 
-      <RecipeDescription recipe={recipe} allergensList ={allergensList}/>
+        <RecipeDescription recipe={recipe} allergensList={allergensList} onEdit={handleDescriptionEdit} />
 
       <TagsDisplay recipe={recipe} />
 
@@ -73,12 +73,8 @@ export default function RecipeCard(prop) {
         className="text-2xl font-semibold pb-2 pt-2 "
         >
           Instructions
-          </h3>
-        <ol >
-          {recipe.instructions.map((instruction, index) => (
-            <li key={index} className='pb-2'>{index + 1}. {instruction}</li>
-          ))}
-        </ol>
+            </h3>
+            <RecipeInstruction recipe={recipe}  onEdit={handleDescriptionEdit} />
       </div>
     )}
         </div>

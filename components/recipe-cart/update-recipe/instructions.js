@@ -22,7 +22,6 @@ function RecipeInstruction(props) {
 
   return (
     <div>
-      <h3>Instruction</h3>
       {isEditing ? (
         <EditRecipeContent
           initialValue={editedInstruction.join('\n')} // Join the array with line breaks
