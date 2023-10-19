@@ -5,10 +5,11 @@ import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
 import { faStopwatch, faKitchenSet, faTags, faHourglass, faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Pagination from "./pagination";
 
 
 export default function RecipeList(props) {
-  const { recipes: initialRecipes } = props;
+  const { recipes: initialRecipes, totalRecipeInDb } = props;
 
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(20);
@@ -96,7 +97,7 @@ export default function RecipeList(props) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-<Link href={`/recipe-list/${recipe._id}`}>
+<Link href={`/recipe-details/${recipe._id}`}>
   <div className="bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col w-200
   ">
     <img
@@ -125,6 +126,7 @@ export default function RecipeList(props) {
           />
         )}
       </div>
+      <Pagination totalRecipeInDb={totalRecipeInDb}/>
     </div>
   );
 }
