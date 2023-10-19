@@ -1,38 +1,5 @@
 import RecipeList from "../../components/recipe-list";
-import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
-
-// export async function getStaticProps() {
-//     const pageNumber = context.params.recipeList
-
-//     let client = await connectToDb();
-//     const recipeDocuments = await getAllRecipes(
-//         client,
-//         "recipes",
-//         { _id: -1 },
-//         pageNumber
-//     );
-
-//     return {
-//         props: {
-//         recipes: recipeDocuments,
-//         },
-//     };
-// }
-
-// export async function getStaticPaths() {
-//     const pageNumber = context.query.recipeList
-
-//     return {
-//         paths: [
-//             {
-//             params: {
-//                 name: [pageNumber],
-//             },
-//             }, 
-//         ],
-//         fallback: 'blocking',
-//     }
-// }
+import { connectToDb, getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
 
 export async function getServerSideProps(context) {
     const pageNumber = context.query.recipeList;
@@ -44,20 +11,25 @@ export async function getServerSideProps(context) {
         { _id: -1 },
         pageNumber
     );
+    const totalRecipeInDb = await getDocumentSize(
+      client,
+      'recipes'
+    )
 
     return {
         props: {
         recipes: recipeDocuments,
+        totalRecipeInDb: totalRecipeInDb,
         },
     };
 }
 
 export default function RecipeCards(props) {
-  const { recipes } = props;
+  const { recipes, totalRecipeInDb } = props;
 
   return (
     <div>
-      <RecipeList recipes={recipes} />
+      <RecipeList recipes={recipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
 }
