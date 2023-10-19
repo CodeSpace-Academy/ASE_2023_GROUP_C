@@ -120,5 +120,5 @@ export async function insertDocument(client, collection, document) {
   
     return result;
   }
-}
+
   
