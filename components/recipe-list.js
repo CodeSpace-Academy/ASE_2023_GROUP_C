@@ -97,9 +97,9 @@ export default function RecipeList(props) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-<Link href={`/recipe-list/${recipe._id}`}>
-  <div className="bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200
-  ">
+<Link href={`/recipe-details/${recipe._id}`}>
+
+  <div className="bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
     <img
       src={recipe.images[0]}
       alt={recipe.title}
