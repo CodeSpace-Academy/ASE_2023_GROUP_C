@@ -1,6 +1,5 @@
 import React from 'react'
 import { connectToDb, getRecipeDetails,getAllergens } from '../../utils/mongodb-utils';
-import TagsDisplay from '../../components/tags/tags-display';
 import RecipeCard from '../../components/recipe-cart/recipecard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';

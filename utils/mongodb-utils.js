@@ -15,6 +15,12 @@ export async function connectToDb() {
     return client;
 }
 
+export async function getDocumentSize(client, collection) {
+    const db = client.db(mongodb)
+    const count = db.collection(collection).countDocuments()
+    return count
+}
+
 /**
  * Retrieves a paginated list of recipes from a MongoDB collection.
  * @param {MongoClient} client - The MongoDB client.
@@ -114,4 +120,5 @@ export async function insertDocument(client, collection, document) {
   
     return result;
   }
+}
   

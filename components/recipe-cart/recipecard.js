@@ -3,8 +3,10 @@ import styles from './recipecart.module.css'
 import RecipeInstruction from './update-recipe/instructions';
 import RecipeDescription from './update-recipe/description';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHourglass, faMitten, faStopwatch, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faMitten, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import TagsDisplay from '../tags/tags-display';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 
 export default function RecipeCard(prop) {
@@ -32,11 +34,19 @@ export default function RecipeCard(prop) {
       {isEdited && <p>Recipe was edited</p>}
     <div className='p-4 flex flex-col bg-slate-900 text-red-100 justify-center'>
     <div className='p-4 flex flex-col bg-slate-900 text-red-100 '>
-      <img
-        src={recipe.images[0]}
-        alt={recipe.title}
-        className=" place-self-center rounded-lg"
-      />
+      <Carousel 
+        showArrows={true}
+        >
+          {recipe.images.map((image) =>(
+              <div className=' max-h-96'>
+                <img
+                  src={image}
+                  alt={recipe.title}
+                  className=""
+                  />
+              </div>
+          ))}
+        </Carousel>
       
     </div>
       <h2 
