@@ -1,15 +1,16 @@
-import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTags } from "@fortawesome/free-solid-svg-icons";
 
 export default function TagsDisplay(prop) {
   const { recipe } = prop;
 
   return (
     <div>
-      <div className="max-w-full p-4">
+      <div className='flex flex-wrap mb-4 gap-8 mt-2 '>
         {recipe.tags.map((tag) => (
-          <span key={tag} className="bg-blue-500 text-white px-2 py-1 m-1 rounded">
-            {tag}
-          </span>
+          <div key={tag} className='border rounded-lg border-sky-500 p-2 hover:bg-sky-700'>
+            <FontAwesomeIcon icon={faTags}/>{tag}
+          </div>
         ))}
       </div>
     </div>

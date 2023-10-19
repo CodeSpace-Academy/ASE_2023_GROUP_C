@@ -3,12 +3,13 @@ import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
+import { faUtensils, faKitchenSet, faHome, faSpoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import Pagination from "./pagination";
 
 
 export default function RecipeList(props) {
-  const { recipes: initialRecipes } = props;
+  const { recipes: initialRecipes, totalRecipeInDb } = props;
 
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(20);
@@ -96,19 +97,19 @@ export default function RecipeList(props) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-<Link href={`/recipe-list/${recipe._id}`}>
-  <div className="bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col w-200
-  ">
+<Link href={`/recipe-details/${recipe._id}`}>
+
+  <div className="bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
     <img
       src={recipe.images[0]}
       alt={recipe.title}
       className="w-full h-48 object-cover"
     />
     <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
-    <p className="mt-2">Prep Time: {convertToHours(recipe.prep)} </p>
-    <p>Cook Time: {convertToHours(recipe.cook)} </p>
-    <p>Total Time: {convertToHours(recipe.prep + recipe.cook)} </p>
-    <TagsDisplay recipe={recipe} />
+    <p className="mt-2"><FontAwesomeIcon icon= {faUtensils} /> Prep: {convertToHours(recipe.prep)} </p>
+    <p><FontAwesomeIcon icon={faKitchenSet} /> Cook: {convertToHours(recipe.cook)} </p>
+    <p><FontAwesomeIcon icon= {faSpoon} /> Total: {convertToHours(recipe.prep + recipe.cook)} </p>
+    {/* <TagsDisplay recipe={recipe} /> */}
   </div>
 </Link>
 
@@ -125,6 +126,7 @@ export default function RecipeList(props) {
           />
         )}
       </div>
+      <Pagination totalRecipeInDb={totalRecipeInDb}/>
     </div>
   );
 }
