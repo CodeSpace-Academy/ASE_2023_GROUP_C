@@ -25,6 +25,7 @@ export default function RecipeCard(prop) {
       }
       return `${minutes} minutes`;
     };
+    
 
   return (
     <div>
@@ -37,12 +38,6 @@ export default function RecipeCard(prop) {
         className=" place-self-center rounded-lg"
       />
       
-      
-      
-      
-      
-
-      
     </div>
       <h2 
         className= 'text-3xl font-bold text-center p-5'
@@ -51,7 +46,7 @@ export default function RecipeCard(prop) {
         </h2>
 
       <RecipeDescription recipe={recipe} allergensList ={allergensList}/>
-      
+
       <TagsDisplay recipe={recipe} />
 
       {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
