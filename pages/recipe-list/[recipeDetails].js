@@ -44,7 +44,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList}) {
   return (
     <div>
       <div className='flex font-bold p-5 text-5xl bg-slate-900 text-white items-center'>
-        <Link href={'./recipe-list'}>
+        <Link href='/recipe-list'>
          <FontAwesomeIcon icon={faChevronLeft} size='xl'/>
         </Link>
         
