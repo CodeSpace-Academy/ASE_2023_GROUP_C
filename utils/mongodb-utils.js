@@ -99,34 +99,19 @@ export async function getCategories(client, collection, filter = {}) {
 }
 
 
-
-
 /**
- * Retrieves a paginated list of user descriptions from the "UsersDescription" collection.
+ * Inserts a document into a MongoDB collection.
  * @param {MongoClient} client - The MongoDB client.
- * @param {Object} sort - The sorting criteria for the user descriptions.
- * @param {number} pageNumber - The page number to retrieve (1-based).
- * @param {Object} filter - The filter criteria for the user descriptions.
- * @returns {Promise<Array>} A Promise that resolves to an array of user description documents.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {object} document - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
-export async function getUsersDescription(client, sort, pageNumber, filter = {}) {
-    const pageSize = 100;
-    const skipPage = (pageNumber - 1) * pageSize;
 
+export async function insertDocument(client, collection, document) {
     const db = client.db(mongodb);
-
-    const documents = await db
-        .collection("UsersDescription")
-        .find(filter)
-        .sort(sort)
-        .skip(skipPage)
-        .limit(pageSize)
-        .toArray();
-
-    return documents;
-}
-
-
-
-//function 
-//insect  (collec store)
+  
+    const result = await db.collection(collection).insertOne(document);
+  
+    return result;
+  }
+  
