@@ -2,7 +2,8 @@ const fs = require('fs');
 
 const envFilePath = '.env.local';
 if (fs.existsSync(envFilePath)) {
+     //console.log('.env.local file is found!'); 
 } else {
-  console.error('Error: .env.local file not found!'); 
+  console.error('Error: .env.local file not found!'); yyy
   process.exit(1); 
 }
