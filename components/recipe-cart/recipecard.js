@@ -7,6 +7,7 @@ import { faMitten, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import TagsDisplay from '../tags/tags-display';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import Card from '../ui-utils/card';
 
 
 export default function RecipeCard(prop) {
@@ -49,6 +50,7 @@ export default function RecipeCard(prop) {
         </Carousel>
       
     </div>
+    <Card>
       <h2 
         className= 'text-3xl font-bold text-center p-5'
       >
@@ -56,7 +58,8 @@ export default function RecipeCard(prop) {
         </h2>
 
       <RecipeDescription recipe={recipe} allergensList ={allergensList}/>
-
+      </Card>
+      
       <TagsDisplay recipe={recipe} />
 
       {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
