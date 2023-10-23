@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
-import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
-import { faUtensils, faKitchenSet, faHome, faSpoon, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faKitchenSet, faHome, faSpoon, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from "./pagination";
 
 
 export default function RecipeList(props) {
   const { recipes: initialRecipes, totalRecipeInDb } = props;
-  const [ isFavourate, setIsFavourate ] = useState(true)
+  const [ isFavourate, setIsFavourate ] = useState(false)
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(20);
   const [remainingRecipes, setRemainingRecipes] = useState(
@@ -108,7 +107,7 @@ export default function RecipeList(props) {
       className="w-full h-48 object-cover rounded-md"
     />
     <button className=" absolute right-4 m-3 rounded-full w-14 text-center">
-    {isFavourate ? <FontAwesomeIcon icon={faStar}/> :<FontAwesomeIcon icon={faStar}/>}
+    {isFavourate ? <FontAwesomeIcon icon={faHeart}/> :<FontAwesomeIcon icon={faHeart}/>}
     </button>
 
     <div className=" flex justify-between ">
