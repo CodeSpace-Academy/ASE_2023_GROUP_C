@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import styles from './recipecart.module.css'
+import React, { useState } from 'react';
 import RecipeInstruction from './update-recipe/instructions';
 import RecipeDescription from './update-recipe/description';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,29 +8,27 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Card from '../ui-utils/card';
 
-
 export default function RecipeCard(prop) {
-    const { recipe, allergensList } = prop
+  const { recipe, allergensList } = prop;
 
-    const [isEdited, setIsEdited] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
-    const handleDescriptionEdit = () => {
-      setIsEdited(true);
-    };
-  
+  const handleDescriptionEdit = () => {
+    setIsEdited(true);
+  };
 
-    const convertToHours = (minutes) => {
-      if (minutes >= 60) {
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-        return `${hours} hours ${remainingMinutes} minutes`;
-      }
-      return `${minutes} minutes`;
-    };
-    
+  const convertToHours = (minutes) => {
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+      return `${hours} hours ${remainingMinutes} minutes`;
+    }
+    return `${minutes} minutes`;
+  };
 
   return (
     <div>
+
       {/* {isEdited && <p>Recipe was edited</p>} */}
     <div className='p-4 flex flex-col  gap-3 bg-slate-900 text-red-100 justify-center'>
     <div className='p-4 flex flex-col md:flex-row md:gap-10 bg-slate-900 text-red-100 '>
@@ -83,13 +80,14 @@ export default function RecipeCard(prop) {
       <Card>
     {recipe.instructions && recipe.instructions.length > 0 && (
       <div className=''>
+
   
-        <h3
-        className="text-2xl font-semibold pb-2 pt-2 "
-        >
-          Instructions
-            </h3>
-            <RecipeInstruction recipe={recipe}  onEdit={handleDescriptionEdit} />
+        {recipe.instructions && recipe.instructions.length > 0 && (
+          <div className="">
+            <h3 className="text-2xl font-semibold pb-2 pt-2">Instructions</h3>
+            <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit} />
+          </div>
+        )}
       </div>
     )}
     </Card>
@@ -98,3 +96,4 @@ export default function RecipeCard(prop) {
         </div>
   )
 }
+

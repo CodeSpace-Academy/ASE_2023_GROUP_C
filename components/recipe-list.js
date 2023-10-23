@@ -6,10 +6,13 @@ import { faUtensils, faKitchenSet, faHome, faSpoon, faHeart } from '@fortawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from "./pagination";
 
-
 export default function RecipeList(props) {
+  // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
   const [ isFavourate, setIsFavourate ] = useState(false)
+
+
+  // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(20);
   const [remainingRecipes, setRemainingRecipes] = useState(
@@ -18,11 +21,13 @@ export default function RecipeList(props) {
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
 
+  // Handle initial recipes and no results
   useEffect(() => {
     setRecipes(initialRecipes);
     updateNoResults(initialRecipes, searchInput);
   }, [initialRecipes]);
 
+  // Handle search and filtering recipes
   useEffect(() => {
     const filteredRecipes = initialRecipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchInput.toLowerCase())
@@ -34,10 +39,12 @@ export default function RecipeList(props) {
     updateNoResults(filteredRecipes, searchInput);
   }, [searchInput, visibleRecipes]);
 
+  // Function to update 'noResults' state
   const updateNoResults = (filteredRecipes, input) => {
     setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
   };
 
+  // Function to load more recipes
   const loadMore = () => {
     const additionalRecipes = 20;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
@@ -47,6 +54,7 @@ export default function RecipeList(props) {
     );
   };
 
+  // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
@@ -56,9 +64,8 @@ export default function RecipeList(props) {
     return `${minutes} minutes`;
   };
 
+  // Handle search when the user clicks the "Search" button
   const handleSearch = () => {
-    // Handle the search when the user clicks the "Search" button.
-    // You can add your search logic here.
     const filteredRecipes = initialRecipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchInput.toLowerCase())
     );
@@ -71,11 +78,9 @@ export default function RecipeList(props) {
 
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
-<Link href="/">
-  <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
-</Link>
-
-
+      <Link href="/">
+        <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
+      </Link>
       <div className="search-bar-container flex items-center mb-4">
         <input
           type="text"
@@ -97,10 +102,8 @@ export default function RecipeList(props) {
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
 
-
   <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
 
-   
     <img
       src={recipe.images[0]}
       alt={recipe.title}
@@ -125,7 +128,6 @@ export default function RecipeList(props) {
     
   </div>
 
-
             </li>
           ))}
         </ul>
@@ -139,7 +141,7 @@ export default function RecipeList(props) {
           />
         )}
       </div>
-      <Pagination totalRecipeInDb={totalRecipeInDb}/>
+      <Pagination totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
 }
