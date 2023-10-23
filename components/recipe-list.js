@@ -3,7 +3,7 @@ import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
-import { faUtensils, faKitchenSet, faHome, faSpoon } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faKitchenSet, faHome, faSpoon, faSort } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from "./pagination";
 
@@ -79,7 +79,9 @@ export default function RecipeList(props) {
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
       <Link href="/">
         <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
+        <FontAwesomeIcon icon={faSort} size="lg" className="p-2" />
       </Link>
+    
       <div className="search-bar-container flex items-center mb-4">
         <input
           type="text"
