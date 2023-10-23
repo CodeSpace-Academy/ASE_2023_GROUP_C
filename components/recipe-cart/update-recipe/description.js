@@ -34,12 +34,12 @@ function RecipeDescription(props) {
       ) : (
         <div>
           <p >{editedDescription}</p>
-          <button onClick={() => setIsEditing(true)}>Edit Description</button>
+          <button className=" mt-5 mb-8" onClick={() => setIsEditing(true)}>Edit Description</button>
 
         </div>
       )}
-      <div>
-        <h3 className="mb-4 mt-2 font-semibold text-2xl">Allergens:</h3>
+      <div className=" mb-2 ">
+        <h3 className=" mt-2 font-semibold text-2xl">Allergens:</h3>
         <Allergens 
           recipe = {recipe}
           allergensList = {allergensList}

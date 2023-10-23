@@ -2,9 +2,10 @@
 module.exports = {
   content: [
    
-    './components/recipe-list.js', 
-    './components/layout/layout.js',
-    './components/recipe-cart/recipecard.js'
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    './app/**/*.{js,ts,jsx,tsx,mdx}'
+
    
   ],
   theme: {
