@@ -36,8 +36,8 @@ export default function RecipeCard(prop) {
         className=' md:max-w-2xl md:border-r-2 md:border-gray-400 md:pr-5'
         showArrows={true}
         >
-          {recipe.images.map((image) =>(
-              <div className=' max-h-80'>
+          {recipe.images.map((image, index) =>(
+              <div key = {index} className=' max-h-80'>
                 <img
                   src={image}
                   alt={recipe.title}
@@ -65,7 +65,7 @@ export default function RecipeCard(prop) {
 
       <Card>
       {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
-        <div className={styles.ingredientsContainer}>
+        <div>
           <h3 className="text-2xl font-semibold pb-2 pt-2 ">Ingredients:</h3>
           <ul>
             {Object.keys(recipe.ingredients).map((ingredientKey, index) => (
