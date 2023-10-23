@@ -32,14 +32,15 @@ export default function RecipeCard(prop) {
 
   return (
     <div>
-      {isEdited && <p>Recipe was edited</p>}
-    <div className='p-4 flex flex-col bg-slate-900 text-red-100 justify-center'>
-    <div className='p-4 flex flex-col bg-slate-900 text-red-100 '>
+      {/* {isEdited && <p>Recipe was edited</p>} */}
+    <div className='p-4 flex flex-col  gap-3 bg-slate-900 text-red-100 justify-center'>
+    <div className='p-4 flex flex-col md:flex-row md:gap-10 bg-slate-900 text-red-100 '>
       <Carousel 
+        className=' md:max-w-2xl md:border-r-2 md:border-gray-400 md:pr-5'
         showArrows={true}
         >
           {recipe.images.map((image) =>(
-              <div className=' max-h-96'>
+              <div className=' max-h-80'>
                 <img
                   src={image}
                   alt={recipe.title}
@@ -48,36 +49,38 @@ export default function RecipeCard(prop) {
               </div>
           ))}
         </Carousel>
-      
-    </div>
-    <Card>
+
+        <Card className=" md:w-96">
       <h2 
-        className= 'text-3xl font-bold text-center p-5'
+        className= 'text-3xl font-bold '
       >
         {recipe.title}
         </h2>
-
+        <div className='flex mt-4 space-x-4 justify-center gap-8 mb-2'>
+       <p><FontAwesomeIcon icon={faUtensils} size='xl'/> Prep: {convertToHours(recipe.prep)} </p>
+       <p><FontAwesomeIcon icon={faMitten} size='xl'/> Cook: {convertToHours(recipe.cook)} </p>
+      </div>
+        <TagsDisplay recipe={recipe} />
         <RecipeDescription recipe={recipe} allergensList={allergensList} onEdit={handleDescriptionEdit} />
+            </Card>
+      
+    </div>
 
-      <TagsDisplay recipe={recipe} />
-
+      <Card>
       {recipe.ingredients && Object.keys(recipe.ingredients).length > 0 && (
         <div className={styles.ingredientsContainer}>
           <h3 className="text-2xl font-semibold pb-2 pt-2 ">Ingredients:</h3>
           <ul>
             {Object.keys(recipe.ingredients).map((ingredientKey, index) => (
-              <li key={index}>{ingredientKey} : { 
-             recipe.ingredients[ingredientKey]}</li>)
+              <li key={index}> { 
+                recipe.ingredients[ingredientKey]} of {ingredientKey} </li>)
             )}
           </ul>
         </div>
       )}
+      </Card>
 
-      <div className='flex space-x-4 justify-center gap-8'>
-       <p><FontAwesomeIcon icon={faUtensils} size='xl'/> Prep: {convertToHours(recipe.prep)} </p>
-       <p><FontAwesomeIcon icon={faMitten} size='xl'/> Cook: {convertToHours(recipe.cook)} </p>
-      </div>
-      
+      <Card>
     {recipe.instructions && recipe.instructions.length > 0 && (
       <div className=''>
   
@@ -89,7 +92,9 @@ export default function RecipeCard(prop) {
             <RecipeInstruction recipe={recipe}  onEdit={handleDescriptionEdit} />
       </div>
     )}
+    </Card>
         </div>
+        
         </div>
   )
 }
