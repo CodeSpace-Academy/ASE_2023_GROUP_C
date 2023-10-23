@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
 import Link from "next/link";
-import { faUtensils, faKitchenSet, faHome, faSpoon, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faKitchenSet, faHome, faSpoon, faHeart, faSort } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from "./pagination";
 
