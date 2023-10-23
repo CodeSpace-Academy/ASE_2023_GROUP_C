@@ -119,6 +119,24 @@ export async function insertUserRecipeList(client, collection, document) {
     const result = await db.collection(collection).insertOne(document);
   
     return result;
-  }
+}
 
-  
+/**
+ * Retrieve a fovourite recipe into a MongoDB collection.
+ * @param {MongoClient} client - The MongoDB client.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {object} document - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+
+export async function getFavouriteRecipes(client, collection, sort, filter = {}) {    
+    const db = client.db(mongodb);
+
+    const documents = await db
+        .collection(collection)
+        .find(filter)
+        .sort(sort)
+        .toArray();
+
+    return documents;
+}
