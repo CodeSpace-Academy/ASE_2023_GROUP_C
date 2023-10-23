@@ -13,13 +13,14 @@ function RecipeHomePage() {
           }
         `}
       </style>
-      <div className="w-1/2">
+      <div className="w-1/2 rounded-2xl">
         {/* Left column for image */}
         <Image
           src="/images/sr-cook-book.png"
           alt="Rendo Sando Cook Book Image"
           width={620}
           height={100}
+          className=' rounded-3xl '
         />
       </div>
       <div className="w-1/2 p-4">

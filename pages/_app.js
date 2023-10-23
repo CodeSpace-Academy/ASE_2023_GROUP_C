@@ -6,7 +6,7 @@ import {UserProvider} from '@auth0/nextjs-auth0/client'
 function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
-      <div className='bg-white'>
+      <div className=' bg-slate-900 '>
         <Layout />
         <Component { ...pageProps} />  
       </div>

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
-import TagsDisplay from "./tags/tags-display";
 import Link from "next/link";
-import { faUtensils, faKitchenSet, faHome, faSpoon, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faKitchenSet, faHome, faSpoon, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from "./pagination";
 
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
+  const [ isFavourate, setIsFavourate ] = useState(false)
+
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -102,20 +103,33 @@ export default function RecipeList(props) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-              <Link href={`/recipe-details/${recipe._id}`}>
-                <div className="bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
-                  <img
-                    src={recipe.images[0]}
-                    alt={recipe.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
-                  <p className="mt-2"><FontAwesomeIcon icon={faUtensils} /> Prep: {convertToHours(recipe.prep)}</p>
-                  <p><FontAwesomeIcon icon={faKitchenSet} /> Cook: {convertToHours(recipe.cook)}</p>
-                  <p><FontAwesomeIcon icon={faSpoon} /> Total: {convertToHours(recipe.prep + recipe.cook)}</p>
-                  {/* <TagsDisplay recipe={recipe} /> */}
-                </div>
-              </Link>
+
+  <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
+
+    <img
+      src={recipe.images[0]}
+      alt={recipe.title}
+      className="w-full h-48 object-cover rounded-md"
+    />
+    <button className=" absolute right-4 m-3 rounded-full w-14 text-center">
+    {isFavourate ? <FontAwesomeIcon icon={faHeart}/> :<FontAwesomeIcon icon={faHeart}/>}
+    </button>
+
+    <div className=" flex justify-between ">
+    <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
+    </div>
+    <p className="mt-2"><FontAwesomeIcon icon= {faUtensils} /> Prep: {convertToHours(recipe.prep)} </p>
+    <p><FontAwesomeIcon icon={faKitchenSet} /> Cook: {convertToHours(recipe.cook)} </p>
+    <p><FontAwesomeIcon icon= {faSpoon} /> Total: {convertToHours(recipe.prep + recipe.cook)} </p>
+
+    <Link href={`/recipe-details/${recipe._id}`} className=" mt-4">
+    <button>
+      View Recipe
+    </button>
+    </Link>
+    
+  </div>
+
             </li>
           ))}
         </ul>
