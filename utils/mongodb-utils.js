@@ -104,6 +104,7 @@ export async function getCategories(client, collection, filter = {}) {
     return documents;
 }
 
+
 /**
  * Inserts a document into a MongoDB collection.
  * @param {MongoClient} client - The MongoDB client.
@@ -118,5 +119,6 @@ export async function insertUserRecipeList(client, collection, document) {
     const result = await db.collection(collection).insertOne(document);
   
     return result;
-}
+  }
+
   
