@@ -7,11 +7,11 @@ export default function SortingOption ({ handleSort })  {
       </button>
       <button  onClick={() => handleSort("ascending")}>
         {/* Sort by Prep Time (Ascending) */}
-        Cook Time
+        Ascending
       </button>
       <button  onClick={() => handleSort("descending")}>
         {/* Sort by Prep Time (Descending) */}
-        Prep Time
+        Descending
       </button>
       <button  onClick={() => handleSort("byDate")}>
         {/* sort by newest */}
