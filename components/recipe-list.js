@@ -9,6 +9,7 @@ import {
   faSpoon,
   faHeart,
   faSort,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "./pagination";
@@ -27,8 +28,9 @@ export default function RecipeList(props) {
   );
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
+  const [matchingRecipeCount, setMatchingRecipeCount] = useState(0); // Added state for matching recipe count
 
-  // state for sorting and dropdown visibility
+  // State for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -49,8 +51,12 @@ export default function RecipeList(props) {
     setRemainingRecipes(
       Math.max(filteredRecipes.length - newVisibleRecipes, 0)
     );
+
+    // Update the count of matching recipes
+    setMatchingRecipeCount(filteredRecipes.length);
+
     updateNoResults(filteredRecipes, searchInput);
-  }, [searchInput, visibleRecipes]);
+  }, [searchInput, visibleRecipes, initialRecipes]);
 
   // Function to update 'noResults' state
   const updateNoResults = (filteredRecipes, input) => {
@@ -60,24 +66,7 @@ export default function RecipeList(props) {
   // Function to handle sorting
   const handleSort = (option) => {
     setCurrentSort(option);
-    let sortedRecipes = [...recipes];
-
-    switch (option) {
-      case "ascending":
-        sortedRecipes.sort((a, b) => a.prep - b.prep);
-        break;
-      case "descending":
-        sortedRecipes.sort((a, b) => b.prep - a.prep);
-        break;
-      case "byDate":
-        sortedRecipes.sort((a, b) => new Date(b.date) - new Date(a.date));
-        break;
-      case "default":
-        // You can set it to your default sorting logic
-        break;
-      default:
-        break;
-    }
+    let sortedRecipes = [...initialRecipes]; // Use the initial recipes for sorting
 
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false); // Close the dropdown after selecting an option
@@ -88,13 +77,13 @@ export default function RecipeList(props) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // Function to load more recipes
-  const loadMore = () => {
-    const additionalRecipes = 20;
-    const newVisibleRecipes = visibleRecipes + additionalRecipes;
-    setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
-  };
+// Function to load more recipes
+const loadMore = () => {
+  const additionalRecipes = 20;
+  const newVisibleRecipes = visibleRecipes + additionalRecipes;
+  setVisibleRecipes(newVisibleRecipes);
+  setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0)); // Add a closing parenthesis here
+};
 
   // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
@@ -114,26 +103,26 @@ export default function RecipeList(props) {
 
     setRecipes(filteredRecipes);
     const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
-    setRemainingRecipes(
-      Math.max(filteredRecipes.length - newVisibleRecipes, 0)
-    );
+    setRemainingRecipes(Math.max(filteredRecipes.length - newVisibleRecipes, 0));
+
+    // Update the count of matching recipes
+    setMatchingRecipeCount(filteredRecipes.length);
+
     updateNoResults(filteredRecipes, searchInput);
   };
 
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
-     <div className="flex items-center">
-      <Link href="/">
-        <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
-      </Link>
-      
+      <div className="flex items-center">
+        <Link href="/">
+          <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
+        </Link>
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
             {isDropdownOpen && (
-              <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg">
-                <SortingOption handleSort={handleSort} />{" "}
-                {/* Render SortingOption */}
+              <div className="z-10">
+                <SortingOption handleSort={handleSort} />
               </div>
             )}
           </div>
@@ -147,6 +136,7 @@ export default function RecipeList(props) {
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search..."
           className="w-3/4 p-2 border rounded-l text-black"
+          
         />
         <button
           onClick={handleSearch}
@@ -154,20 +144,33 @@ export default function RecipeList(props) {
         >
           Search
         </button>
+        <button className="bg-red-700 text-white p-2 rounded-r hover:bg-blue-800" >
+        <FontAwesomeIcon icon={faFilter} />
+        </button>
+        
+        <Link href="/favourite-recipes">
+          <button className="text-white p-2">Favorite Recipes</button>
+        </Link>
       </div>
       {noResults && <NoResultsMessage />}
+
+      <div className="matching-recipe-count">
+        {matchingRecipeCount > 0 && (
+          <p>{matchingRecipeCount} matching recipes found</p>
+        )}
+      </div>
 
       <div className="recipe-list-container overflow-y-auto flex-grow">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
+              <div className="relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
                 <img
                   src={recipe.images[0]}
                   alt={recipe.title}
                   className="w-full h-48 object-cover rounded-md"
                 />
-                <button className=" absolute right-4 m-3 rounded-full w-14 text-center">
+                <button className="absolute right-4 m-3 rounded-full w-14 text-center">
                   {isFavourate ? (
                     <FontAwesomeIcon icon={faHeart} />
                   ) : (
@@ -175,7 +178,7 @@ export default function RecipeList(props) {
                   )}
                 </button>
 
-                <div className=" flex justify-between ">
+                <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
                 </div>
                 <p className="mt-2">
@@ -191,7 +194,7 @@ export default function RecipeList(props) {
                   {convertToHours(recipe.prep + recipe.cook)}{" "}
                 </p>
 
-                <Link href={`/recipe-details/${recipe._id}`} className=" mt-4">
+                <Link href={`/recipe-details/${recipe._id}`} className="mt-4">
                   <button>View Recipe</button>
                 </Link>
               </div>
@@ -204,7 +207,7 @@ export default function RecipeList(props) {
           <LoadMoreButton
             onClick={loadMore}
             remainingRecipes={remainingRecipes}
-            className="bg-blue-700 text-white px-2 py-1 rounded-full hover:bg-blue-800"
+            className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
           />
         )}
       </div>
