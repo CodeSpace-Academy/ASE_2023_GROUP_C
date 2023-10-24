@@ -24,8 +24,9 @@ export default function RecipeList(props) {
   );
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
+  const [matchingRecipeCount, setMatchingRecipeCount] = useState(0); // Added state for matching recipe count
 
-  // state for sorting and dropdown visibility
+  // State for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -46,8 +47,12 @@ export default function RecipeList(props) {
     setRemainingRecipes(
       Math.max(filteredRecipes.length - newVisibleRecipes, 0)
     );
+
+    // Update the count of matching recipes
+    setMatchingRecipeCount(filteredRecipes.length);
+
     updateNoResults(filteredRecipes, searchInput);
-  }, [searchInput, visibleRecipes]);
+  }, [searchInput, visibleRecipes, initialRecipes]);
 
   // Function to update 'noResults' state
   const updateNoResults = (filteredRecipes, input) => {
@@ -57,24 +62,7 @@ export default function RecipeList(props) {
   // Function to handle sorting
   const handleSort = (option) => {
     setCurrentSort(option);
-    let sortedRecipes = [...recipes];
-
-    switch (option) {
-      case "ascending":
-        sortedRecipes.sort((a, b) => a.prep - b.prep);
-        break;
-      case "descending":
-        sortedRecipes.sort((a, b) => b.prep - a.prep);
-        break;
-      case "byDate":
-        sortedRecipes.sort((a, b) => new Date(b.date) - new Date(a.date));
-        break;
-      case "default":
-        // You can set it to your default sorting logic
-        break;
-      default:
-        break;
-    }
+    let sortedRecipes = [...initialRecipes]; // Use the initial recipes for sorting
 
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false); // Close the dropdown after selecting an option
@@ -101,9 +89,11 @@ export default function RecipeList(props) {
 
     setRecipes(filteredRecipes);
     const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
-    setRemainingRecipes(
-      Math.max(filteredRecipes.length - newVisibleRecipes, 0)
-    );
+    setRemainingRecipes(Math.max(filteredRecipes.length - newVisibleRecipes, 0));
+
+    // Update the count of matching recipes
+    setMatchingRecipeCount(filteredRecipes.length);
+
     updateNoResults(filteredRecipes, searchInput);
   };
 
@@ -120,9 +110,8 @@ export default function RecipeList(props) {
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
             </div>
             {isDropdownOpen && (
-              <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg">
-                <SortingOption handleSort={handleSort} />{" "}
-                {/* Render SortingOption */}
+              <div className="z-10">
+                <SortingOption handleSort={handleSort} />
               </div>
             )}
           </div>
@@ -146,7 +135,7 @@ export default function RecipeList(props) {
           <LoadMoreButton
             onClick={loadMore}
             remainingRecipes={remainingRecipes}
-            className="bg-blue-700 text-white px-2 py-1 rounded-full hover:bg-blue-800"
+            className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
           />
         )}
       </div>
