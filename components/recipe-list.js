@@ -58,30 +58,31 @@ export default function RecipeList(props) {
   };
 
   // Function to handle sorting
-  const handleSort = (option) => {
-    setCurrentSort(option);
-    let sortedRecipes = [...recipes];
+const handleSort = (option) => {
+  setCurrentSort(option);
+  let sortedRecipes = [...recipes]; // Use the initial recipes for sorting
 
-    switch (option) {
-      case "ascending":
-        sortedRecipes.sort((a, b) => a.prep - b.prep);
-        break;
-      case "descending":
-        sortedRecipes.sort((a, b) => b.prep - a.prep);
-        break;
-      case "byDate":
-        sortedRecipes.sort((a, b) => new Date(b.date) - new Date(a.date));
-        break;
-      case "default":
-        // You can set it to your default sorting logic
-        break;
-      default:
-        break;
-    }
+  switch (option) {
+    case "ascending":
+      sortedRecipes.sort((a, b) => a.prep - b.prep);
+      break;
+    case "descending":
+      sortedRecipes.sort((a, b) => b.prep - a.prep);
+      break;
+    case "byDate":
+      sortedRecipes.sort((a, b) => new Date(b.date) - new Date(a.date));
+      break;
+    case "default":
+      // You can set it to your default sorting logic
+      break;
+    default:
+      break;
+  }
 
-    setRecipes(sortedRecipes);
-    setIsDropdownOpen(false); // Close the dropdown after selecting an option
-  };
+  setRecipes(sortedRecipes);
+  setIsDropdownOpen(false); // Close the dropdown after selecting an option
+};
+
 
   // Function to toggle the sorting options dropdown
   const toggleDropdown = () => {
@@ -131,9 +132,9 @@ export default function RecipeList(props) {
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
             {isDropdownOpen && (
-              <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg">
+              <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg z-10">
                 <SortingOption handleSort={handleSort} />{" "}
-                {/* Render SortingOption */}
+                
               </div>
             )}
           </div>
@@ -161,7 +162,8 @@ export default function RecipeList(props) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
+              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200"
+>
                 <img
                   src={recipe.images[0]}
                   alt={recipe.title}
