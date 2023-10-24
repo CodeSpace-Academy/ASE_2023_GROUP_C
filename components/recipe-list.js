@@ -140,7 +140,7 @@ export default function RecipeList(props) {
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
             {isDropdownOpen && (
-              <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg z-10">
+              <div className=" z-10">
                 <SortingOption handleSort={handleSort} />
                 <button onClick={() => handleSort("default")}>Default</button>
               </div>
