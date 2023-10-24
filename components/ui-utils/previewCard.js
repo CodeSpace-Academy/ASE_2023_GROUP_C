@@ -26,7 +26,7 @@ export default function PreviewCard (props){
     
      return(
        <li key={recipe._id}>
-                 <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
+                 <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200 h-full">
                    <img
                      src={recipe.images[0]}
                      alt={recipe.title}
