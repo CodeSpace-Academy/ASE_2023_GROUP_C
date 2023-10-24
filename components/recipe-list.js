@@ -27,8 +27,9 @@ export default function RecipeList(props) {
   );
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
+  const [matchingRecipeCount, setMatchingRecipeCount] = useState(0); // Added state for matching recipe count
 
-  // state for sorting and dropdown visibility
+  // State for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -49,8 +50,12 @@ export default function RecipeList(props) {
     setRemainingRecipes(
       Math.max(filteredRecipes.length - newVisibleRecipes, 0)
     );
+
+    // Update the count of matching recipes
+    setMatchingRecipeCount(filteredRecipes.length);
+
     updateNoResults(filteredRecipes, searchInput);
-  }, [searchInput, visibleRecipes]);
+  }, [searchInput, visibleRecipes, initialRecipes]);
 
   // Function to update 'noResults' state
   const updateNoResults = (filteredRecipes, input) => {
@@ -62,32 +67,6 @@ export default function RecipeList(props) {
     setCurrentSort(option);
     let sortedRecipes = [...initialRecipes]; // Use the initial recipes for sorting
 
-    switch (option) {
-      case "ascending":
-        sortedRecipes.sort((a, b) => a.prep - b.prep);
-        break;
-      case "descending":
-        sortedRecipes.sort((a, b) => b.prep - a.prep);
-        break;
-      case "ascendingCook":
-        sortedRecipes.sort((a, b) => a.cook - b.cook);
-        break;
-      case "descendingCook":
-        sortedRecipes.sort((a, b) => b.cook - a.cook);
-        break;
-      case "byDateOldest":
-        sortedRecipes.sort(
-          (a, b) => new Date(b.published) - new Date(a.published)
-        );
-        break;
-      case "default":
-        // Revert to default sorting logic (if you have one)
-        sortedRecipes = initialRecipes;
-        break;
-      default:
-        break;
-    }
-
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false); // Close the dropdown after selecting an option
   };
@@ -97,13 +76,13 @@ export default function RecipeList(props) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // Function to load more recipes
-  const loadMore = () => {
-    const additionalRecipes = 20;
-    const newVisibleRecipes = visibleRecipes + additionalRecipes;
-    setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
-  };
+// Function to load more recipes
+const loadMore = () => {
+  const additionalRecipes = 20;
+  const newVisibleRecipes = visibleRecipes + additionalRecipes;
+  setVisibleRecipes(newVisibleRecipes);
+  setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0)); // Add a closing parenthesis here
+};
 
   // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
@@ -123,9 +102,11 @@ export default function RecipeList(props) {
 
     setRecipes(filteredRecipes);
     const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
-    setRemainingRecipes(
-      Math.max(filteredRecipes.length - newVisibleRecipes, 0)
-    );
+    setRemainingRecipes(Math.max(filteredRecipes.length - newVisibleRecipes, 0));
+
+    // Update the count of matching recipes
+    setMatchingRecipeCount(filteredRecipes.length);
+
     updateNoResults(filteredRecipes, searchInput);
   };
 
@@ -139,7 +120,7 @@ export default function RecipeList(props) {
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
             {isDropdownOpen && (
-              <div className=" z-10">
+              <div className="z-10">
                 <SortingOption handleSort={handleSort} />
               </div>
             )}
@@ -162,22 +143,28 @@ export default function RecipeList(props) {
           Search
         </button>
         <Link href="/favourite-recipes">
-        <button className="text-white p-2">Favorite Recipes</button>
-      </Link>
+          <button className="text-white p-2">Favorite Recipes</button>
+        </Link>
       </div>
       {noResults && <NoResultsMessage />}
+
+      <div className="matching-recipe-count">
+        {matchingRecipeCount > 0 && (
+          <p>{matchingRecipeCount} matching recipes found</p>
+        )}
+      </div>
 
       <div className="recipe-list-container overflow-y-auto flex-grow">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
+              <div className="relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
                 <img
                   src={recipe.images[0]}
                   alt={recipe.title}
                   className="w-full h-48 object-cover rounded-md"
                 />
-                <button className=" absolute right-4 m-3 rounded-full w-14 text-center">
+                <button className="absolute right-4 m-3 rounded-full w-14 text-center">
                   {isFavourate ? (
                     <FontAwesomeIcon icon={faHeart} />
                   ) : (
@@ -185,7 +172,7 @@ export default function RecipeList(props) {
                   )}
                 </button>
 
-                <div className=" flex justify-between ">
+                <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
                 </div>
                 <p className="mt-2">
@@ -201,7 +188,7 @@ export default function RecipeList(props) {
                   {convertToHours(recipe.prep + recipe.cook)}{" "}
                 </p>
 
-                <Link href={`/recipe-details/${recipe._id}`} className=" mt-4">
+                <Link href={`/recipe-details/${recipe._id}`} className="mt-4">
                   <button>View Recipe</button>
                 </Link>
               </div>
@@ -214,7 +201,7 @@ export default function RecipeList(props) {
           <LoadMoreButton
             onClick={loadMore}
             remainingRecipes={remainingRecipes}
-            className="bg-blue-700 text-white px-2 py-1 rounded-full hover:bg-blue-800"
+            className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
           />
         )}
       </div>
