@@ -58,44 +58,40 @@ export default function RecipeList(props) {
   };
 
   // Function to handle sorting
-const handleSort = (option) => {
-  setCurrentSort(option);
-  let sortedRecipes = [...recipes]; // Use the initial recipes for sorting
+  const handleSort = (option) => {
+    setCurrentSort(option);
+    let sortedRecipes = [...initialRecipes]; // Use the initial recipes for sorting
 
-  switch (option) {
-    case "ascending":
-      sortedRecipes.sort((a, b) => a.prep - b.prep);
-      break;
-    case "descending":
-      sortedRecipes.sort((a, b) => b.prep - a.prep);
-      break;
-
+    switch (option) {
       case "ascending":
-        sortedRecipes.sort((a, b) => a.cook - b.cook);
+        sortedRecipes.sort((a, b) => a.prep - b.prep);
         break;
       case "descending":
+        sortedRecipes.sort((a, b) => b.prep - a.prep);
+        break;
+      case "ascendingCook":
+        sortedRecipes.sort((a, b) => a.cook - b.cook);
+        break;
+      case "descendingCook":
         sortedRecipes.sort((a, b) => b.cook - a.cook);
         break;
-
-        case "byDateNewest":
+      case "byDateNewest":
         sortedRecipes.sort((a, b) => new Date(b.published) - new Date(a.published));
         break;
-
       case "byDateOldest":
         sortedRecipes.sort((a, b) => new Date(a.published) - new Date(b.published));
         break;
-  
-    case "default":
-      // You can set it to your default sorting logic
-      break;
-    default:
-      break;
-  }
+      case "default":
+        // Revert to default sorting logic (if you have one)
+        sortedRecipes = initialRecipes;
+        break;
+      default:
+        break;
+    }
 
-  setRecipes(sortedRecipes);
-  setIsDropdownOpen(false); // Close the dropdown after selecting an option
-};
-
+    setRecipes(sortedRecipes);
+    setIsDropdownOpen(false); // Close the dropdown after selecting an option
+  };
 
   // Function to toggle the sorting options dropdown
   const toggleDropdown = () => {
@@ -109,6 +105,7 @@ const handleSort = (option) => {
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
   };
+  
 
   // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
@@ -136,18 +133,17 @@ const handleSort = (option) => {
 
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
-     <div className="flex items-center">
-      <Link href="/">
-        <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
-      </Link>
-      
+      <div className="flex items-center">
+        <Link href="/">
+          <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
+        </Link>
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
             {isDropdownOpen && (
               <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg z-10">
-                <SortingOption handleSort={handleSort} />{" "}
-                
+                <SortingOption handleSort={handleSort} />
+                <button onClick={() => handleSort("default")}>Default</button>
               </div>
             )}
           </div>
@@ -175,8 +171,7 @@ const handleSort = (option) => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
             <li key={recipe._id}>
-              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200"
->
+              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
                 <img
                   src={recipe.images[0]}
                   alt={recipe.title}
