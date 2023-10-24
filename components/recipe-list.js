@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import NoResultsMessage from "./layout/no-results-message";
 import LoadMoreButton from "./ui-utils/load-more-button";
-import Link from "next/link";
 import {
-  faUtensils,
-  faKitchenSet,
   faHome,
-  faSpoon,
-  faHeart,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "./pagination";
 import SortingOption from "./ui-utils/filtering-form";
+import PreviewCard from "./ui-utils/previewCard";
+import Link from "next/link";
 
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
-  const [isFavourate, setIsFavourate] = useState(false);
+  
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -96,16 +93,6 @@ export default function RecipeList(props) {
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
   };
 
-  // Function to convert minutes to hours and minutes
-  const convertToHours = (minutes) => {
-    if (minutes >= 60) {
-      const hours = Math.floor(minutes / 60);
-      const remainingMinutes = minutes % 60;
-      return `${hours} hours ${remainingMinutes} minutes`;
-    }
-    return `${minutes} minutes`;
-  };
-
   // Handle search when the user clicks the "Search" button
   const handleSearch = () => {
     const filteredRecipes = initialRecipes.filter((recipe) =>
@@ -157,48 +144,15 @@ export default function RecipeList(props) {
       </div>
       {noResults && <NoResultsMessage />}
 
+      {/* recipe list container */}
       <div className="recipe-list-container overflow-y-auto flex-grow">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
-            <li key={recipe._id}>
-              <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
-                <img
-                  src={recipe.images[0]}
-                  alt={recipe.title}
-                  className="w-full h-48 object-cover rounded-md"
-                />
-                <button className=" absolute right-4 m-3 rounded-full w-14 text-center">
-                  {isFavourate ? (
-                    <FontAwesomeIcon icon={faHeart} />
-                  ) : (
-                    <FontAwesomeIcon icon={faHeart} />
-                  )}
-                </button>
-
-                <div className=" flex justify-between ">
-                  <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
-                </div>
-                <p className="mt-2">
-                  <FontAwesomeIcon icon={faUtensils} /> Prep:{" "}
-                  {convertToHours(recipe.prep)}{" "}
-                </p>
-                <p>
-                  <FontAwesomeIcon icon={faKitchenSet} /> Cook:{" "}
-                  {convertToHours(recipe.cook)}{" "}
-                </p>
-                <p>
-                  <FontAwesomeIcon icon={faSpoon} /> Total:{" "}
-                  {convertToHours(recipe.prep + recipe.cook)}{" "}
-                </p>
-
-                <Link href={`/recipe-details/${recipe._id}`} className=" mt-4">
-                  <button>View Recipe</button>
-                </Link>
-              </div>
-            </li>
+            <PreviewCard recipe={recipe} />
           ))}
         </ul>
       </div>
+      
       <div className="bg-gray-900 p-4 flex justify-center items-center">
         {remainingRecipes > 0 && (
           <LoadMoreButton
@@ -212,3 +166,6 @@ export default function RecipeList(props) {
     </div>
   );
 }
+
+
+
