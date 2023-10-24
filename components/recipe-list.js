@@ -161,6 +161,9 @@ export default function RecipeList(props) {
         >
           Search
         </button>
+        <Link href="/favourite-recipes">
+        <button className="text-white p-2">Favorite Recipes</button>
+      </Link>
       </div>
       {noResults && <NoResultsMessage />}
 
