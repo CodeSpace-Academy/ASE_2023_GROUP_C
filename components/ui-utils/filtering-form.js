@@ -1,4 +1,7 @@
 export default function SortingOption({ handleSort }) {
+
+ 
+
   return (
     <div>
 
@@ -30,9 +33,13 @@ export default function SortingOption({ handleSort }) {
       <button onClick={() => handleSort("byDateNewest")}>
         Newest
       </button>
-      
+
       <button onClick={() => handleSort("byDateOldest")}>
         Oldest
+      </button>
+
+      <button onClick={() => handleSort("clearFilters")}>
+       Clear Filters
       </button>
 
     </div>

@@ -84,6 +84,9 @@ export default function RecipeList(props) {
         // Revert to default sorting logic (if you have one)
         sortedRecipes = initialRecipes;
         break;
+        case "clearFilters":
+       
+        break;
       default:
         break;
     }
@@ -130,6 +133,7 @@ export default function RecipeList(props) {
     updateNoResults(filteredRecipes, searchInput);
   };
 
+
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
       <div className="flex items-center">
@@ -142,7 +146,7 @@ export default function RecipeList(props) {
             {isDropdownOpen && (
               <div className=" z-10">
                 <SortingOption handleSort={handleSort} />
-               
+                
               </div>
             )}
           </div>
