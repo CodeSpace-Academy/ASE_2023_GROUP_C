@@ -1,5 +1,3 @@
-import React from "react";
-
 export  default function NoFavouritesYet() {
     return (
         <div>
@@ -7,5 +5,3 @@ export  default function NoFavouritesYet() {
         </div>
     );
 }
-
-
