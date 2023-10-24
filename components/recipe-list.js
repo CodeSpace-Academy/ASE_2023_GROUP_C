@@ -28,8 +28,6 @@ export default function RecipeList(props) {
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
 
-  
-
   // state for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -78,14 +76,13 @@ export default function RecipeList(props) {
         sortedRecipes.sort((a, b) => b.cook - a.cook);
         break;
       case "byDateOldest":
-        sortedRecipes.sort((a, b) => new Date(b.published) - new Date(a.published));
+        sortedRecipes.sort(
+          (a, b) => new Date(b.published) - new Date(a.published)
+        );
         break;
       case "default":
         // Revert to default sorting logic (if you have one)
         sortedRecipes = initialRecipes;
-        break;
-        case "clearFilters":
-       
         break;
       default:
         break;
@@ -107,7 +104,6 @@ export default function RecipeList(props) {
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
   };
-  
 
   // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
@@ -133,7 +129,6 @@ export default function RecipeList(props) {
     updateNoResults(filteredRecipes, searchInput);
   };
 
-
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
       <div className="flex items-center">
@@ -146,7 +141,6 @@ export default function RecipeList(props) {
             {isDropdownOpen && (
               <div className=" z-10">
                 <SortingOption handleSort={handleSort} />
-                
               </div>
             )}
           </div>

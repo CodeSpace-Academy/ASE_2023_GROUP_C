@@ -1,10 +1,6 @@
 export default function SortingOption({ handleSort }) {
-
- 
-
   return (
     <div>
-
       <button onClick={() => handleSort("default")}>
         {/* Default Sort */}
         Default
@@ -30,18 +26,9 @@ export default function SortingOption({ handleSort }) {
         Cook Time (Descending)
       </button>
 
-      <button onClick={() => handleSort("byDateNewest")}>
-        Newest
-      </button>
+      <button onClick={() => handleSort("byDateNewest")}>Newest</button>
 
-      <button onClick={() => handleSort("byDateOldest")}>
-        Oldest
-      </button>
-
-      <button onClick={() => handleSort("clearFilters")}>
-       Clear Filters
-      </button>
-
+      <button onClick={() => handleSort("byDateOldest")}>Oldest</button>
     </div>
   );
 }
