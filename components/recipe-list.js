@@ -10,12 +10,12 @@ import Pagination from "./pagination";
 import SortingOption from "./ui-utils/filtering-form";
 import PreviewCard from "./ui-utils/previewCard";
 import Link from "next/link";
+import SearchInput from "./ui-utils/searchInput";
 
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
   
-
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
   const [visibleRecipes, setVisibleRecipes] = useState(20);
@@ -110,13 +110,15 @@ export default function RecipeList(props) {
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
      <div className="flex items-center">
-      <Link href="/">
+      <Link href="/" className=" rounded-lg border border-gray-800 mb-3">
         <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
       </Link>
       
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
+            <div className="rounded-lg border border-gray-800 mb-3 p-2 ml-2">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
+            </div>
             {isDropdownOpen && (
               <div className="absolute right-0 top-10 mt-2 bg-white rounded-lg shadow-lg">
                 <SortingOption handleSort={handleSort} />{" "}
@@ -127,21 +129,7 @@ export default function RecipeList(props) {
         </div>
       </div>
 
-      <div className="search-bar-container flex items-center mb-4">
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search..."
-          className="w-3/4 p-2 border rounded-l text-black"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-700 text-white p-2 rounded-r hover:bg-blue-800"
-        >
-          Search
-        </button>
-      </div>
+      <SearchInput handleSearch={handleSearch}/>
       {noResults && <NoResultsMessage />}
 
       {/* recipe list container */}
@@ -152,7 +140,7 @@ export default function RecipeList(props) {
           ))}
         </ul>
       </div>
-      
+
       <div className="bg-gray-900 p-4 flex justify-center items-center">
         {remainingRecipes > 0 && (
           <LoadMoreButton
