@@ -28,6 +28,8 @@ export default function RecipeList(props) {
   const [searchInput, setSearchInput] = useState("");
   const [noResults, setNoResults] = useState(false);
 
+  
+
   // state for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -78,11 +80,11 @@ const handleSort = (option) => {
         break;
 
         case "byDateNewest":
-        sortedRecipes.sort((a, b) => new Date(b.published) - new Date(a.published));
+        sortedRecipes.sort((a, b) => new Date(a.published) - new Date(b.published));
         break;
 
       case "byDateOldest":
-        sortedRecipes.sort((a, b) => new Date(a.published) - new Date(b.published));
+        sortedRecipes.sort((a, b) => new Date(b.published) - new Date(a.published));
         break;
   
     case "default":
