@@ -142,7 +142,7 @@ export default function RecipeList(props) {
             {isDropdownOpen && (
               <div className=" z-10">
                 <SortingOption handleSort={handleSort} />
-                <button onClick={() => handleSort("default")}>Default</button>
+               
               </div>
             )}
           </div>
