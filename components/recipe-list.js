@@ -9,6 +9,7 @@ import {
   faSpoon,
   faHeart,
   faSort,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "./pagination";
@@ -154,6 +155,7 @@ export default function RecipeList(props) {
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search..."
           className="w-3/4 p-2 border rounded-l text-black"
+          
         />
         <button
           onClick={handleSearch}
@@ -161,6 +163,10 @@ export default function RecipeList(props) {
         >
           Search
         </button>
+        <button className="bg-red-700 text-white p-2 rounded-r hover:bg-blue-800" >
+        <FontAwesomeIcon icon={faFilter} />
+        </button>
+        
         <Link href="/favourite-recipes">
         <button className="text-white p-2">Favorite Recipes</button>
       </Link>
