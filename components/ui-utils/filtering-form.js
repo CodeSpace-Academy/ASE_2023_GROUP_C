@@ -1,24 +1,40 @@
-export default function SortingOption ({ handleSort })  {
+export default function SortingOption({ handleSort }) {
   return (
-    <div >
-      <button  onClick={() => handleSort("default")}>
+    <div>
+
+      <button onClick={() => handleSort("default")}>
         {/* Default Sort */}
         Default
       </button>
-      <button  onClick={() => handleSort("ascending")}>
+
+      <button onClick={() => handleSort("ascending")}>
         {/* Sort by Prep Time (Ascending) */}
-        Ascending
+        Prep Time (Ascending)
       </button>
-      <button  onClick={() => handleSort("descending")}>
+
+      <button onClick={() => handleSort("descending")}>
         {/* Sort by Prep Time (Descending) */}
-        Descending
+        Prep Time (Descending)
       </button>
-      <button  onClick={() => handleSort("byDate")}>
-        {/* sort by newest */}
+
+      <button onClick={() => handleSort("ascending")}>
+        {/* Sort by Cook Time (Ascending) */}
+        Cook Time (Ascending)
+      </button>
+
+      <button onClick={() => handleSort("descending")}>
+        {/* Sort by Cook Time (Descending) */}
+        Cook Time (Descending)
+      </button>
+
+      <button onClick={() => handleSort("byDateNewest")}>
         Newest
       </button>
+      
+      <button onClick={() => handleSort("byDateOldest")}>
+        Oldest
+      </button>
+
     </div>
   );
-};
-
-
+}

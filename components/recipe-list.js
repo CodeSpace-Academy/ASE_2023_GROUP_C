@@ -69,9 +69,22 @@ const handleSort = (option) => {
     case "descending":
       sortedRecipes.sort((a, b) => b.prep - a.prep);
       break;
-    case "byDate":
-      sortedRecipes.sort((a, b) => new Date(b.date) - new Date(a.date));
-      break;
+
+      case "ascending":
+        sortedRecipes.sort((a, b) => a.cook - b.cook);
+        break;
+      case "descending":
+        sortedRecipes.sort((a, b) => b.cook - a.cook);
+        break;
+
+        case "byDateNewest":
+        sortedRecipes.sort((a, b) => new Date(b.published) - new Date(a.published));
+        break;
+
+      case "byDateOldest":
+        sortedRecipes.sort((a, b) => new Date(a.published) - new Date(b.published));
+        break;
+  
     case "default":
       // You can set it to your default sorting logic
       break;
