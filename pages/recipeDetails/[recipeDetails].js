@@ -1,6 +1,6 @@
 import React from 'react'
 import { connectToDb, getRecipeDetails,getAllergens } from '../../utils/mongodb-utils';
-import RecipeCard from '../../components/recipe-cart/recipecard';
+import RecipeCard from '../../components/recipeCard/recipeCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
@@ -43,7 +43,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList}) {
   return (
     <div>
       <div className='flex font-bold p-5  bg-slate-900 text-white items-center'>
-        <Link href='/recipe-list'>
+        <Link href='/recipeList/recipeList'>
          <FontAwesomeIcon icon={faChevronLeft} size='xl' />
         </Link>
         
