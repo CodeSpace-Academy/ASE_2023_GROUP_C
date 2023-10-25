@@ -15,8 +15,6 @@ export default async function handler(req, res) {
     userName: 'The User Gang',
     userList: recipe
   }
-  console.log('000000000', favouredRecipe)
-
 
   if (req.method === 'POST') {
     try {
