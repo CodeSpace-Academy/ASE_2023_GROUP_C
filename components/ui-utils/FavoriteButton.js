@@ -6,9 +6,16 @@ export default function FavoriteButton({recipe}) {
   const [isFavourate, setIsFavourate] = useState(false);
 
   function handleFavorite() {
-    setIsFavourate( prevState => !prevState);
+    setIsFavourate((prevState) => !prevState);
     console.log(isFavourate ? "unfavourite" : `favourite: ${recipe.title}`);
-    console.log(recipe.title)
+  
+    fetch('/api/favourite', {
+      method: 'POST',
+      body: JSON.stringify(recipe),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   return (
