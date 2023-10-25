@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import FavouriteRecipes from '../components/favourite/favourite-recipes'
+import FavouriteRecipes from '../components/favourite/favouriteRecipes'
 import { connectToDb, getFavouriteRecipes } from '../utils/mongodb-utils';
 
 export async function getServerSideProps(context) {
