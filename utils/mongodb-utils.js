@@ -125,7 +125,7 @@ export async function insertUserRecipeList(client, collection, document) {
  * Retrieve a fovourite recipe into a MongoDB collection.
  * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to insert into.
- * @param {object} document - The document to be inserted.
+ * @param {object} sort - The document to be inserted.
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
 
