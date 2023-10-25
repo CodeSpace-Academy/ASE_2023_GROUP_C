@@ -174,7 +174,7 @@ export default function RecipeList(props) {
           <FontAwesomeIcon icon={faFilter} />
         </button>
 
-        <Link href="/favourite-recipes">
+        <Link href="/favouriteRecipes">
           <button className="text-white p-2">Favorite Recipes</button>
         </Link>
       </div>
@@ -220,7 +220,7 @@ export default function RecipeList(props) {
                   {convertToHours(recipe.prep + recipe.cook)}{" "}
                 </p>
 
-                <Link href={`/recipe-details/${recipe._id}`} className="mt-4">
+                <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
                   <button>View Recipe</button>
                 </Link>
               </div>
