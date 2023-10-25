@@ -4,6 +4,7 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
   const [categories, setCategories] = useState([]);
   const [searchInput, setSearchInput] = useState(""); // Initialize search input state
   const [filteredCategories, setFilteredCategories] = useState([]); // State for filtered categories
+  const [showMore, setShowMore] = useState(50); // Number of buttons to show
 
   // Fetch categories from MongoDB
   useEffect(() => {
@@ -29,12 +30,22 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
     setFilteredCategories(filtered);
   };
 
+  const handleCategoryClick = (category) => {
+    // Append the clicked category to the search input
+    setSearchInput(searchInput + " " + category);
+    handleSearch(); // Perform a search immediately when a category is clicked
+  };
+
+  const handleShowMore = () => {
+    setShowMore(showMore + 50); // Increase the number of buttons to show
+  };
+
   useEffect(() => {
     if (searchInput.trim() === "") {
-      // If the search input is empty, show all categories
-      setFilteredCategories(categories);
+      // If the search input is empty, show only the limited number of categories
+      setFilteredCategories(categories.slice(0, showMore));
     }
-  }, [searchInput, categories]);
+  }, [searchInput, categories, showMore]);
 
   if (!categories) {
     return <div>No categories available.</div>;
@@ -57,12 +68,21 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
           Search
         </button>
       </div>
-      <label>Filter by Category:</label>
-      {categories.map((category, index) => (
-        <button key={index} value={category} className=" p-2 m-2">
+      {filteredCategories.map((category, index) => (
+        <button
+          key={index}
+          value={category}
+          className="p-2 m-2"
+          onClick={() => handleCategoryClick(category)}
+        >
           {category}
         </button>
       ))}
+      {categories.length > showMore && (
+        <button onClick={handleShowMore} className="p-2 m-2">
+          Load More
+        </button>
+      )}
     </div>
   );
 }
