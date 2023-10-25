@@ -68,6 +68,30 @@ export default function RecipeList(props) {
     setCurrentSort(option);
     let sortedRecipes = [...initialRecipes]; // Use the initial recipes for sorting
 
+    switch (option) {
+      case "ascending":
+        sortedRecipes.sort((a, b) => a.prep - b.prep);
+        break;
+      case "descending":
+        sortedRecipes.sort((a, b) => b.prep - a.prep);
+        break;
+      case "ascendingCook":
+        sortedRecipes.sort((a, b) => a.cook - b.cook);
+        break;
+      case "descendingCook":
+        sortedRecipes.sort((a, b) => b.cook - a.cook);
+        break;
+      case "byDateOldest":
+        sortedRecipes.sort((a, b) => new Date(b.published) - new Date(a.published));
+        break;
+      case "default":
+        // Revert to default sorting logic (if you have one)
+        sortedRecipes = initialRecipes;
+        break;
+      default:
+        break;
+    }
+
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false); // Close the dropdown after selecting an option
   };
