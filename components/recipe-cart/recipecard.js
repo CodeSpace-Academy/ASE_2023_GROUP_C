@@ -7,11 +7,13 @@ import TagsDisplay from '../tags/tags-display';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Card from '../ui-utils/card';
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function RecipeCard(prop) {
   const { recipe, allergensList } = prop;
 
   const [isEdited, setIsEdited] = useState(false);
+  const [isFavourate, setIsFavourate] = useState(false);
 
   const handleDescriptionEdit = () => {
     setIsEdited(true);
@@ -43,6 +45,13 @@ export default function RecipeCard(prop) {
                   alt={recipe.title}
                   className=""
                   />
+                   <button className="absolute right-4 m-3 rounded-full w-14 text-center">
+                  {isFavourate ? (
+                    <FontAwesomeIcon icon={faHeart} />
+                  ) : (
+                    <FontAwesomeIcon icon={faHeart} />
+                  )}
+                </button>
               </div>
           ))}
         </Carousel>
