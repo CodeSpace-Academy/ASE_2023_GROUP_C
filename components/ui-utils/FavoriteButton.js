@@ -1,17 +1,24 @@
-//api rout to send info to mongo db
-//create state variable to keep track of which recipes are marked as favorites.
-//add an onClick handler to the favorite button.
-//pass the toggleFavorite function as a prop to each recipe item component so that it can be called when the favorite button is clicked.
-//storage
-
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
-export default function FavoriteButton({ isFavorite, onClick }) {
+export default function FavoriteButton({recipe}) {
+  const [isFavourate, setIsFavourate] = useState(false);
+
+  function handleFavorite() {
+    setIsFavourate( prevState => !prevState);
+    console.log(isFavourate ? "unfavourite" : `favourite: ${recipe.title}`);
+    console.log(recipe.title)
+  }
+
   return (
-    <button onClick={onClick} className={isFavorite ? "favorite" : "not-favorite"}>
-      <FontAwesomeIcon icon={faHeart} />
+    <button className=" absolute right-4 m-3 rounded-full w-14 text-center" onClick={handleFavorite}>
+      {isFavourate ? (
+
+        <FontAwesomeIcon className=' fill-current text-red-500' icon={faHeart} />
+      ) : (
+          <FontAwesomeIcon icon={faHeart} />
+      )}
     </button>
   );
 }
