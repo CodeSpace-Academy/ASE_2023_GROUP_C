@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import EditRecipeContent from "./editable-text";
+import EditRecipeContent from "./editableText";
 
-import Allergens from "../allergens/allergens-ingredient";
+import Allergens from "../allergens/allergensIngredient";
 
 
 function RecipeDescription(props) {
