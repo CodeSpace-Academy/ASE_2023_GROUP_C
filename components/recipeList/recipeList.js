@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import NoResultsMessage from "./layout/no-results-message";
-import LoadMoreButton from "./ui-utils/load-more-button";
+import NoResultsMessage from "../layout/noResultsMessage";
+import LoadMoreButton from "../ui-utils/loadMoreButton";
 import Link from "next/link";
 import {
   faUtensils,
@@ -9,15 +9,16 @@ import {
   faSpoon,
   faHeart,
   faSort,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Pagination from "./pagination";
-import SortingOption from "./ui-utils/filtering-form";
-import FavoriteButton from "./ui-utils/FavoriteButton";
+import Pagination from "../pagination";
+import SortingOption from "../ui-utils/filteringForm";
 
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
+  const [isFavourate, setIsFavourate] = useState(false);
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -67,6 +68,31 @@ export default function RecipeList(props) {
     setCurrentSort(option);
     let sortedRecipes = [...initialRecipes]; // Use the initial recipes for sorting
 
+    switch (option) {
+      case "ascending":
+        sortedRecipes.sort((a, b) => a.prep - b.prep);
+        break;
+      case "descending":
+        sortedRecipes.sort((a, b) => b.prep - a.prep);
+        break;
+      case "ascendingCook":
+        sortedRecipes.sort((a, b) => a.cook - b.cook);
+        break;
+      case "descendingCook":
+        sortedRecipes.sort((a, b) => b.cook - a.cook);
+        break;
+      case "byDateOldest":
+        sortedRecipes.sort(
+          (a, b) => new Date(b.published) - new Date(a.published)
+        );
+        break;
+      case "default":
+        sortedRecipes = initialRecipes;
+        break;
+      default:
+        break;
+    }
+
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false); // Close the dropdown after selecting an option
   };
@@ -76,13 +102,13 @@ export default function RecipeList(props) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-// Function to load more recipes
-const loadMore = () => {
-  const additionalRecipes = 20;
-  const newVisibleRecipes = visibleRecipes + additionalRecipes;
-  setVisibleRecipes(newVisibleRecipes);
-  setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0)); // Add a closing parenthesis here
-};
+  // Function to load more recipes
+  const loadMore = () => {
+    const additionalRecipes = 20;
+    const newVisibleRecipes = visibleRecipes + additionalRecipes;
+    setVisibleRecipes(newVisibleRecipes);
+    setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0)); // Add a closing parenthesis here
+  };
 
   // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
@@ -102,7 +128,9 @@ const loadMore = () => {
 
     setRecipes(filteredRecipes);
     const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
-    setRemainingRecipes(Math.max(filteredRecipes.length - newVisibleRecipes, 0));
+    setRemainingRecipes(
+      Math.max(filteredRecipes.length - newVisibleRecipes, 0)
+    );
 
     // Update the count of matching recipes
     setMatchingRecipeCount(filteredRecipes.length);
@@ -142,7 +170,11 @@ const loadMore = () => {
         >
           Search
         </button>
-        <Link href="/favourite-recipes">
+        <button className="bg-red-700 text-white p-2 rounded-r hover:bg-blue-800">
+          <FontAwesomeIcon icon={faFilter} />
+        </button>
+
+        <Link href="/favouriteRecipes">
           <button className="text-white p-2">Favorite Recipes</button>
         </Link>
       </div>
@@ -153,7 +185,7 @@ const loadMore = () => {
           <p>{matchingRecipeCount} matching recipes found</p>
         )}
       </div>
-      
+
       <div className="recipe-list-container overflow-y-auto flex-grow">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
@@ -164,10 +196,13 @@ const loadMore = () => {
                   alt={recipe.title}
                   className="w-full h-48 object-cover rounded-md"
                 />
-                
-                <FavoriteButton
-                  recipe={recipe}
-                />
+                <button className="absolute right-4 m-3 rounded-full w-14 text-center">
+                  {isFavourate ? (
+                    <FontAwesomeIcon icon={faHeart} />
+                  ) : (
+                    <FontAwesomeIcon icon={faHeart} />
+                  )}
+                </button>
 
                 <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
@@ -185,7 +220,7 @@ const loadMore = () => {
                   {convertToHours(recipe.prep + recipe.cook)}{" "}
                 </p>
 
-                <Link href={`/recipe-details/${recipe._id}`} className="mt-4">
+                <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
                   <button>View Recipe</button>
                 </Link>
               </div>
@@ -206,3 +241,6 @@ const loadMore = () => {
     </div>
   );
 }
+
+
+

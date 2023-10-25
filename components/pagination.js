@@ -31,26 +31,26 @@ function Pagination(props) {
         <div className={styles.pagination}>
         {
             centerPage !== firstPage  && 
-            <Link href={`/recipe-list/${centerPage - 1}`} onClick={() => handlePageClick('prev')}>&laquo;</Link>
+            <Link href={`/recipeList/${centerPage - 1}`} onClick={() => handlePageClick('prev')}>&laquo;</Link>
         }
         {
             centerPage - 1 >= 1 && (
-            <Link href={`/recipe-list/${firstPage}`} onClick={() => handlePageClick(firstPage)} className={`${styles.page}`}>
+            <Link href={`/recipeList/${firstPage}`} onClick={() => handlePageClick(firstPage)} className={`${styles.page}`}>
             {firstPage}
             </Link>
         )}
-        <Link href={`/recipe-list/${centerPage}`} onClick={() => handlePageClick(centerPage)} className={`${styles.page} ${styles.active}`}>
+        <Link href={`/recipeList/${centerPage}`} onClick={() => handlePageClick(centerPage)} className={`${styles.page} ${styles.active}`}>
             {centerPage}
         </Link>
         {
             centerPage < totalPages && (
-            <Link href={`/recipe-list/${totalPages}`} onClick={() => handlePageClick(totalPages)} className={`${styles.page}`}>
+            <Link href={`/recipeList/${totalPages}`} onClick={() => handlePageClick(totalPages)} className={`${styles.page}`}>
             {totalPages}
             </Link>
         )}
         {
             centerPage !== totalPages && (
-            <Link href={`/recipe-list/${centerPage + 1}`} onClick={() => handlePageClick('next')}>&raquo;</Link>
+            <Link href={`/recipeList/${centerPage + 1}`} onClick={() => handlePageClick('next')}>&raquo;</Link>
         )}
         </div>
     );
