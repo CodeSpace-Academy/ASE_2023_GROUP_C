@@ -13,11 +13,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "./pagination";
 import SortingOption from "./ui-utils/filtering-form";
+import FavoriteButton from "./ui-utils/FavoriteButton";
 
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
-  const [isFavourate, setIsFavourate] = useState(false);
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -153,7 +153,7 @@ const loadMore = () => {
           <p>{matchingRecipeCount} matching recipes found</p>
         )}
       </div>
-
+      
       <div className="recipe-list-container overflow-y-auto flex-grow">
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {recipes.slice(0, visibleRecipes).map((recipe) => (
@@ -164,13 +164,10 @@ const loadMore = () => {
                   alt={recipe.title}
                   className="w-full h-48 object-cover rounded-md"
                 />
-                <button className="absolute right-4 m-3 rounded-full w-14 text-center">
-                  {isFavourate ? (
-                    <FontAwesomeIcon icon={faHeart} />
-                  ) : (
-                    <FontAwesomeIcon icon={faHeart} />
-                  )}
-                </button>
+                
+                <FavoriteButton
+                  recipe={recipe}
+                />
 
                 <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
