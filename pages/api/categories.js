@@ -1,8 +1,8 @@
-import { connectToDb, getAllRecipes } from "../../../utils/mongodb-utils";
+import { connectToDb, getCategories } from "../../utils/mongodb-utils";
 
 export default async function handler(req, res) {
     let client;
-    
+
     try {
         client = await connectToDb()
     } catch(error) {
@@ -12,13 +12,12 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
         try {
-            const recipeDocuments = await getAllRecipes(
+            const recipeDocuments = await getCategories(
                 client,
-                'recipes',
-                {_id: -1},
-                1,
+                'categories',
             )
-            res.status(200).json({message: recipeDocuments})
+            const categoriesArr = recipeDocuments[0].categories
+            res.status(200).json({message: categoriesArr})
         } catch (error) {
             res.status(500).json({message: 'Getting recipes failed'})
         }

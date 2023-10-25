@@ -6,7 +6,7 @@ export default function FavouriteRecipes() {
 
   return (
     <div >
-       <Link href='/recipe-list'>
+       <Link href='/recipeList/recipeList'>
          <FontAwesomeIcon icon={faChevronLeft} size='xl' className="text-white p-2" />
         </Link>
         

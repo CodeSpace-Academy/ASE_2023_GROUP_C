@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import RecipeInstruction from './update-recipe/instructions';
-import RecipeDescription from './update-recipe/description';
+import RecipeInstruction from './updateRecipe/instructions';
+import RecipeDescription from './updateRecipe/description';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMitten, faUtensils } from '@fortawesome/free-solid-svg-icons';
-import TagsDisplay from '../tags/tags-display';
+import TagsDisplay from '../tags/tagsDisplay';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Card from '../ui-utils/card';
