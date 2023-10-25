@@ -52,42 +52,40 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
   }
 
   return (
-<div>
-  {/* Search bar */}
-  <div className="search-bar-container flex items-center mb-4">
-    <input
-      type="text"
-      value={searchInput}
-      onChange={(e) => setSearchInput(e.target.value)}
-      placeholder="Search..."
-      className="w-3/4 p-2 border rounded-l text-black"
-    />
-    <button
-      onClick={handleSearch}
-      className="bg-blue-700 text-white p-2 rounded-r hover-bg-blue-800"
-    >
-      Search
-    </button>
-  </div>
-
-  {/* Category buttons */}
-  {filteredCategories.map((category, index) => (
-    <button
-      key={index}
-      value={category}
-      className="p-2 m-2"
-      onClick={() => handleCategoryClick(category)}
-    >
-      {category}
-    </button>
-  ))};
-
-  {/* Load More button (if applicable) */}
-  {categories.length > showMore && (
-    <button onClick={handleShowMore} className="p-2 m-2">
-      Load More
-    </button>
-  )}
-</div>
+    <div>
+      {/* Search bar */}
+      <div className="search-bar-container flex items-center mb-4">
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search..."
+          className="w-3/4 p-2 border rounded-l text-black"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-700 text-white p-2 rounded-r hover-bg-blue-800"
+        >
+          Search
+        </button>
+      </div>
+      {/* Category buttons */}
+      {filteredCategories.map((category, index) => (
+        <button
+          key={index}
+          value={category}
+          className="p-2 m-2"
+          onClick={() => handleCategoryClick(category)}
+        >
+          {category}
+        </button>
+      ))}
+      ;{/* Load More button (if applicable) */}
+      {categories.length > showMore && (
+        <button onClick={handleShowMore} className="p-2 m-2">
+          Load More
+        </button>
+      )}
+    </div>
   );
 }
