@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RecipeInstruction from './update-recipe/instructions';
-import RecipeDescription from './update-recipe/description';
+import RecipeInstruction from './updateRecipe/instructions';
+import RecipeDescription from './updateRecipe/description';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMitten, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import TagsDisplay from '../tags/tags-display';

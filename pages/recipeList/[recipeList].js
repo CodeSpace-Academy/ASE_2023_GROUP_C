@@ -1,4 +1,4 @@
-import RecipeList from "../../components/recipe-list";
+import RecipeList from "../../components/recipeList/recipeList";
 import { connectToDb, getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
 
 export async function getServerSideProps(context) {
