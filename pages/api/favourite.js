@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   }
   const favouredRecipe = {
     userName: 'The User Gang',
-    userList: recipe
+    userList: [recipe]
   }
 
   if (req.method === 'POST') {
