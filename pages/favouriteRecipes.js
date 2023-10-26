@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
     
     const userList = favouriteRecipe.userList
 
-    return { props: { favouriteRecipes: [userList]} }
+    return { props: { favouriteRecipes: userList} }
 
   } catch (error) {
     console.error("Getting recipes failed");
