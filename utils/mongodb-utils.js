@@ -81,6 +81,7 @@ export async function getAllergens(collection, filter = {}) {
     return documents;
 }
 
+
 /**
  * Retrieves a list of recipe categories from a MongoDB collection.
  * @param {MongoClient} client - The MongoDB client.

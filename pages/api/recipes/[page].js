@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
             const recipeDocuments = await getAllRecipes(
-                client,
                 'recipes',
                 {_id: -1},
                 1,

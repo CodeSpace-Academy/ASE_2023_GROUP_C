@@ -51,17 +51,26 @@
 //           "protein": "0.8"
 //         }
 //       }
-import { client } from "../../../utils/mongodb-utils";
-import { mongodb,  } from "../../../utils/mongodb-utils";
+import { getAllRecipes } from "../../../utils/mongodb-utils";
 
 
 
 export default async function handler(req, res) {
     
-
-    
+        
     if ( req.method === 'GET') {
-        const recipes =  client.db(mongodb).collection("recipes").find({});
+        const userQuery = req.query.searchQuery === 'all'? '': req.query.searchQuery; // User's search query
+        const regexPattern = new RegExp(`.*${userQuery}.*`, "i")
+    
+        const recipes =  await getAllRecipes(
+
+            'recipes',
+            {_id: -1},
+            1,
+            {
+                title: { $regex: regexPattern }
+            }
+        );
         res.status(200).json({message: recipes })
     }
 }
