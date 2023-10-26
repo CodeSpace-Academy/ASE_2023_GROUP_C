@@ -12,8 +12,8 @@ export default async function handler(req, res) {
     return 
   }
   const favouredRecipe = {
-    userName: 'The User Gang',
-    userList: [recipe]
+    userName: 'The User 1',
+    userList: recipe
   }
 
   if (req.method === 'POST') {
