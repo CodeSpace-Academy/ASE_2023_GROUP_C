@@ -1,6 +1,5 @@
 import RecipeList from "../../components/recipeList/recipeList";
 import {
-  connectToDb,
   getAllRecipes,
   getDocumentSize,
 } from "../../utils/mongodb-utils";
@@ -8,14 +7,12 @@ import {
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
 
-  let client = await connectToDb();
   const recipeDocuments = await getAllRecipes(
-    client,
     "recipes",
     { _id: -1 },
     pageNumber
   );
-  const totalRecipeInDb = await getDocumentSize(client, "recipes");
+  const totalRecipeInDb = await getDocumentSize("recipes");
 
   return {
     props: {

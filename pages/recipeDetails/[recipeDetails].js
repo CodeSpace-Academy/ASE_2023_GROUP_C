@@ -1,5 +1,5 @@
 import React from 'react'
-import { connectToDb, getRecipeDetails,getAllergens } from '../../utils/mongodb-utils';
+import { getRecipeDetails,getAllergens } from '../../utils/mongodb-utils';
 import RecipeCard from '../../components/recipeCard/recipeCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -8,24 +8,14 @@ import Link from 'next/link';
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
 
-  let client;
-
-  try {
-    client = await connectToDb();
-  } catch (error) {
-    console.error("Database connection failed");
-    return {
-      notFound: true,
-    };
-  }
   let recipeDocuments;
   let allergens;
 
   try {
-    recipeDocuments = await getRecipeDetails(client, "recipes", {
+    recipeDocuments = await getRecipeDetails("recipes", {
       _id: recipeId,
     });
-    allergens = await getAllergens(client, "allergens");
+    allergens = await getAllergens("allergens");
 
     const allergensList = allergens[0].allergens
 

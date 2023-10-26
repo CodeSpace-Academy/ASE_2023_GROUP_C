@@ -5,17 +5,13 @@ const mongodb = process.env.MONGODB_DATABASE;
 
 /**
  * Connects to the MongoDB database.
- * @returns {Promise<MongoClient>} A Promise that resolves to a MongoClient instance.
  */
 
-export async function connectToDb() {
-    const client = await MongoClient.connect(connectionString, {
-        useNewUrlParser: true,  // Add any additional connection options here
-    });
-    return client;
-}
+const client = await MongoClient.connect(connectionString, {
+    useNewUrlParser: true,  // Add any additional connection options here
+});
 
-export async function getDocumentSize(client, collection) {
+export async function getDocumentSize(collection) {
     const db = client.db(mongodb)
     const count = db.collection(collection).countDocuments()
     return count
@@ -31,7 +27,7 @@ export async function getDocumentSize(client, collection) {
  * @returns {Promise<Array>} A Promise that resolves to an array of recipe documents.
  */
 
-export async function getAllRecipes(client, collection, sort, pageNumber, filter = {}) {
+export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
     const pageSize = 100;
     const skipPage = (pageNumber - 1) * pageSize;
 
@@ -56,7 +52,7 @@ export async function getAllRecipes(client, collection, sort, pageNumber, filter
  * @returns {Promise<object|null>} A Promise that resolves to the recipe document, or null if not found.
  */
 
-export async function getRecipeDetails(client, collection, uniqueIdentifier) {
+export async function getRecipeDetails(collection, uniqueIdentifier) {
     const db = client.db(mongodb);
 
     const document = await db
@@ -74,7 +70,7 @@ export async function getRecipeDetails(client, collection, uniqueIdentifier) {
  * @returns {Promise<Array>} A Promise that resolves to an array of item documents.
  */
 
-export async function getAllergens(client, collection, filter = {}) {
+export async function getAllergens(collection, filter = {}) {
     const db = client.db(mongodb);
   
     const documents = await db
@@ -93,7 +89,7 @@ export async function getAllergens(client, collection, filter = {}) {
  * @returns {Promise<Array>} A Promise that resolves to an array of item documents.
  */
 
-export async function getCategories(client, collection, filter = {}) {
+export async function getCategories(collection, filter = {}) {
     const db = client.db(mongodb);
   
     const documents = await db
@@ -113,7 +109,7 @@ export async function getCategories(client, collection, filter = {}) {
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
 
-export async function insertDocument(client, collection, document) {
+export async function insertDocument(collection, document) {
     const db = client.db(mongodb);
   
     const result = await db
@@ -131,7 +127,7 @@ export async function insertDocument(client, collection, document) {
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
 
-export async function getFavouriteRecipes(client, collection, filter = {}) {    
+export async function getFavouriteRecipes(collection, filter = {}) {    
     const db = client.db(mongodb);
 
     const documents = await db
