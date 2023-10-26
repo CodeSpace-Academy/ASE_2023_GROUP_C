@@ -1,4 +1,4 @@
-import { connectToDb, insertDocument } from "../../utils/mongodb-utils";
+import { insertDocument } from "../../utils/mongodb-utils";
 
 export default async function handler(req, res) {
   const recipe = req.body
