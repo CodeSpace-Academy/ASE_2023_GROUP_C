@@ -24,6 +24,7 @@ export default function PreviewCard (props){
         return `${minutes} minutes`;
   };
     
+   
      return(
        <li key={recipe._id}>
                  <div className=" relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200 h-full">
@@ -32,11 +33,11 @@ export default function PreviewCard (props){
                      alt={recipe.title}
                      className="w-full h-48 object-cover rounded-md"
                    />
-                   <button className=" absolute right-4 m-3 rounded-full w-14 text-center">
+                   <button className=" absolute right-4 m-3 rounded-full w-14 text-center" onClick={() =>setIsFavourate(prevState => !prevState)}>
                      {isFavourate ? (
                        <FontAwesomeIcon icon={faHeart} />
                      ) : (
-                       <FontAwesomeIcon icon={faHeart} />
+                       <FontAwesomeIcon className= ' fill-current text-red-500'  icon={faHeart} />
                      )}
                    </button>
    
