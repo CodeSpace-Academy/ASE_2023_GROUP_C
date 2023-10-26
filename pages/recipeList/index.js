@@ -1,9 +1,7 @@
-import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
+import {getAllRecipes } from "../../utils/mongodb-utils";
 
 export async function getStaticProps() {
-  let client = await connectToDb();
   const recipeDocuments = await getAllRecipes(
-    client,
     "recipes",
     { _id: -1 },
     1

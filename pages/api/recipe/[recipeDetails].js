@@ -1,4 +1,4 @@
-import { connectToDb, getRecipeDetails } from "../../../utils/mongodb-utils";
+import { getRecipeDetails } from "../../../utils/mongodb-utils";
 
 export default async function handler(req, res){
     const recipeId = req.query.recipeDetails;

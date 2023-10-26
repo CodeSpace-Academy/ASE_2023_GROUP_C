@@ -1,13 +1,17 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-export const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
-export const mongodb = process.env.MONGODB_DATABASE;
+const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
+const mongodb = process.env.MONGODB_DATABASE;
 
-export const client = new MongoClient(connectionString, {
-        useNewUrlParser: true // Add any additional connection options here
-})
+/**
+ * Connects to the MongoDB database.
+ */
 
-export async function getDocumentSize(client, collection) {
+const client = await MongoClient.connect(connectionString, {
+    useNewUrlParser: true,  // Add any additional connection options here
+});
+
+export async function getDocumentSize(collection) {
     const db = client.db(mongodb)
     const count = db.collection(collection).countDocuments()
     return count
@@ -23,7 +27,7 @@ export async function getDocumentSize(client, collection) {
  * @returns {Promise<Array>} A Promise that resolves to an array of recipe documents.
  */
 
-export async function getAllRecipes(client, collection, sort, pageNumber, filter = {}) {
+export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
     const pageSize = 100;
     const skipPage = (pageNumber - 1) * pageSize;
 
@@ -48,7 +52,7 @@ export async function getAllRecipes(client, collection, sort, pageNumber, filter
  * @returns {Promise<object|null>} A Promise that resolves to the recipe document, or null if not found.
  */
 
-export async function getRecipeDetails(client, collection, uniqueIdentifier) {
+export async function getRecipeDetails(collection, uniqueIdentifier) {
     const db = client.db(mongodb);
 
     const document = await db
@@ -66,7 +70,7 @@ export async function getRecipeDetails(client, collection, uniqueIdentifier) {
  * @returns {Promise<Array>} A Promise that resolves to an array of item documents.
  */
 
-export async function getAllergens(client, collection, filter = {}) {
+export async function getAllergens(collection, filter = {}) {
     const db = client.db(mongodb);
   
     const documents = await db
@@ -85,7 +89,7 @@ export async function getAllergens(client, collection, filter = {}) {
  * @returns {Promise<Array>} A Promise that resolves to an array of item documents.
  */
 
-export async function getCategories(client, collection, filter = {}) {
+export async function getCategories(collection, filter = {}) {
     const db = client.db(mongodb);
   
     const documents = await db
@@ -105,7 +109,7 @@ export async function getCategories(client, collection, filter = {}) {
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
 
-export async function insertDocument(client, collection, document) {
+export async function insertDocument(collection, document) {
     const db = client.db(mongodb);
   
     const result = await db
@@ -113,6 +117,22 @@ export async function insertDocument(client, collection, document) {
         .insertOne(document);
   
     return result;
-  }
+}
 
-  
+/**
+ * Retrieve a fovourite recipe into a MongoDB collection.
+ * @param {MongoClient} client - The MongoDB client.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {object} username - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+
+export async function getFavouriteRecipes(collection, filter = {}) {    
+    const db = client.db(mongodb);
+
+    const documents = await db
+        .collection(collection)
+        .findOne(filter)
+
+    return documents;
+}

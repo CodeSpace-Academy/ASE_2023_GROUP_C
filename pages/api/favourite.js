@@ -1,4 +1,4 @@
-import { connectToDb, insertDocument } from "../../utils/mongodb-utils";
+import { insertDocument } from "../../utils/mongodb-utils";
 
 export default async function handler(req, res) {
   const recipe = req.body
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     return 
   }
   const favouredRecipe = {
-    userName: 'The User Gang',
+    userName: 'The User 1',
     userList: recipe
   }
 
