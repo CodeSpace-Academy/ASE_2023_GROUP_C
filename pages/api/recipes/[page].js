@@ -1,4 +1,4 @@
-import { connectToDb, getAllRecipes } from "../../../utils/mongodb-utils";
+import { getAllRecipes } from "../../../utils/mongodb-utils";
 
 export default async function handler(req, res) {
     let client;

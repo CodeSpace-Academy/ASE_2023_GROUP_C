@@ -1,4 +1,4 @@
-import { connectToDb, getCategories } from "../../utils/mongodb-utils";
+import { getCategories } from "../../utils/mongodb-utils";
 
 export default async function handler(req, res) {
     let client;
