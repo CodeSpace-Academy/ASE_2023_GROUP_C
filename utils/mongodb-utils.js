@@ -116,7 +116,9 @@ export async function getCategories(client, collection, filter = {}) {
 export async function insertDocument(client, collection, document) {
     const db = client.db(mongodb);
   
-    const result = await db.collection(collection).insertOne(document);
+    const result = await db
+        .collection(collection)
+        .insertOne(document);
   
     return result;
   }
