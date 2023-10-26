@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 
-export default function SearchBar({ onSearch }) {
-  const [searchInput, setSearchInput] = useState("");
+export default function SearchBar() {
+  const searchRef = useRef()
   
-  const handleSearch = () => {
-    onSearch(searchInput);
-  };
+  const submitHandler = () => {
+    console.log(searchRef.current.value)
+  }
 
   return (
-    <div className="search-container">
+    <form className="search-container" onSubmit={submitHandler}>
       <input
         type="text"
         placeholder="Search for recipes by title"
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
+        ref = {searchRef}
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      <button>Search</button>
+    </form>
   );
 }
