@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
 import FavoriteButton from "../ui-utils/FavoriteButton";
+import SearchBar from "../layout/searchBar";
 
 export default function RecipeList(props) {
   // Destructure props
@@ -161,19 +162,7 @@ export default function RecipeList(props) {
       </div>
 
       <div className="search-bar-container flex items-center mb-4">
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search..."
-          className="w-3/4 p-2 border rounded-l text-black"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-700 text-white p-2 rounded-r hover:bg-blue-800"
-        >
-          Search
-        </button>
+        <SearchBar />
         <button className="bg-red-700 text-white p-2 rounded-r hover:bg-blue-800">
           <FontAwesomeIcon icon={faFilter} />
         </button>

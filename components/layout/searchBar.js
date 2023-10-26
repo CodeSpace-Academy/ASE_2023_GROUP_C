@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useRef } from 'react';
+import Link from 'next/link'; 
 
-export default function SearchBar({ onSearch }) {
-  const [searchInput, setSearchInput] = useState("");
+export default function SearchBar() {
+  const searchRef = useRef();
   
-  const handleSearch = () => {
-    onSearch(searchInput);
-  };
 
   return (
-    <div className="search-container">
+    <form className="search-container">
+      <label htmlFor='titleSearch'></label>
       <input
         type="text"
         placeholder="Search for recipes by title"
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
+        ref={searchRef}
+        id='titleSearch'
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      <button onClick={handleSearch}>
+        <Link to={`/search/${searchRef.current.value}`}>Search</Link>
+      </button>
+    </form>
   );
 }
