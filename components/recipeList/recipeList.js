@@ -10,6 +10,7 @@ import {
   faHeart,
   faSort,
   faFilter,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
@@ -154,6 +155,9 @@ export default function RecipeList(props) {
             )}
           </div>
         </div>
+        <Link href="/search">
+        <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
+        </Link>
       </div>
 
       <div className="search-bar-container flex items-center mb-4">
