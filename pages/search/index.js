@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import CategoryFilter from "../../components/category-filter/category-filter";
+import CategoryFilter from "../../components/categoryFilter/categoryFilter";
 
 
 

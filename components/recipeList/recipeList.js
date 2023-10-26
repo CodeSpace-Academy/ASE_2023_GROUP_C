@@ -10,15 +10,16 @@ import {
   faHeart,
   faSort,
   faFilter,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
+import FavoriteButton from "../ui-utils/FavoriteButton";
 
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb } = props;
-  const [isFavourate, setIsFavourate] = useState(false);
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -154,6 +155,9 @@ export default function RecipeList(props) {
             )}
           </div>
         </div>
+        <Link href="/search">
+        <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
+        </Link>
       </div>
 
       <div className="search-bar-container flex items-center mb-4">
@@ -196,13 +200,10 @@ export default function RecipeList(props) {
                   alt={recipe.title}
                   className="w-full h-48 object-cover rounded-md"
                 />
-                <button className="absolute right-4 m-3 rounded-full w-14 text-center">
-                  {isFavourate ? (
-                    <FontAwesomeIcon icon={faHeart} />
-                  ) : (
-                    <FontAwesomeIcon icon={faHeart} />
-                  )}
-                </button>
+
+                <FavoriteButton
+                  recipe={recipe}
+                />
 
                 <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
