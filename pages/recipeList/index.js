@@ -1,7 +1,4 @@
-
 import { connectToDb, getAllRecipes } from "../../utils/mongodb-utils";
-
-
 
 export async function getStaticProps() {
   let client = await connectToDb();
@@ -19,9 +16,7 @@ export async function getStaticProps() {
   };
 }
 
-
-
-import RecipeList from "../../components/recipe-list";
+import RecipeList from "../../components/recipeList/recipeList";
 
 export default function RecipeCards(props) {
   const { recipes } = props;
@@ -32,5 +27,3 @@ export default function RecipeCards(props) {
     </div>
   );
 }
-//<tags recipes = {recipes}/>
-//<instructions .../>

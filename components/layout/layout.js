@@ -1,8 +1,12 @@
-import React from 'react'
-import MainNavigation from './main-navigation'
+import { Fragment } from 'react'
 
-export default function Layout() {
+
+export default function Layout(props) {
   return (
-    <MainNavigation  />
+    <Fragment>
+      <div className=' bg-slate-900 '>
+      {props.children}
+      </div>
+    </Fragment>
   )
 }

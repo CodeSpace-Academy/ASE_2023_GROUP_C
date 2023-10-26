@@ -1,13 +1,16 @@
-import React from 'react'
-import Layout from '../components/layout/layout'
+import Layout from "../components/layout/layout";
+import "../styles/globals.css"; 
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
-    <div>
-      <Layout />
-      <Component { ...pageProps} />
-      
-    </div>
-  )
+    <UserProvider>
+      <div className=" bg-slate-900 ">
+        <Layout />
+        <Component {...pageProps} />
+      </div>
+    </UserProvider>
+  );
 }
 
+export default MyApp;
