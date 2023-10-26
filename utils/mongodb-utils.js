@@ -1,19 +1,11 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
-const mongodb = process.env.MONGODB_DATABASE;
+export const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
+export const mongodb = process.env.MONGODB_DATABASE;
 
-/**
- * Connects to the MongoDB database.
- * @returns {Promise<MongoClient>} A Promise that resolves to a MongoClient instance.
- */
-
-export async function connectToDb() {
-    const client = await MongoClient.connect(connectionString, {
-        useNewUrlParser: true,  // Add any additional connection options here
-    });
-    return client;
-}
+export const client = new MongoClient(connectionString, {
+        useNewUrlParser: true // Add any additional connection options here
+})
 
 export async function getDocumentSize(client, collection) {
     const db = client.db(mongodb)

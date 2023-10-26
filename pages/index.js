@@ -22,7 +22,7 @@ export default function HomePage() {
     <div>
       {user && (
         <>
-          <div>Welcome {user.name}</div>
+          <div >Welcome {user.name}</div>
           <h1>
             <Link href="/api/auth/logout" legacyBehavior>
               <a>Logout</a>
