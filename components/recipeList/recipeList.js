@@ -159,7 +159,6 @@ export default function RecipeList(props) {
       </div>
 
       <div className="search-bar-container items-center mb-4">
-        <SearchBar />
         <Link href="/favouriteRecipes">
           <button className="text-white p-2">Favorite Recipes</button>
         </Link>
