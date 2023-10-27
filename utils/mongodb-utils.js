@@ -120,6 +120,29 @@ export async function insertDocument(collection, document) {
 }
 
 /**
+ * Inserts a document into a MongoDB collection.
+ * @param {MongoClient} client - The MongoDB client.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {string} username - The name of the collection to insert into.
+ * @param {object} filter - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+
+export async function updateUsersList(collection, username, filter) {
+    const db = client.db(mongodb);
+  
+    const result = await db
+        .collection(collection)
+        .updateOne(
+            { userName: username},
+            { $addToSet: { userList: filter } }
+        );
+  
+    return result;
+}
+
+
+/**
  * Retrieve a fovourite recipe into a MongoDB collection.
  * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to insert into.
