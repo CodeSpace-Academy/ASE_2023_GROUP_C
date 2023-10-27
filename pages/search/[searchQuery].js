@@ -1,6 +1,5 @@
 import { useEffect, useState} from 'react'
 import { useRouter } from 'next/router'
-import SearchBar from '../../components/layout/search-bar'
 import RecipeList from '../../components/recipeList/recipeList'
 
 export default function SearchResultPage(props) {

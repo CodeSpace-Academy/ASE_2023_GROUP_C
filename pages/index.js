@@ -20,17 +20,15 @@ export default function HomePage() {
 
   return (
     <div>
+      <RecipeHomePage />
       {user && (
         <>
-          <div >Welcome {user.name}</div>
-          <h1>
+          <div className="text-2xl font-bold text-white mb-6" >User: {user.name}</div>
             <Link href="/api/auth/logout" legacyBehavior>
-              <a>Logout</a>
+              <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Logout</button>
             </Link>
-          </h1>
         </>
       )}
-      <RecipeHomePage />
     </div>
   );
 }

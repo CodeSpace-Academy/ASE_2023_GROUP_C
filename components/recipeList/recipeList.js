@@ -156,17 +156,10 @@ export default function RecipeList(props) {
             )}
           </div>
         </div>
-        <Link href="/search">
-        <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
-        </Link>
       </div>
 
-      <div className="search-bar-container flex items-center mb-4">
+      <div className="search-bar-container items-center mb-4">
         <SearchBar />
-        <button className="bg-red-700 text-white p-2 rounded-r hover:bg-blue-800">
-          <FontAwesomeIcon icon={faFilter} />
-        </button>
-
         <Link href="/favouriteRecipes">
           <button className="text-white p-2">Favorite Recipes</button>
         </Link>
@@ -190,9 +183,7 @@ export default function RecipeList(props) {
                   className="w-full h-48 object-cover rounded-md"
                 />
 
-                <FavoriteButton
-                  recipe={recipe}
-                />
+                <FavoriteButton recipe={recipe} />
 
                 <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
@@ -231,6 +222,3 @@ export default function RecipeList(props) {
     </div>
   );
 }
-
-
-
