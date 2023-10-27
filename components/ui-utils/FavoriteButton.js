@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function FavoriteButton({recipe}) {
   const [isFavourate, setIsFavourate] = useState(false);
+  
 
   function handleFavorite() {
     setIsFavourate((prevState) => !prevState);
@@ -19,13 +20,19 @@ export default function FavoriteButton({recipe}) {
   }
 
   return (
-    <button className=" absolute right-4 m-3 rounded-full w-14 text-center" onClick={handleFavorite}>
-      {isFavourate ? (
+   //Favourite button
+    <button
+  className={`m-3 rounded-full w-14 h-14 flex items-center justify-center ${
+    isFavourate ? 'bg-red-100' : 'bg-red'
+  }`}
+  onClick={handleFavorite}
+>
+  {isFavourate ? (
+    <FontAwesomeIcon className='text-red-500' icon={faHeart} />
+  ) : (
+    <FontAwesomeIcon icon={faHeart} />
+  )}
+</button>
 
-        <FontAwesomeIcon className=' fill-current text-red-500' icon={faHeart} />
-      ) : (
-          <FontAwesomeIcon icon={faHeart} />
-      )}
-    </button>
   );
 }

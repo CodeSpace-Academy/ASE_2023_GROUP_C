@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
 import FavoriteButton from "../ui-utils/FavoriteButton";
+import SearchBar from "../layout/searchBar";
 
 export default function RecipeList(props) {
   // Destructure props
@@ -155,29 +156,9 @@ export default function RecipeList(props) {
             )}
           </div>
         </div>
-        <Link href="/search">
-        <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
-        </Link>
       </div>
 
-      <div className="search-bar-container flex items-center mb-4">
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search..."
-          className="w-3/4 p-2 border rounded-l text-black"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-700 text-white p-2 rounded-r hover:bg-blue-800"
-        >
-          Search
-        </button>
-        <button className="bg-red-700 text-white p-2 rounded-r hover:bg-blue-800">
-          <FontAwesomeIcon icon={faFilter} />
-        </button>
-
+      <div className="search-bar-container items-center mb-4">
         <Link href="/favouriteRecipes">
           <button className="text-white p-2">Favorite Recipes</button>
         </Link>
@@ -201,9 +182,7 @@ export default function RecipeList(props) {
                   className="w-full h-48 object-cover rounded-md"
                 />
 
-                <FavoriteButton
-                  recipe={recipe}
-                />
+                <FavoriteButton recipe={recipe} />
 
                 <div className="flex justify-between">
                   <h2 className="text-xl font-semibold mt-2">{recipe.title}</h2>
@@ -242,6 +221,3 @@ export default function RecipeList(props) {
     </div>
   );
 }
-
-
-
