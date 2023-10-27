@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
-import FavouriteRecipes from '../components/favourite/favouriteRecipes'
 import { getFavouriteRecipes } from '../utils/mongodb-utils';
 import RecipeList from '../components/recipeList/recipeList';
+import NoFavouritesYet from '../components/favourite/noFavourites';
 
 
 export async function getServerSideProps() {
@@ -10,7 +10,7 @@ export async function getServerSideProps() {
   try {
     favouriteRecipe = await getFavouriteRecipes(
       'users-list',
-      {'userName': 'The User 2'},
+      {'userName': 'The User 1'},
     )
     
     const userList = favouriteRecipe.userList
@@ -30,13 +30,14 @@ export default function Favorites({favouriteRecipes}) {
   const totalRecipeInDb = 0
   return (
     <Fragment>
-      <div >
-        niu
-        <RecipeList recipes={favouriteRecipes} totalRecipeInDb={totalRecipeInDb} />
-       
-
-       
-      </div>
+        {
+          favouriteRecipes && favouriteRecipes.length === 0 &&
+          <NoFavouritesYet />
+        }
+        {
+          favouriteRecipes && favouriteRecipes.length > 0 &&
+          <RecipeList recipes={favouriteRecipes} totalRecipeInDb={totalRecipeInDb} />  
+        }
     </Fragment>  
   )
 }
