@@ -1,25 +1,21 @@
-import { Fragment } from 'react'
-import SearchBar from './searchBar'
-import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { Fragment } from "react";
+import SearchBar from "./searchBar";
 
-
+/**
+ * Layout component that provides a common structure for pages.
+ * @param {Object} props - Component properties.
+ * @param {ReactNode} props.children - The content to be displayed within the layout.
+ */
 export default function Layout(props) {
   return (
     <Fragment>
-      <div >
-      <Link href="/">
-          <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
-        </Link>
-      <SearchBar />
-      <div className="search-bar-container items-center mb-4">
-        <Link href="/favouriteRecipes">
-          <button className="text-white p-2">Favorite Recipes</button>
-        </Link>
-      </div>
-      {props.children}
+      <div>
+        {/* Render the SearchBar component at the top of the layout */}
+        <SearchBar />
+        <div className="search-bar-container items-center mb-4"></div>
+        {/* Render the content passed as children */}
+        {props.children}
       </div>
     </Fragment>
-  )
+  );
 }
