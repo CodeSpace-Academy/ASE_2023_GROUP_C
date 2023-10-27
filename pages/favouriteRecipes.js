@@ -3,13 +3,14 @@ import FavouriteRecipes from '../components/favourite/favouriteRecipes'
 import { getFavouriteRecipes } from '../utils/mongodb-utils';
 import RecipeList from '../components/recipeList/recipeList';
 
+
 export async function getServerSideProps() {
   let favouriteRecipe;
 
   try {
     favouriteRecipe = await getFavouriteRecipes(
       'users-list',
-      {'userName': 'The User 1'},
+      {'userName': 'The User 2'},
     )
     
     const userList = favouriteRecipe.userList
@@ -29,8 +30,13 @@ export default function Favorites({favouriteRecipes}) {
   const totalRecipeInDb = 0
   return (
     <Fragment>
-      {/* <FavouriteRecipes /> */}
-      <RecipeList recipes={favouriteRecipes} totalRecipeInDb={totalRecipeInDb} />
+      <div >
+        niu
+        <RecipeList recipes={favouriteRecipes} totalRecipeInDb={totalRecipeInDb} />
+       
+
+       
+      </div>
     </Fragment>  
   )
 }

@@ -183,7 +183,7 @@ export default function RecipeList(props) {
         </Link>
       </div>
       {noResults && <NoResultsMessage />}
-
+      <h2 className='recipe-card text-white'>My Favourite Recipes</h2>
       <div className="matching-recipe-count">
         {matchingRecipeCount > 0 && (
           <p>{matchingRecipeCount} matching recipes found</p>

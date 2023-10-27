@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-export default function FavouriteRecipes() {
+export default function FavouriteRecipes({children}) {
 
   return (
     <div >
@@ -13,6 +13,7 @@ export default function FavouriteRecipes() {
       <h1 className="text-white p-2">Your Favorite Recipes</h1>
       <h2 className="text-white p-2">Hellooo</h2>
       <button>Remove favourite</button>
+      <div>{children}</div>
     </div>
 
   
