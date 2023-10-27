@@ -30,7 +30,6 @@ function RecipeInstruction(props) {
         />
       ) : (
         <div>
-          <h3>Instructions</h3>
           <ol>
             {editedInstruction.map((instruction, index) => (
               <li key={index}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
