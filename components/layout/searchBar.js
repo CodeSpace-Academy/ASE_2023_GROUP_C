@@ -1,20 +1,20 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 
 
 export default function SearchBar() {
   const searchRef = useRef();
-  const [searchTerms, setSearchTerms] = useState('');
-  const [ text, setText ] = useState('all')
- 
-
-
+  const router = useRouter()
+  
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(searchRef.current.value);
+    const searchValue = searchRef.current.value
+    router.push( `search/${searchValue}`)
   }
   
 
+  // let searchText = !searchRef.current.value ? 'all' : searchRef.current.value
   return (
     <form className="search-container" onSubmit={handleSubmit}>
       <label htmlFor='titleSearch'>Search</label>
@@ -26,10 +26,8 @@ export default function SearchBar() {
         className=' text-black'
       />
 
-      <button type='submit'>
-        <Link href={`/search/${text}`}>
-        Search
-        </Link>     
+      <button type='submit'>   
+        Search   
       </button>
     </form>
   );

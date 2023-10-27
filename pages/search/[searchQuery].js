@@ -1,6 +1,7 @@
 import { useEffect, useState} from 'react'
 import { useRouter } from 'next/router'
 import SearchBar from '../../components/layout/search-bar'
+import RecipeList from '../../components/recipeList/recipeList'
 
 export default function SearchResultPage(props) {
 
@@ -11,15 +12,17 @@ export default function SearchResultPage(props) {
    useEffect(() => {
     fetch(`/api/search/${searchQuery}`)
     .then(res => res.json())
-    .then(data => setSearchResult(data) )
+    .then(data => setSearchResult(data.message) )
    },[searchQuery]
    ) 
+
+   if (!searchResult) return <h1>Loading...</h1>
 
 
 
   return (
     <div>
-      <h1>why is not connecting</h1>
+      <RecipeList recipes={searchResult} totalRecipeInDb={0} />
     </div>
   )
 }

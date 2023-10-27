@@ -59,14 +59,15 @@ export default async function handler(req, res) {
     
         
     if ( req.method === 'GET') {
-        const userQuery = req.query.searchQuery === 'all'? '': req.query.searchQuery; // User's search query
+        // const userQuery = req.query.searchQuery === 'all' ? '': req.query.searchQuery; // User's search query
+        const userQuery = req.query.searchQuery  // User's search query
         const regexPattern = new RegExp(`.*${userQuery}.*`, "i")
     
         const recipes =  await getAllRecipes(
 
             'recipes',
             {_id: -1},
-            1,
+            2,
             {
                 title: { $regex: regexPattern }
             }
