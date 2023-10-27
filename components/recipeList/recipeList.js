@@ -143,9 +143,6 @@ export default function RecipeList(props) {
   return (
     <div className="bg-gray-900 text-white h-screen p-4 flex flex-col">
       <div className="flex items-center">
-        <Link href="/">
-          <FontAwesomeIcon icon={faHome} size="lg" className="p-2" />
-        </Link>
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
@@ -158,13 +155,7 @@ export default function RecipeList(props) {
         </div>
       </div>
 
-      <div className="search-bar-container items-center mb-4">
-        <Link href="/favouriteRecipes">
-          <button className="text-white p-2">Favorite Recipes</button>
-        </Link>
-      </div>
       {noResults && <NoResultsMessage />}
-
       <div className="matching-recipe-count">
         {matchingRecipeCount > 0 && (
           <p>{matchingRecipeCount} matching recipes found</p>
