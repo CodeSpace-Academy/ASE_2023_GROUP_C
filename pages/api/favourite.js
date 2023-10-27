@@ -1,30 +1,23 @@
-import { insertDocument } from "../../utils/mongodb-utils";
+import { updateUsersList } from "../../utils/mongodb-utils";
 
 export default async function handler(req, res) {
   const recipe = req.body
+  const username = 'The User 1'
 
-    let client;
-    
-  try {
-    client = await connectToDb()
-  } catch(error) {
-  res.status(500).json({message: 'Database connection failed'})
-    return 
-  }
   const favouredRecipe = {
     userName: 'The User 1',
-    userList: recipe
+    userList: []
   }
 
   if (req.method === 'POST') {
     try {
-      const recipeDocuments = await insertDocument(
-        client,
+      const recipeDocuments = await updateUsersList(
         'users-list',
-        favouredRecipe,
+        username,
+        recipe
       )
-      favouredRecipe._id = recipeDocuments.insertedId
-      res.status(201).json({message: favouredRecipe})
+
+      res.status(201).json({message: recipe})
     } catch (error) {
       res.status(500).json({message: 'Getting recipes failed'})
     }
