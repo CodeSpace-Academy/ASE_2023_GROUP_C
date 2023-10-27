@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import NoResultsMessage from "../layout/noResultsMessage";
 import LoadMoreButton from "../ui-utils/loadMoreButton";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +11,6 @@ import {
   faKitchenSet,
   faSpoon,
   faSort,
-  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 
 /**
@@ -32,22 +29,10 @@ export default function RecipeList(props) {
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
   );
-  const [searchInput, setSearchInput] = useState("");
-  const [noResults, setNoResults] = useState(false);
-  const [matchingRecipeCount, setMatchingRecipeCount] = useState(0);
 
   // State for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  /**
-   * Updates 'noResults' state based on the filtered recipes and search input.
-   * @param {Array} filteredRecipes - List of filtered recipes.
-   * @param {string} input - Search input.
-   */
-  const updateNoResults = (filteredRecipes, input) => {
-    setNoResults(filteredRecipes.length === 0 && input.trim() !== "");
-  };
 
   /**
    * Handles sorting of recipes based on the selected option.
@@ -89,14 +74,14 @@ export default function RecipeList(props) {
 
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false);
-  };
+  }
 
   /**
    * Toggles the sorting options dropdown.
    */
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  };
+  }
 
   /**
    * Loads more recipes when the "Load More" button is clicked.
@@ -106,7 +91,7 @@ export default function RecipeList(props) {
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
-  };
+  }
 
   /**
    * Converts minutes to hours and minutes format.
@@ -120,34 +105,7 @@ export default function RecipeList(props) {
       return `${hours} hours ${remainingMinutes} minutes`;
     }
     return `${minutes} minutes`;
-  };
-
-  /**
-   * Handles search when the user clicks the "Search" button.
-   */
- const router = useRouter(); // Add this line to get the router instance
-
-const handleSearch = () => {
-  const filteredRecipes = initialRecipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(searchInput.toLowerCase())
-  );
-
-  setRecipes(filteredRecipes);
-  const newVisibleRecipes = Math.min(visibleRecipes, filteredRecipes.length);
-  setRemainingRecipes(
-    Math.max(filteredRecipes.length - newVisibleRecipes, 0)
-  );
-
-  setMatchingRecipeCount(filteredRecipes.length);
-
-  updateNoResults(filteredRecipes, searchInput);
-
-  // Check if there are no matching recipes and the search input is not empty
-  if (filteredRecipes.length === 0 && searchInput.trim() !== "") {
-    router.push("/noresultsmessage"); // Redirect to the NoResultsMessage page
   }
-};
-
 
   return (
     <div className="bg-gray-900 text-white h-screen flex">
@@ -155,21 +113,6 @@ const handleSearch = () => {
         <NavBar />
       </div>
       <div className="flex-1 p-4">
-        <div className="search-bar-container flex items-center mb-4">
-          <input
-            type="text"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="Search..."
-            className="w-3/4 p-2 border rounded-l text-black"
-          />
-          <button
-            onClick={handleSearch}
-            className="bg-blue-700 text-white p-2 rounded-r hover:bg-blue-800"
-          >
-            <FontAwesomeIcon icon={faSearch} size="lg" />
-          </button>
-        </div>
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
@@ -179,11 +122,6 @@ const handleSearch = () => {
               </div>
             )}
           </div>
-        </div>
-        <div className="matching-recipe-count">
-          {matchingRecipeCount > 0 && (
-            <p>{matchingRecipeCount} matching recipes found</p>
-          )}
         </div>
         <div
           className="recipe-list-container overflow-y-auto flex-grow"
@@ -212,12 +150,10 @@ const handleSearch = () => {
                     <FontAwesomeIcon icon={faKitchenSet} /> Cook:{" "}
                     {convertToHours(recipe.cook)}
                   </p>
-
                   <p>
                     <FontAwesomeIcon icon={faSpoon} /> Total:{" "}
                     {convertToHours(recipe.prep + recipe.cook)}
                   </p>
-
                   <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
                     <button>View Recipe</button>
                   </Link>
