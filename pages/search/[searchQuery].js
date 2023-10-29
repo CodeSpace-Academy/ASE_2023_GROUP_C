@@ -22,7 +22,7 @@ export default function SearchResultPage(props) {
 
   // If searchResult is not available yet, display a loading message
   if (!searchResult) return <h1>Loading...</h1>;
-
+console.log(searchResult)
   // Render the RecipeList component with the search results
   return (
     <div>
@@ -30,3 +30,4 @@ export default function SearchResultPage(props) {
     </div>
   );
 }
+
