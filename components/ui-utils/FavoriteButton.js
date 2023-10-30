@@ -24,6 +24,14 @@ export default function FavoriteButton(props) {
     setMessage('Recipe removed!'); // Set the message
     setIsFavourate(false);
     setIsDialogOpen(false);
+    
+    fetch('/api/unfavour', {
+      method: 'POST',
+      body: JSON.stringify(recipe),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   };
 
   /**
