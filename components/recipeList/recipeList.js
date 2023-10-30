@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NoResultsMessage from "../layout/noResultsMessage";
 import LoadMoreButton from "../ui-utils/loadMoreButton";
 import Link from "next/link";
+import FilterBySteps from './FilterBySteps';
 import {
   faUtensils,
   faKitchenSet,
@@ -111,6 +112,11 @@ export default function RecipeList(props) {
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0)); // Add a closing parenthesis here
   };
 
+  const handleFilterBySteps = (numSteps) => {
+    // Your filtering logic here
+    // Update the state to filter recipes based on the number of steps
+  };
+
   // Function to convert minutes to hours and minutes
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
@@ -151,6 +157,7 @@ export default function RecipeList(props) {
             {isDropdownOpen && (
               <div className="z-10">
                 <SortingOption handleSort={handleSort} />
+                <FilterBySteps onFilter={handleFilterBySteps} />
               </div>
             )}
           </div>
