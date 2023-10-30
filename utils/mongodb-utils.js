@@ -19,7 +19,6 @@ export async function getDocumentSize(collection) {
 
 /**
  * Retrieves a paginated list of recipes from a MongoDB collection.
- * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to query.
  * @param {Object} sort - The sorting criteria for the recipes.
  * @param {number} pageNumber - The page number to retrieve (1-based).
@@ -32,7 +31,7 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
     const skipPage = (pageNumber - 1) * pageSize;
 
     const db = client.db(mongodb);
-
+    
     const documents = await db
         .collection(collection)
         .find(filter)
@@ -46,7 +45,6 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
 
 /**
  * Retrieves a recipe document from a MongoDB collection based on a unique identifier.
- * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to query.
  * @param {object} uniqueIdentifier - The unique identifier for the recipe to retrieve.
  * @returns {Promise<object|null>} A Promise that resolves to the recipe document, or null if not found.
@@ -54,7 +52,7 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
 
 export async function getRecipeDetails(collection, uniqueIdentifier) {
     const db = client.db(mongodb);
-
+    
     const document = await db
         .collection(collection)
         .findOne(uniqueIdentifier)
@@ -64,7 +62,6 @@ export async function getRecipeDetails(collection, uniqueIdentifier) {
 
 /**
  * Retrieves a list of allergens from a MongoDB collection.
- * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to query.
  * @param {object} [filter={}] - An optional filter object to narrow down the query.
  * @returns {Promise<Array>} A Promise that resolves to an array of item documents.
@@ -72,7 +69,7 @@ export async function getRecipeDetails(collection, uniqueIdentifier) {
 
 export async function getAllergens(collection, filter = {}) {
     const db = client.db(mongodb);
-  
+    
     const documents = await db
       .collection(collection)
       .find(filter)
@@ -81,9 +78,9 @@ export async function getAllergens(collection, filter = {}) {
     return documents;
 }
 
+
 /**
  * Retrieves a list of recipe categories from a MongoDB collection.
- * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to query.
  * @param {object} [filter={}] - An optional filter object to narrow down the query.
  * @returns {Promise<Array>} A Promise that resolves to an array of item documents.
@@ -91,7 +88,7 @@ export async function getAllergens(collection, filter = {}) {
 
 export async function getCategories(collection, filter = {}) {
     const db = client.db(mongodb);
-  
+    
     const documents = await db
       .collection(collection)
       .find(filter)
@@ -99,11 +96,25 @@ export async function getCategories(collection, filter = {}) {
 
     return documents;
 }
+/**
+ * Check if a document exist in a collection in MongoDB.
+ * @param {string} collection - The name of the collection to insert into.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+
+export async function lookforDocument(filter) {
+    const db = client.db(mongodb);
+
+    const result = await db
+        .collection('users-list')
+        .findOne(filter)
+
+    return result;
+}
 
 
 /**
  * Inserts a document into a MongoDB collection.
- * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to insert into.
  * @param {object} document - The document to be inserted.
  * @returns {Promise} A Promise that resolves when the insertion is complete.
@@ -111,7 +122,7 @@ export async function getCategories(collection, filter = {}) {
 
 export async function insertDocument(collection, document) {
     const db = client.db(mongodb);
-  
+   
     const result = await db
         .collection(collection)
         .insertOne(document);
@@ -120,8 +131,29 @@ export async function insertDocument(collection, document) {
 }
 
 /**
+ * Inserts a document into a MongoDB collection.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {string} username - The name of the collection to insert into.
+ * @param {object} filter - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+
+export async function updateUsersList(collection, username, filter) {
+    const db = client.db(mongodb);
+  
+    const result = await db
+        .collection(collection)
+        .updateOne(
+            { userName: username},
+            { $addToSet: { userList: filter } }
+        );
+  
+    return result;
+}
+
+
+/**
  * Retrieve a fovourite recipe into a MongoDB collection.
- * @param {MongoClient} client - The MongoDB client.
  * @param {string} collection - The name of the collection to insert into.
  * @param {object} username - The document to be inserted.
  * @returns {Promise} A Promise that resolves when the insertion is complete.
@@ -129,7 +161,7 @@ export async function insertDocument(collection, document) {
 
 export async function getFavouriteRecipes(collection, filter = {}) {    
     const db = client.db(mongodb);
-
+   
     const documents = await db
         .collection(collection)
         .findOne(filter)
