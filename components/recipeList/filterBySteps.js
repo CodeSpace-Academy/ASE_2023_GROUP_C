@@ -7,12 +7,14 @@ function FilterBySteps({ onFilter }) {
   const handleInputChange = (e) => {
     setFilterValue(e.target.value);
     const numSteps = parseInt(e.target.value, 10);
+    
     if (!isNaN(numSteps) && numSteps > 0) {
-      onFilter(numSteps);
-    }
-    if (e.target.value.trim() === '') {
+      // Determine the sorting criteria based on user input
+      const sortingCriteria = e.target.value.trim() === 'asc' ? 'ascending' : 'descending';
+      onFilter(numSteps, sortingCriteria);
+    } else {
       setShowInput(false);
-      onFilter(null);
+      onFilter(null, null);
     }
   };
 
@@ -22,10 +24,10 @@ function FilterBySteps({ onFilter }) {
       {showInput && (
         <div className="input-container">
           <input
-            type="number"
+            type="text"
             value={filterValue}
             onChange={handleInputChange}
-            placeholder="Filter by Number of Steps"
+            placeholder="Filter by Steps (asc/desc)"
           />
         </div>
       )}

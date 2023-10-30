@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
 import LoadMoreButton from "../ui-utils/loadMoreButton";
 import Link from "next/link";
-
-import {
-  faUtensils,
-  faKitchenSet,
-  faHome,
-  faSpoon,
-  faHeart,
-  faSort,
-  faFilter,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
 import FavoriteButton from "../ui-utils/FavoriteButton";
 import NavBar from "../navigation/navbar";
+import FilterBySteps from './FilterBySteps';
 import {
   faUtensils,
   faKitchenSet,
@@ -41,6 +30,15 @@ export default function RecipeList(props) {
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
   );
+
+    /**
+   * Handles filtering of recipes based on the number of steps.
+   * @param {number} numSteps - The number of steps to filter by.
+   */
+    const handleFilterBySteps = (numSteps) => {
+      // Your filtering logic here
+      // Update the state to filter recipes based on the number of steps
+    };
 
   // State for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
@@ -105,12 +103,6 @@ export default function RecipeList(props) {
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
   }
 
-  const handleFilterBySteps = (numSteps) => {
-    // Your filtering logic here
-    // Update the state to filter recipes based on the number of steps
-  };
-
-  // Function to convert minutes to hours and minutes
   /**
    * Converts minutes to hours and minutes format.
    * @param {number} minutes - Duration in minutes.
@@ -130,6 +122,7 @@ export default function RecipeList(props) {
       <div className="w-16 p-4">
         <NavBar />
       </div>
+      <FilterBySteps onFilter={handleFilterBySteps} />
       <div className="flex-1 p-4">
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
@@ -137,7 +130,6 @@ export default function RecipeList(props) {
             {isDropdownOpen && (
               <div className="z-10">
                 <SortingOption handleSort={handleSort} />
-                <FilterBySteps onFilter={handleFilterBySteps} />
               </div>
             )}
           </div>
