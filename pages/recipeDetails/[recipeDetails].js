@@ -4,6 +4,7 @@ import RecipeCard from '../../components/recipeCard/recipeCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
@@ -29,14 +30,14 @@ export async function getServerSideProps(context) {
 }
 
 export default function RecipeDetails({ recipeDocuments, allergensList}) {
+  const router = useRouter()
 
   return (
     <div>
       <div className='flex font-bold p-5  bg-slate-900 text-white items-center'>
-        <Link href='/recipeList/recipeList'>
-         <FontAwesomeIcon icon={faChevronLeft} size='xl' />
-        </Link>
-        
+      <button onClick={() => router.back()}>
+        <FontAwesomeIcon icon={faChevronLeft} size='xl' />
+      </button>
         <h1 className=' text-center font-bold p-5 text-xl bg-slate-900 text-white'>RecipeDetails</h1>
         </div>
       

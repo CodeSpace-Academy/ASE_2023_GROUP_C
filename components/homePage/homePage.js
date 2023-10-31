@@ -35,7 +35,7 @@ function RecipeHomePage() {
                 Login <FontAwesomeIcon icon={faUser} /> {/* Adding a user icon */}
               </button>
             </Link>
-            <Link href="/recipeList">
+            <Link href="/recipeList/1">
               <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover-bg-green-700 ml-4"> {/* Styling for the Recipes button with margin */}
                 Recipes <FontAwesomeIcon icon={faPizzaSlice} /> {/* Adding a pizza slice icon */}
               </button>
