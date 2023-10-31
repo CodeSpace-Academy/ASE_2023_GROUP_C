@@ -3,8 +3,6 @@ import { getRecipeDetails } from "../../../utils/mongodb-utils";
 export default async function handler(req, res){
     const recipeId = req.query.recipeDetails;
 
-    
-
     if (req.method === 'GET') {
         try {
             const recipeDocuments = await getRecipeDetails(

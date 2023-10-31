@@ -11,6 +11,16 @@ export default function SortingOption({ handleSort }) {
         Prep Time (Ascending)
       </button>
 
+      {/* sort by number of steps (ascending) */}
+      <button onClick={() => handleSort("ascending")}>
+        Number of Steps (Ascending)
+      </button>
+
+      {/* sort by number of steps (descending) */}
+      <button onClick={() => handleSort("descending")}>
+        Number of Steps (Descending)
+      </button>
+
       <button onClick={() => handleSort("descending")}>
         {/* Sort by Prep Time (Descending) */}
         Prep Time (Descending)

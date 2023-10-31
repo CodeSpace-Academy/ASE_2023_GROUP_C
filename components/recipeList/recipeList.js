@@ -40,6 +40,7 @@ export default function RecipeList(props) {
    * @param {string} option - The selected sorting option.
    */
   const handleSort = (option) => {
+    // Update the current sorting option
     setCurrentSort(option);
     let sortedRecipes = [...recipes]; // Use the current state of recipes for sorting
 
@@ -73,16 +74,18 @@ export default function RecipeList(props) {
         break;
     }
 
+    // Update the state with the sorted recipes
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false);
-  }
+  };
 
   /**
    * Toggles the sorting options dropdown.
    */
   const toggleDropdown = () => {
+    // Toggle the visibility of the sorting dropdown
     setIsDropdownOpen(!isDropdownOpen);
-  }
+  };
 
   /**
    * Loads more recipes when the "Load More" button is clicked.
@@ -90,9 +93,10 @@ export default function RecipeList(props) {
   const loadMore = () => {
     const additionalRecipes = 20;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
+    // Update the state with the new visible and remaining recipes
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
-  }
+  };
 
   /**
    * Converts minutes to hours and minutes format.

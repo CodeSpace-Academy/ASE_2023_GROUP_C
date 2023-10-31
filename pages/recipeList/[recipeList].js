@@ -1,8 +1,5 @@
 import RecipeList from "../../components/recipeList/recipeList";
-import {
-  getAllRecipes,
-  getDocumentSize,
-} from "../../utils/mongodb-utils";
+import { getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
