@@ -6,7 +6,7 @@ export default function Filtering({categoriesArr}) {
     <div className='text-white'>
         <h3>Categories</h3>
         <FilteringByCategory 
-        categories={categoriesArr}
+          categories={categoriesArr}
         />
         <div>
             <h3>Number of Steps</h3>
