@@ -145,7 +145,7 @@ export async function updateUsersList(collection, username, filter) {
         .collection(collection)
         .updateOne(
             { userName: username},
-            { $addToSet: { userList: filter } }
+            filter
         );
   
     return result;
