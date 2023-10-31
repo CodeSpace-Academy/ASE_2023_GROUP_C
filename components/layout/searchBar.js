@@ -1,7 +1,7 @@
 
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { useDebounce } from "../hooks/hooks";
+import { useDebounce } from "use-debounce";
 
 /**
  * SearchBar component for searching recipes by title.
@@ -10,15 +10,16 @@ export default function SearchBar() {
 
   const router = useRouter();
   const [searchValue, setSearchValue ] = useState("")
-  const debouncedSearchValue = useDebounce(searchValue, 1000)
+  const [ debouncedSearchValue ] = useDebounce(searchValue, 1000)
   
   // Use useEffect to trigger the search when debouncedSearchValue changes.
   useEffect(() => {
-    if (debouncedSearchValue.trim() === "") {
-      router.push("/recipeList");
-    } else {
-      router.push(`search/${debouncedSearchValue}`);
+    if (!debouncedSearchValue) {
+      router.push(`/recipeList/1`)
     }
+      else{
+        router.push(`/search/${debouncedSearchValue}`);
+      }
   }, [debouncedSearchValue]);
 
   /**

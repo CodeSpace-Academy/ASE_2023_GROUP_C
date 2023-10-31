@@ -2,14 +2,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes } from "../../utils/mongodb-utils";
+import NoRecipeMessage from "../noRecipeMessage";
 
 
 export default function SearchResultPage(props) {
-
+  const router = useRouter()
   const searchResult = props.recipes
+  const query = router.query.searchQuery
+
+  if (searchResult.length === 0){
+    return <NoRecipeMessage />
+  }
 
   return (
     <div>
+      <h1 className="text-center text-5xl font-bold text-white">SHOWING RESULTS FOR "{query}"</h1>
       <RecipeList recipes={searchResult} totalRecipeInDb={0} />
     </div>
   );

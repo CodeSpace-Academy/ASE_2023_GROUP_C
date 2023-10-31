@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
 import FavoriteButton from "../ui-utils/FavoriteButton";
-import NavBar from "../navigation/navbar";
+
 import {
   faUtensils,
   faKitchenSet,
@@ -113,50 +113,47 @@ export default function RecipeList(props) {
   }
 
   return (
-    <div className="bg-gray-900 text-white h-screen flex">
+    <>
 
-      {/* side navbar */}
-      <div className="w-16 p-4">
-        <NavBar />
-      </div>
+     <div className="bg-gray-900 text-white h-screen flex">
 
-      
-      <div className="flex-1 p-4">
+  <div className="flex-1 p-4">
 
-            {/* sort */}
-            <div className=" pb-4 flex items-center pb-4">
-            <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
-            {isDropdownOpen && (
-              <div className="z-10 overflow-x-hidden border-l-2 m-2 dropdown-options ">
-                <SortingOption handleSort={handleSort} />
-              </div>
-            )}
-            </div>
-            
-
-       
-          {/* This here is basically the list */}
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {recipes.slice(0, visibleRecipes).map((recipe) => (
-             <RecipePreviewCard recipe={recipe} convertToHours={convertToHours} />
-            ))}
-          </ul>
-
-        {/* Load More  */}
-        <div className="bg-gray-900 p-4 flex justify-center items-center">
-          {remainingRecipes > 0 && (
-            <LoadMoreButton
-              onClick={loadMore}
-              remainingRecipes={remainingRecipes}
-              className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
-            />
-          )}
+      {/* sort */}
+      <div className=" pb-4 flex items-center pb-4">
+      <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
+      {isDropdownOpen && (
+        <div className="z-10 overflow-x-hidden border-l-2 m-2 dropdown-options ">
+          <SortingOption handleSort={handleSort} />
         </div>
-
-        {/* pagination */}
-        <Pagination totalRecipeInDb={totalRecipeInDb} />
+      )}
       </div>
-    </div>
+      
+
+ 
+    {/* This here is basically the list */}
+    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {recipes.slice(0, visibleRecipes).map((recipe) => (
+       <RecipePreviewCard recipe={recipe} key={recipe._id} convertToHours={convertToHours} />
+      ))}
+    </ul>
+
+  {/* Load More  */}
+  <div className="bg-gray-900 p-4 flex justify-center items-center">
+    {remainingRecipes > 0 && (
+      <LoadMoreButton
+        onClick={loadMore}
+        remainingRecipes={remainingRecipes}
+        className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
+      />
+    )}
+  </div>
+
+  {/* pagination */}
+  <Pagination totalRecipeInDb={totalRecipeInDb} />
+</div>
+</div>
+    </>
   );
 }
 

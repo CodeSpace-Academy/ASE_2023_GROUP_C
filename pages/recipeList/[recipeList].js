@@ -1,5 +1,6 @@
 import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
+import NavBar from "../../components/navigation/navbar";
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -24,6 +25,7 @@ export default function RecipeCards(props) {
 
   return (
     <div>
+      <NavBar />
       <RecipeList recipes={recipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
