@@ -6,7 +6,6 @@ import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
 import FavoriteButton from "../ui-utils/FavoriteButton";
 import NavBar from "../navigation/navbar";
-import FilterBySteps from './FilterBySteps';
 import {
   faUtensils,
   faKitchenSet,
@@ -31,14 +30,6 @@ export default function RecipeList(props) {
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
   );
 
-    /**
-   * Handles filtering of recipes based on the number of steps.
-   * @param {number} numSteps - The number of steps to filter by.
-   */
-    const handleFilterBySteps = (numSteps) => {
-      // Your filtering logic here
-      // Update the state to filter recipes based on the number of steps
-    };
 
   // State for sorting and dropdown visibility
   const [currentSort, setCurrentSort] = useState("default");
@@ -50,41 +41,57 @@ export default function RecipeList(props) {
    */
   const handleSort = (option) => {
     setCurrentSort(option);
-    let sortedRecipes = [...recipes]; // Use the current state of recipes for sorting
-
+    let sortedRecipes = [...recipes];
+  
     switch (option) {
       case "ascending":
+        // Sort by prep time in ascending order
         sortedRecipes.sort((a, b) => a.prep - b.prep);
         break;
       case "descending":
+        // Sort by prep time in descending order
         sortedRecipes.sort((a, b) => b.prep - a.prep);
         break;
       case "ascendingCook":
+        // Sort by cook time in ascending order
         sortedRecipes.sort((a, b) => a.cook - b.cook);
         break;
       case "descendingCook":
+        // Sort by cook time in descending order
         sortedRecipes.sort((a, b) => b.cook - a.cook);
         break;
+      case "ascendingSteps":
+        // Sort by the number of steps in ascending order
+        sortedRecipes.sort((a, b) => a.instructions.length - b.instructions.length);
+        break;
+      case "descendingSteps":
+        // Sort by the number of steps in descending order
+        sortedRecipes.sort((a, b) => b.instructions.length - a.instructions.length);
+        break;
       case "byDateOldest":
+        // Sort by date (as before)
         sortedRecipes.sort(
           (a, b) => new Date(a.published) - new Date(b.published)
         );
         break;
       case "byDateNewest":
+        // Sort by date (as before)
         sortedRecipes.sort(
           (a, b) => new Date(b.published) - new Date(a.published)
         );
         break;
       case "default":
-        sortedRecipes = initialRecipes.slice(0); // Reset to the initial order
+        sortedRecipes = initialRecipes.slice(0);
         break;
       default:
         break;
     }
-
+  
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false);
-  }
+  };
+  
+  
 
   /**
    * Toggles the sorting options dropdown.
@@ -122,8 +129,8 @@ export default function RecipeList(props) {
       <div className="w-16 p-4">
         <NavBar />
       </div>
-      <FilterBySteps onFilter={handleFilterBySteps} />
       <div className="flex-1 p-4">
+      <SortingOption handleSort={handleSort} />
         <div className="relative inline-block text-white">
           <div className="sorting-container relative">
             <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
