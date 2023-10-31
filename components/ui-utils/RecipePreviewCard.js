@@ -6,8 +6,49 @@ import Link from "next/link"
 export function RecipePreviewCard(props) {
   const { 
     recipe,
-    convertToHours
+    convertToHours,
+    searchQuery
    } = props
+
+  //  Highlighting helper 
+  function highlightingMatchingWords( text, searchQuery) {
+     
+    const regex = new RegExp( searchQuery, "gi")
+
+    // const highlightedTitle = text.replace(regex, `<span style={{ backgroundColor: 'green', color: 'white' } >${searchQuery}</span>`)
+
+    // return (
+    //   <span  dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
+    // );
+    const segments = text.split(regex)
+    const matches = text.match(regex)
+
+    return (
+      <span>
+        {segments.map((segment, index) => (
+          <span key={index}>
+            {segment}
+            {matches && index < matches.length && (
+              <span className="bg-green-500 text-white font-extrabold">
+                {matches[index]}
+              </span>
+            )}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  const title = highlightingMatchingWords(recipe.title, searchQuery)
+
+  
+
+  //  if (searchQuery){
+  //   const regex = new RegExp( searchQuery, 'gi')
+  //   highlightedTitle = recipe.title.replace(regex, `<span className=" text-green-300">${searchQuery}</span>`)
+  //  }
+
+  
 
   return (
     <>
@@ -22,7 +63,7 @@ export function RecipePreviewCard(props) {
           </div>
          
             <h2 className="text-xl font-semibold mt-2 whitespace-nowrap overflow-hidden text-ellipsis">
-              {recipe.title}
+              {title || recipe.title}
             </h2>
           <p className="mt-2">
             <FontAwesomeIcon icon={faUtensils} /> Prep:{" "}
