@@ -11,19 +11,19 @@ export function RecipePreviewCard(props) {
 
   return (
     <>
-      <li key={recipe._id}>
-        <div className="relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-300">
+      <li key={recipe._id} className="relative bg-gray-800 p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1">
           <img
             src={recipe.images[0]}
             alt={recipe.title}
             className="w-full h-48 object-cover rounded-md"
           />
-          <FavoriteButton recipe={recipe} />
-          <div className="flex justify-between">
-            <h2 className="text-xl font-semibold mt-2">
+          <div className=" absolute opacity-70 hover:opacity-100">
+          <FavoriteButton recipe={recipe}  />
+          </div>
+         
+            <h2 className="text-xl font-semibold mt-2 whitespace-nowrap overflow-hidden text-ellipsis">
               {recipe.title}
             </h2>
-          </div>
           <p className="mt-2">
             <FontAwesomeIcon icon={faUtensils} /> Prep:{" "}
             {convertToHours(recipe.prep)}{" "}
@@ -39,7 +39,6 @@ export function RecipePreviewCard(props) {
           <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
             <button>View Recipe</button>
           </Link>
-        </div>
       </li>
     </>
   )

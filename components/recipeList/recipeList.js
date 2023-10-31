@@ -103,9 +103,9 @@ export default function RecipeList(props) {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
       const remainingMinutes = minutes % 60;
-      return `${hours} hours ${remainingMinutes} minutes`;
+      return `${hours} hours ${remainingMinutes} mins`;
     }
-    return `${minutes} minutes`;
+    return `${minutes} mins`;
   }
 
   return (
@@ -120,12 +120,15 @@ export default function RecipeList(props) {
       <div className="flex-1 p-4">
 
             {/* sort */}
-            <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
+            <div className=" pb-4 flex items-center pb-4">
+            <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
             {isDropdownOpen && (
-              <div className="z-10">
+              <div className="z-10 overflow-x-hidden border-l-2 m-2 dropdown-options ">
                 <SortingOption handleSort={handleSort} />
               </div>
             )}
+            </div>
+            
 
        
           {/* This here is basically the list */}
