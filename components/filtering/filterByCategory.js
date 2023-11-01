@@ -1,13 +1,19 @@
-export default function FilteringByCategory({categories}) {
-
-
+export default function FilterByCategory({ categoriesArr, value, onChange }) {
   return (
     <div>
-      <select className='text-black'>
-        {categories.map((category, index) => (
-          <option key={index} >{category}</option>
+      <h3>Categories</h3>
+      <select
+        className='text-black'
+        name='categories'
+        value={value}
+        onChange={onChange}
+      >
+        {categoriesArr.map((category, index) => (
+          <option key={index} value={category}>
+            {category}
+          </option>
         ))}
       </select>
     </div>
-  )
+  );
 }

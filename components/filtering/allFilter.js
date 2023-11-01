@@ -1,20 +1,21 @@
-import FilteringByCategory from './filterByCategory'
+import { useState } from 'react';
+import FilterByCategory from './filterByCategory';
+import FilterBySteps from './filterBySteps';
 
-export default function Filtering({categoriesArr}) {
+export default function Filtering({ categoriesArr, data, onChange}) {
 
   return (
     <div className='text-white'>
-        <h3>Categories</h3>
-        <FilteringByCategory 
-          categories={categoriesArr}
-        />
-        <div>
-            <h3>Number of Steps</h3>
-            <input 
-            type='text'
-            placeholder='number of instructions'
-            />
-        </div>
+      <FilterByCategory
+        categoriesArr={categoriesArr}
+        value={data.categories}
+        onChange={onChange}
+      />
+      <FilterBySteps
+        value={data.numberOfSteps}
+        onChange={onChange}
+      />
+
     </div>
-  )
+  );
 }
