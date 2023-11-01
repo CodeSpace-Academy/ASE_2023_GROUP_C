@@ -22,34 +22,24 @@ export async function getServerSideProps() {
 
 export default function Filter({ categoriesArr }) {
   const [selectedOption, setSelectedOption] = useState(""); // Step 1
+  const [numberOfSteps, setNumberOfSteps] = useState(""); // Add this state variable
 
   // Step 2: Create a function to update the selected option
   const handleOptionChange = (newOption) => {
     setSelectedOption(newOption);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/filter/filter');
-        const data = await response.json();
-        // console.log(data);
-      } catch (error) {
-        console.error("Fetching data from the API failed");
-      }
-    };
-
-    fetchData();
-
-  }, []);
+  
 
   return (
     <Fragment>
       <Overlay
         categoriesArr={categoriesArr}
-        selectedOption={selectedOption} // Pass the selected option and the update function
-        onOptionChange={handleOptionChange} // Step 2
+        selectedOption={selectedOption}
+        onOptionChange={handleOptionChange}
+        numberOfSteps={numberOfSteps} // Pass the number of steps as a prop
       />
+      <div>{numberOfSteps}</div>
     </Fragment>
   );
 }
