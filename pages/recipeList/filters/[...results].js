@@ -9,7 +9,7 @@ export async function getServerSideProps({ query }) {
   let numOfInstruction = '';
   let category = '';
 
-  if (!isNaN(parseInt(results[1]))) {
+  if (results.length > 1 && !isNaN(parseInt(results[1]))) {
     // Parse the number of instructions from the query parameter
     numOfInstruction = parseInt(results[1]);
   }

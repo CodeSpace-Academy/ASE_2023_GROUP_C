@@ -21,16 +21,13 @@ export async function getServerSideProps() {
 }
 
 export default function Filter({ categoriesArr }) {
-  const [selectedOption, setSelectedOption] = useState(""); // Step 1
-  const [numberOfSteps, setNumberOfSteps] = useState(""); // Add this state variable
-
 
   return (
     <Fragment>
       <Overlay
         categoriesArr={categoriesArr}
       />
-      <div>{numberOfSteps}</div>
     </Fragment>
   );
+  
 }
