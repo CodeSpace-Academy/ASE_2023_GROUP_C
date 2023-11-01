@@ -14,10 +14,11 @@ export async function getServerSideProps({ query }) {
     numOfInstruction = parseInt(results[1]);
   }
 
-  if (numOfInstruction !== '') {
+  if (results.length > 2 && numOfInstruction !== '') {
     // If numOfInstruction is provided, use the third parameter as category
     category = results[2];
-  } else {
+  } 
+  if (results[0] !== 'steps') {
     // Otherwise, use the first parameter as category
     category = results[0];
   }
