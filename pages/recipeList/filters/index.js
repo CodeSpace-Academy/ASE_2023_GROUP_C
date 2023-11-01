@@ -24,20 +24,11 @@ export default function Filter({ categoriesArr }) {
   const [selectedOption, setSelectedOption] = useState(""); // Step 1
   const [numberOfSteps, setNumberOfSteps] = useState(""); // Add this state variable
 
-  // Step 2: Create a function to update the selected option
-  const handleOptionChange = (newOption) => {
-    setSelectedOption(newOption);
-  };
-
-  
 
   return (
     <Fragment>
       <Overlay
         categoriesArr={categoriesArr}
-        selectedOption={selectedOption}
-        onOptionChange={handleOptionChange}
-        numberOfSteps={numberOfSteps} // Pass the number of steps as a prop
       />
       <div>{numberOfSteps}</div>
     </Fragment>

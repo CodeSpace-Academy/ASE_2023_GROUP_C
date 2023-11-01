@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 export default function Overlay({categoriesArr}) {
   const [data, setData] = useState({
     categories: '', 
-    numberOfSteps: '1', 
+    numberOfSteps: '', 
   });
   const router = useRouter()
 
@@ -18,12 +18,14 @@ export default function Overlay({categoriesArr}) {
   };
 
   const handleOkButtonClick = () => {
-
-        // Generate a dynamic URL based on the state
-        const url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
-
-        // Use router.push to navigate to the dynamic URL
-        router.push(url);
+    let url; // Set url of the filtered options
+    if (data.categories === ''){
+      `/recipeList/filters/${data.categories}`
+    } else {
+      url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
+    }
+    // Use router.push to navigate to the dynamic URL
+    router.push(url);
     console.log(data);
   };
 
