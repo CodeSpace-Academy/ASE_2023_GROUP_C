@@ -5,14 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
 import FavoriteButton from "../ui-utils/FavoriteButton";
-
+import NavBar from "../navigation/navbar";
 import {
   faUtensils,
   faKitchenSet,
   faSpoon,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
-import { RecipePreviewCard } from "../ui-utils/RecipePreviewCard";
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -107,53 +106,93 @@ export default function RecipeList(props) {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
       const remainingMinutes = minutes % 60;
-      return `${hours} hours ${remainingMinutes} mins`;
+      return `${hours} hours ${remainingMinutes} minutes`;
     }
-    return `${minutes} mins`;
-  }
+    return `${minutes} minutes`;
+  };
 
   return (
     <>
-
-     <div className="bg-gray-900 text-white h-screen flex">
-
-  <div className="flex-1 p-4">
-
-      {/* sort */}
-      <div className=" pb-4 flex items-center pb-4">
-      <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
-      {isDropdownOpen && (
-        <div className="z-10 overflow-x-hidden border-l-2 m-2 dropdown-options ">
-          <SortingOption handleSort={handleSort} />
-        </div>
-      )}
+      <div className="w-16">
+        <NavBar />
       </div>
-      
-
- 
-    {/* This here is basically the list */}
-    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {recipes.slice(0, visibleRecipes).map((recipe) => (
-       <RecipePreviewCard recipe={recipe} key={recipe._id} convertToHours={convertToHours} />
-      ))}
-    </ul>
-
-  {/* Load More  */}
-  <div className="bg-gray-900 p-4 flex justify-center items-center">
-    {remainingRecipes > 0 && (
-      <LoadMoreButton
-        onClick={loadMore}
-        remainingRecipes={remainingRecipes}
-        className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
-      />
-    )}
-  </div>
-
-  {/* pagination */}
-  <Pagination totalRecipeInDb={totalRecipeInDb} />
-</div>
-</div>
+      <div className="bg-gray-900 text-white h-screen flex">
+        <div className="flex-1 p-4">
+          <div className="relative inline-block text-white">
+            <div className="sorting-container relative">
+              {/* Sorting dropdown icon */}
+              <FontAwesomeIcon
+                icon={faSort}
+                size="lg"
+                onClick={toggleDropdown}
+              />
+              {isDropdownOpen && (
+                // Display the sorting options when the dropdown is open
+                <div className="z-10">
+                  <SortingOption handleSort={handleSort} />
+                </div>
+              )}
+            </div>
+          </div>
+          <div
+            className="recipe-list-container overflow-y-auto flex-grow"
+            style={{ backgroundColor: "rgb(16, 23, 42)" }}
+          >
+            <ul className=" mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {recipes.slice(0, visibleRecipes).map((recipe) => (
+                <li key={recipe._id}>
+                  <div className="relative bg-gray-800 p-4 rounded-lg transition hover:shadow-lg flex flex-col flex-wrap w-200">
+                    {/* Recipe image */}
+                    <img
+                      src={recipe.images[0]}
+                      alt={recipe.title}
+                      className="w-full h-48 object-cover rounded-md"
+                    />
+                    {/* Favorite button for the recipe */}
+                    <FavoriteButton recipe={recipe} />
+                    <div className="flex justify between">
+                      <h2 className="text-xl font-semibold mt-2">
+                        {recipe.title}
+                      </h2>
+                    </div>
+                    <p className="mt-2">
+                      <FontAwesomeIcon icon={faUtensils} /> Prep:{" "}
+                      {convertToHours(recipe.prep)}{" "}
+                    </p>
+                    <p>
+                      <FontAwesomeIcon icon={faKitchenSet} /> Cook:{" "}
+                      {convertToHours(recipe.cook)}
+                    </p>
+                    <p>
+                      <FontAwesomeIcon icon={faSpoon} /> Total:{" "}
+                      {convertToHours(recipe.prep + recipe.cook)}
+                    </p>
+                    <Link
+                      href={`/recipeDetails/${recipe._id}`}
+                      className="mt-4"
+                    >
+                      {/* Link to view the recipe details */}
+                      <button>View Recipe</button>
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-gray-900 p-4 flex justify-center items-center">
+            {remainingRecipes > 0 && (
+              // Display the "Load More" button when there are remaining recipes
+              <LoadMoreButton
+                onClick={loadMore}
+                remainingRecipes={remainingRecipes}
+                className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
+              />
+            )}
+          </div>
+          {/* Pagination component to navigate through the recipe list */}
+          <Pagination totalRecipeInDb={totalRecipeInDb} />
+        </div>
+      </div>
     </>
   );
 }
-

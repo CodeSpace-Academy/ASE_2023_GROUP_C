@@ -1,11 +1,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@layer utilities {
-  .opacity-1 {
-    opacity: 1;
-  }
-}
 
 
 :root {

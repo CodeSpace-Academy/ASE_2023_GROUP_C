@@ -12,7 +12,6 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SearchBar from "../layout/searchBar";
 
 const NavBar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -33,12 +32,10 @@ const NavBar = () => {
   };
 
   return (
-    <div className=" w-full bg-gray-900 m-0 text-white ">
-      
+    <div className="fixed top-0 w-full bg-gray-900 text-white z-10">
       <div className="flex justify-between items-center p-4">
         <button className="text-white p-2" onClick={toggleSidebar}>
           <FontAwesomeIcon icon={faBars} size="lg" />
-          
         </button>
 
         {/* Navigation links in the navbar */}
@@ -77,10 +74,13 @@ const NavBar = () => {
             <button className="text-white p-2" onClick={toggleSearch}>
               <FontAwesomeIcon icon={faSearch} size="lg" /> Search
             </button>
-            
             {isSearchOpen && (
               <div className="absolute top-0 right-0 mt-10 mr-4">
-                <SearchBar  className="bg-gray-800 text-white p-2 rounded"/>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="bg-gray-800 text-white p-2 rounded"
+                />
               </div>
             )}
           </div>

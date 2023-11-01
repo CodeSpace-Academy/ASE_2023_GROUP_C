@@ -1,56 +1,33 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import RecipeList from "../../components/recipeList/recipeList";
-import { getAllRecipes } from "../../utils/mongodb-utils";
-import NoRecipeMessage from "../noRecipeMessage";
-
 
 export default function SearchResultPage(props) {
-  const router = useRouter()
-  const searchResult = props.recipes
-  const query = router.query.searchQuery
+  // Get the router instance from Next.js
+  const router = useRouter();
 
-  if (searchResult.length === 0){
-    return <NoRecipeMessage />
-  }
+  // Extract the searchQuery from the router's query parameters
+  const searchQuery = router.query.searchQuery;
 
+  // Initialize the searchResult state with an empty string
+  const [searchResult, setSearchResult] = useState("");
+
+  // Use the useEffect hook to fetch search results when the searchQuery changes
+  useEffect(() => {
+    // Fetch search results from the server's API
+    fetch(`/api/search/${searchQuery}`)
+      .then((res) => res.json())
+      .then((data) => setSearchResult(data.message));
+  }, [searchQuery]);
+
+  // If searchResult is not available yet, display a loading message
+  if (!searchResult) return <h1>Loading...</h1>;
+console.log(searchResult)
+  // Render the RecipeList component with the search results
   return (
     <div>
-      <h1 className="text-center text-5xl font-bold text-white">SHOWING RESULTS FOR "{query}"</h1>
       <RecipeList recipes={searchResult} totalRecipeInDb={0} />
     </div>
   );
 }
-
-export async function getServerSideProps(context) {
-  const searchQuery = context.params?.searchQuery
-  //regular expression for search mongoDB 
-  const regexPattern = new RegExp(`.*${searchQuery}.*`,"i")
-
-  let recipes
-
-  try {
-     recipes = await getAllRecipes(
-      'recipes',  // Collection name
-      { _id: -1 }, // Sort by _id in descending order
-      2, // Limit the number of results to 2
-      {
-          title: { $regex: regexPattern }, // Match recipes with titles that contain the search query
-          
-      }
-  );
-  if (!recipes) throw new Error('No recipe found!');
-  } catch(error){
-    console.log('Error getting all recipes')
-  }
-
-  return{
-    props:{
-      recipes:[
-        ...recipes
-    ]
-  }
-}
-}
-
 
