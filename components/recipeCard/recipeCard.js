@@ -29,7 +29,7 @@ export default function RecipeCard(prop) {
 
   return (
     <div>
-      {/* {isEdited && <p>Recipe was edited</p>} */}
+       {/* {isEdited && <p>Recipe was edited</p>} */}
       <div className="p-4 flex flex-col  gap-3 bg-slate-900 text-red-100 justify-center">
         <div className="p-4 flex flex-col md:flex-row md:gap-10 bg-slate-900 text-red-100 ">
           <Carousel
