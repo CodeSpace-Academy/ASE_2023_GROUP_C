@@ -15,7 +15,8 @@ export default async function handler(req, res) {
             { _id: -1 }, // Sort by _id in descending order
             2, // Limit the number of results to 2
             {
-                title: { $regex: regexPattern } // Match recipes with titles that contain the search query
+                title: { $regex: regexPattern }, // Match recipes with titles that contain the search query
+                
             }
         );
 
