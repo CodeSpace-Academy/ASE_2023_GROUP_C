@@ -17,6 +17,7 @@ import SearchBar from "../layout/searchBar";
 const NavBar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
+  // const [ isFilterOpen, setFilterOpen] = useState(false)
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);

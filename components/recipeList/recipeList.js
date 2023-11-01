@@ -22,7 +22,7 @@ import { RecipePreviewCard } from "../ui-utils/RecipePreviewCard";
  */
 export default function RecipeList(props) {
   // Destructure props
-  const { recipes: initialRecipes, totalRecipeInDb } = props;
+  const { recipes: initialRecipes, totalRecipeInDb, searchQuery } = props;
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -134,7 +134,7 @@ export default function RecipeList(props) {
     {/* This here is basically the list */}
     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {recipes.slice(0, visibleRecipes).map((recipe) => (
-       <RecipePreviewCard recipe={recipe} key={recipe._id} convertToHours={convertToHours} />
+       <RecipePreviewCard recipe={recipe} key={recipe._id} convertToHours={convertToHours} searchQuery = {searchQuery} />
       ))}
     </ul>
 
