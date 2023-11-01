@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import LoadMoreButton from "../ui-utils/loadMoreButton";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../pagination";
 import SortingOption from "../ui-utils/filteringForm";
