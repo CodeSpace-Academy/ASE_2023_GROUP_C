@@ -17,7 +17,7 @@ export default function SearchResultPage(props) {
   return (
     <div>
       <h1 className="text-center text-5xl font-bold text-white">SHOWING RESULTS FOR "{query}"</h1>
-      <RecipeList recipes={searchResult} totalRecipeInDb={0} />
+      <RecipeList recipes={searchResult} totalRecipeInDb={0} searchQuery = {query} />
     </div>
   );
 }
