@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         const recipeDocuments = await updateUsersList(
           'users-list',
           username,
-          recipe
+          { $addToSet: { userList: recipe } }
         )
         res.status(201).json({message: recipe})
       } catch (error) {
