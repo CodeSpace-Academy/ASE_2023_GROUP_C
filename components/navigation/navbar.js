@@ -8,95 +8,92 @@ import {
   faListCheck,
   faShoePrints,
   faTags,
- 
+  faBars,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// NavBar component represents a vertical navigation bar on the left side of the screen.
-// It provides links to different sections of the application.
+import SearchBar from "../layout/searchBar";
 
 const NavBar = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSearchOpen, setSearchOpen] = useState(false);
+  // const [ isFilterOpen, setFilterOpen] = useState(false)
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+    setSearchOpen(false); // Close the search when opening sidebar
+  };
+
+  const toggleSearch = () => {
+    setSearchOpen(!isSearchOpen);
+  };
+
+  const toggleFilter = () => {
+    setFilterOpen(!isFilterOpen);
+    setSearchOpen(false); // Close the search when opening filter
   };
 
   return (
-        // The root container of the NavBar. Fixed position on the left side of the screen.
-    <div className="fixed left-0 top-0 h-screen bg-gray-900 text-white p-4 flex flex-col items-center">
-         {/* Link to the Home page */}
-      <Link href="/">
-        <button className="text-white p-2 my-2">
-          <FontAwesomeIcon icon={faHome} />
-
+    <div className=" w-full bg-gray-900 m-0 text-white ">
+      
+      <div className="flex justify-between items-center p-4">
+        <button className="text-white p-2" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} size="lg" />
+          
         </button>
-       
-      </Link>
-      {/* Link to the Recipe List page */}
-      <Link href="/recipeList">
-        <button className="text-white p-2 my-2">
-          <FontAwesomeIcon icon={faBook} />
 
-        </button>
-      </Link>
-      {/* Link to the Favorite Recipes page */}
-      <Link href="/favouriteRecipes">
-        <button className="text-white p-2 my-2">
-          <FontAwesomeIcon icon={faHeart} />
-
-        </button>
-      </Link>
-      {/* A  button for a filtering*/}
-      <div className="relative">
-        <button
-          onClick={toggleDropdown}
-          className="text-white p-2 my-2 flex items-center"
+        {/* Navigation links in the navbar */}
+        <div
+          className={`flex space-x-4 ${
+            isSidebarOpen ? "opacity-100" : "opacity-0"
+          } transform ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out`}
         >
-          <FontAwesomeIcon icon={faFilter} />
-     
-        </button>
+          <Link href="/">
+            <button>
+              <FontAwesomeIcon icon={faHome} size="lg" /> Home
+            </button>
+          </Link>
+          <Link href="/recipeList">
+            <button>
+              <FontAwesomeIcon icon={faBook} size="lg" /> Recipe List
+            </button>
+          </Link>
+          <Link href="/favouriteRecipes">
+            <button>
+              <FontAwesomeIcon icon={faHeart} size="lg" /> Favorite Recipes
+            </button>
+          </Link>
+          {/* Filter button */}
+          <button className="text-white p-2" onClick={toggleFilter}>
+            <FontAwesomeIcon icon={faFilter} size="lg" /> Filter
+          </button>
+          {/* Add more navigation links as needed */}
+        </div>
 
-        {isDropdownOpen && (
-          <div
-            className="absolute left-0 bg-gray-800 p-2 rounded-lg"
-            style={{
-              top: "100%", 
-            }}
-          >
-            <p
-              onClick={() => {
-
-                toggleDropdown();
-              }}
-              className="text-white cursor-pointer hover:text-gray-300"
-            >
-          {/* A button for a filtering by tags*/}
-           <FontAwesomeIcon icon={ faTags} />
-            </p>
-            <p
-              onClick={() => {
-
-                toggleDropdown();
-              }}
-              className="text-white cursor-pointer hover:text-gray-300"
-            >
-            {/* A button for a filtering by number of steps*/}
-            <FontAwesomeIcon icon={ faShoePrints} />
-            </p>
-            <p
-              onClick={() => {
-
-                toggleDropdown();
-              }}
-              className="text-white cursor-pointer hover:text-gray-300"
-            >
-           {/* A button for a filtering by ingredients*/}
-            <FontAwesomeIcon icon={ faListCheck} />
-            </p>
+        {/* Search button (visible when sidebar is open) */}
+        {isSidebarOpen && (
+          <div className="relative">
+            <button className="text-white p-2" onClick={toggleSearch}>
+              <FontAwesomeIcon icon={faSearch} size="lg" /> Search
+            </button>
+            
+            {isSearchOpen && (
+              <div className="absolute top-0 right-0 mt-10 mr-4">
+                <SearchBar  className="bg-gray-800 text-white p-2 rounded"/>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* Sidebar (hidden by default, displayed when the button is clicked) */}
+      <div
+        className={`w-64 h-full bg-gray-900 text-white p-4 transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out`}
+      ></div>
     </div>
   );
 };

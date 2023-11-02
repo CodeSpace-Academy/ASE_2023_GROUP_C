@@ -10,8 +10,6 @@ export default function Layout(props) {
   return (
     <Fragment>
       <div>
-        {/* Render the SearchBar component at the top of the layout */}
-        <SearchBar />
         <div className="search-bar-container items-center mb-4"></div>
         {/* Render the content passed as children */}
         {props.children}
