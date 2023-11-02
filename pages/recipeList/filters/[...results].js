@@ -34,8 +34,9 @@ export async function getServerSideProps({ query }) {
     filterObject.category = category;
   }
 
-  // Searching with ingredients the result mustbe ['ingredients', 'something', 'something']
+  // Searching with ingredients. 
   if (results[0] === 'ingredients') {
+    // The filterArray generate a list of object that searches in mongodb.
     const filterArray = results.slice(1).map((ingredient) => {
       const key = `ingredients.${ingredient}`;
       return { [key]: { $exists: true } };
