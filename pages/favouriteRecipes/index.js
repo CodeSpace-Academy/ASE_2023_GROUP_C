@@ -37,6 +37,8 @@ export default function Favorites({favouriteRecipes}) {
           favouriteRecipes && favouriteRecipes.length > 0 &&
           <RecipeList recipes={favouriteRecipes} totalRecipeInDb={totalRecipeInDb} />  
         }
+        
     </Fragment>  
+    
   )
 }
