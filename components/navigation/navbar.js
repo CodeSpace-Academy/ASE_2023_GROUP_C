@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   faHome,
@@ -13,17 +13,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "../layout/searchBar";
+import Overlay from "../ui-utils/overlay/overlay";
 
-const NavBar = () => {
+const NavBar = ({ categoriesArr }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [isFilterOpen, setFilterOpen] = useState(false);
-  const [filtersApplied, setFiltersApplied] = useState(false);
-  const [showFilterMessage, setShowFilterMessage] = useState(false);
+  const [showFilterOverlay, setShowFilterOverlay] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
-    setSearchOpen(false); // Close the search when opening sidebar
+    setSearchOpen(false);
   };
 
   const toggleSearch = () => {
@@ -31,26 +30,14 @@ const NavBar = () => {
   };
 
   const toggleFilter = () => {
-    setFilterOpen(!isFilterOpen);
-    setSearchOpen(false); // Close the search when opening filter
-    setFiltersApplied(!isFilterOpen); // Update the filtersApplied state
-
-    // Show the message when filters are applied and hide it after 3 seconds
-    setShowFilterMessage(true);
-    setTimeout(() => {
-      setShowFilterMessage(false);
-    }, 3000);
+    setSidebarOpen(false);
+    setSearchOpen(false);
+    setShowFilterOverlay(!showFilterOverlay);
   };
 
-  useEffect(() => {
-    if (filtersApplied) {
-      // After 3 seconds, hide the filter message
-      const timeout = setTimeout(() => {
-        setShowFilterMessage(false);
-      }, 3000);
-      return () => clearTimeout(timeout);
-    }
-  }, [filtersApplied]);
+  const closeFilterOverlay = () => {
+    setShowFilterOverlay(false);
+  };
 
   return (
     <div className="w-full bg-gray-900 m-0 text-white">
@@ -95,27 +82,15 @@ const NavBar = () => {
             <button className="text-white p-2" onClick={toggleSearch}>
               <FontAwesomeIcon icon={faSearch} size="lg" /> Search
             </button>
-
-            {isSearchOpen && (
-              <div className="absolute top-0 right-0 mt-10 mr-4">
-                <SearchBar className="bg-gray-800 text-white p-2 rounded" />
-              </div>
-            )}
           </div>
         )}
       </div>
 
-      {/* Sidebar (hidden by default, displayed when the button is clicked) */}
-      <div
-        className={`w-64 h-full bg-gray-900 text-white p-4 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out`}
-      ></div>
-
-      {showFilterMessage && (
-        <div className="p-4 text-center filter-message">
-          <p>No filters have been applied.</p>
-        </div>
+      {showFilterOverlay && (
+        <Overlay
+          categoriesArr={categoriesArr}
+          onClose={closeFilterOverlay}
+        />
       )}
     </div>
   );
