@@ -51,6 +51,7 @@ export default function RecipeCards(props) {
 
   return (
     <div>
+      
       <RecipeList recipes={recipeDocuments} totalRecipeInDb={0} />
     </div>
   );
