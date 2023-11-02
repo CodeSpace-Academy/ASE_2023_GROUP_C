@@ -18,7 +18,7 @@ export async function getServerSideProps({ query }) {
     // If numOfInstruction is provided, use the third parameter as category
     category = results[2];
   } 
-  if (results[0] !== 'steps') {
+  if (results[0] !== 'steps' && results[0] !== 'ingredients') {
     // Otherwise, use the first parameter as category
     category = results[0];
   }
@@ -33,6 +33,20 @@ export async function getServerSideProps({ query }) {
     // Apply a filter for recipes in a specific category
     filterObject.category = category;
   }
+
+  // Searching with ingredients. 
+  if (results[0] === 'ingredients') {
+    // The filterArray generate a list of object that searches in mongodb.
+    const filterArray = results.slice(1).map((ingredient) => {
+      const key = `ingredients.${ingredient}`;
+      return { [key]: { $exists: true } };
+    });
+
+    if (filterArray.length > 0) {
+      filterObject.$and = filterArray;
+    }
+  } 
+
   console.log('filterObject: ',filterObject)
 
   try {
