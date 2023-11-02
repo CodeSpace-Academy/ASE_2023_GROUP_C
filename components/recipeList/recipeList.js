@@ -120,7 +120,7 @@ export default function RecipeList(props) {
   <div className="flex-1 p-4">
 
       {/* sort */}
-      <div className=" pb-4 flex items-center pb-4">
+      <div className=" pb-4 flex items-center ">
       <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
       {isDropdownOpen && (
         <div className="z-10 overflow-x-hidden border-l-2 m-2 dropdown-options ">
@@ -156,4 +156,3 @@ export default function RecipeList(props) {
     </>
   );
 }
-
