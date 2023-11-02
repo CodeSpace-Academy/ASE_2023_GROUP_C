@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "../layout/searchBar";
+import NavLink from "../ui-utils/navLink";
 
 const NavBar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -54,13 +55,13 @@ const NavBar = () => {
 
   return (
     <div className=" bg-gray-900 m-0 text-white flex items-center justify-between pr-4 pl-4 pb-6 pt-6 gap-3 drop-shadow-lg ">
-       <h1 className=" text-2xl font-extrabold">
+       <Link href={'/'}  className=" text-2xl font-extrabold">
         Recipe app🍜
-       </h1>
+       </Link >
        <div className=" flex items-center gap-4"> 
-       <Link href={'/'}><FontAwesomeIcon icon={faHome}/></Link  >
-        <Link href={'/'}><FontAwesomeIcon icon={faHeart}/></Link >
-        <Link href={'/'}><FontAwesomeIcon icon={faFilter}/></Link  >
+       <NavLink href={'/'}><FontAwesomeIcon icon={faHome}/></NavLink  >
+        <NavLink href={'/favouriteRecipes'}><FontAwesomeIcon icon={faHeart}/></NavLink >
+        <NavLink href={'/recipeList/filters'}><FontAwesomeIcon icon={faFilter}/></NavLink  >
        <SearchBar />
        </div>
        
