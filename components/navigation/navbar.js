@@ -38,7 +38,7 @@ const NavBar = () => {
     // Show the message when filters are applied and hide it after 3 seconds
     setShowFilterMessage(true);
     setTimeout(() => {
-      setShowFilterMessage(false);
+      setShowFilterMessage(false);                         
     }, 3000);
   };
 
@@ -53,72 +53,19 @@ const NavBar = () => {
   }, [filtersApplied]);
 
   return (
-    <div className="w-full bg-gray-900 m-0 text-white">
-      <div className="flex justify-between items-center p-4">
-        <button className="text-white p-2" onClick={toggleSidebar}>
-          <FontAwesomeIcon icon={faBars} size="lg" />
-        </button>
-
-        {/* Navigation links in the navbar */}
-        <div
-          className={`flex space-x-4 ${
-            isSidebarOpen ? "opacity-100" : "opacity-0"
-          } transform ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 ease-in-out`}
-        >
-          <Link href="/">
-            <button>
-              <FontAwesomeIcon icon={faHome} size="lg" /> Home
-            </button>
-          </Link>
-          <Link href="/recipeList">
-            <button>
-              <FontAwesomeIcon icon={faBook} size="lg" /> Recipe List
-            </button>
-          </Link>
-          <Link href="/favouriteRecipes">
-            <button>
-              <FontAwesomeIcon icon={faHeart} size="lg" /> Favorite Recipes
-            </button>
-          </Link>
-          {/* Filter button */}
-          <button className="text-white p-2" onClick={toggleFilter}>
-            <FontAwesomeIcon icon={faFilter} size="lg" /> Filter
-          </button>
-          {/* Add more navigation links as needed */}
-        </div>
-
-        {/* Search button (visible when sidebar is open) */}
-        {isSidebarOpen && (
-          <div className="relative">
-            <button className="text-white p-2" onClick={toggleSearch}>
-              <FontAwesomeIcon icon={faSearch} size="lg" /> Search
-            </button>
-
-            {isSearchOpen && (
-              <div className="absolute top-0 right-0 mt-10 mr-4">
-                <SearchBar className="bg-gray-800 text-white p-2 rounded" />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Sidebar (hidden by default, displayed when the button is clicked) */}
-      <div
-        className={`w-64 h-full bg-gray-900 text-white p-4 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out`}
-      ></div>
-
-      {showFilterMessage && (
-        <div className="p-4 text-center filter-message">
-          <p>No filters have been applied.</p>
-        </div>
-      )}
+    <div className=" bg-gray-900 m-0 text-white flex items-center justify-between pr-4 pl-4 pb-6 pt-6 gap-3 drop-shadow-lg ">
+       <h1 className=" text-2xl font-extrabold">
+        Recipe app🍜
+       </h1>
+       <div className=" flex items-center gap-4"> 
+       <Link href={'/'}><FontAwesomeIcon icon={faHome}/></Link  >
+        <Link href={'/'}><FontAwesomeIcon icon={faHeart}/></Link >
+        <Link href={'/'}><FontAwesomeIcon icon={faFilter}/></Link  >
+       <SearchBar />
+       </div>
+       
     </div>
   );
 };
 
-export default NavBar;
+export default NavBar;               

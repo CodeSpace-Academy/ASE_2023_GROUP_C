@@ -1,6 +1,6 @@
 export default function SortingOption({ handleSort }) {
   return (
-    <div className=" flex m-3 gap-2 ">
+    <div className=" flex m-3 gap-2 overflow-x-hidden">
       <button onClick={() => handleSort("default")}>
         {/* Default Sort */}
         Default
