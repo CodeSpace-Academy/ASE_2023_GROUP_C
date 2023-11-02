@@ -41,6 +41,7 @@ export default function SortingOption({ handleSort }) {
       <button onClick={() => handleSort("byDateNewest")}>Newest</button>
 
       <button onClick={() => handleSort("byDateOldest")}>Oldest</button>
+      {/* called the filtered ingredients */}
       <FilterByIngredients />
     </div>
   );
