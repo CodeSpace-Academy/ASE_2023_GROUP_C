@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import FilterByCategory from './filterByCategory';
 import FilterBySteps from './filterBySteps';
+import FilterByIngredients from './filterByIngredients';
 
-export default function Filtering({ categoriesArr, data, onChange}) {
+export default function Filtering({ categoriesArr, data, onChange, ingredientsInputRef,handleIngredientsChange}) {
 
   return (
     <div className='text-white'>
@@ -15,7 +16,11 @@ export default function Filtering({ categoriesArr, data, onChange}) {
         value={data.numberOfSteps}
         onChange={onChange}
       />
-
+      <FilterByIngredients 
+        ingredientsInputRef={ingredientsInputRef}
+        handleIngredientsChange={handleIngredientsChange}
+      />
+  
     </div>
   );
 }
