@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css'
 import { useRouter } from 'next/router';
@@ -16,7 +16,21 @@ export default function Overlay({categoriesArr}) {
     categories: '', 
     numberOfSteps: '', 
   });
+  const ingredientsInputRef = useRef();
+
   const router = useRouter()
+
+  let arrayOfIngrerdients
+  function handleIngredientsChange(){
+    const ingredientsValue = ingredientsInputRef.current.value;
+    console.log(ingredientsValue);
+
+    arrayOfIngrerdients = ingredientsValue.split(' ');
+    console.log(arrayOfIngrerdients);
+  }
+
+  
+
 
   /**
    * Handle input change for filtering options.
@@ -44,15 +58,16 @@ export default function Overlay({categoriesArr}) {
     } else {
     url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
     }
+
+    if (arrayOfIngrerdients.length !== 0){
+      url = `/recipeList/filters/ingredient/${arrayOfIngrerdients.join('/')}`
+    }
     
     // Use router.push to navigate to the dynamic URL
     router.push(url);
     console.log(data);
+
   };
-
-
-
-
 
   return(
     <div className={styles.overlay}>
@@ -61,6 +76,8 @@ export default function Overlay({categoriesArr}) {
           categoriesArr={categoriesArr}
           data={data}
           onChange={handleInputChange}
+          ingredientsInputRef={ingredientsInputRef}
+          handleIngredientsChange={handleIngredientsChange}
         />
         <div className={styles.buttonContainer}>
           <button className={`${styles.button} ${styles.cancelButton}`} >Cancel</button>
