@@ -1,47 +1,30 @@
 import FilterByIngredients from "../filtering/filterByIngredients";
 
 export default function SortingOption({ handleSort }) {
+
+  const sortingOptions = [
+    { value: "default", label: "Default" },
+    { value: "ascending", label: "Prep Time (Ascending)" },
+    { value: "descending", label: "Prep Time (Descending)" },
+    { value: "ascendingCook", label: "Cook Time (Ascending)" },
+    { value: "descendingCook", label: "Cook Time (Descending)" },
+    { value: "byDateNewest", label: "Newest" },
+    { value: "byDateOldest", label: "Oldest" },
+  ];
+
+
   return (
-    <div className=" flex m-3 gap-2 overflow-x-auto">
-      <button onClick={() => handleSort("default")}>
-        {/* Default Sort */}
-        Default
-      </button>
-
-      <button onClick={() => handleSort("ascending")}>
-        {/* Sort by Prep Time (Ascending) */}
-        Prep Time (Ascending)
-      </button>
-
-      {/* sort by number of steps (ascending) */}
-      <button onClick={() => handleSort("ascending")}>
-        Number of Steps (Ascending)
-      </button>
-
-      {/* sort by number of steps (descending) */}
-      <button onClick={() => handleSort("descending")}>
-        Number of Steps (Descending)
-      </button>
-
-      <button onClick={() => handleSort("descending")}>
-        {/* Sort by Prep Time (Descending) */}
-        Prep Time (Descending)
-      </button>
-
-      <button onClick={() => handleSort("ascending")}>
-        {/* Sort by Cook Time (Ascending) */}
-        Cook Time (Ascending)
-      </button>
-
-      <button onClick={() => handleSort("descending")}>
-        {/* Sort by Cook Time (Descending) */}
-        Cook Time (Descending)
-      </button>
-
-      <button onClick={() => handleSort("byDateNewest")}>Newest</button>
-
-      <button onClick={() => handleSort("byDateOldest")}>Oldest</button>
-      <FilterByIngredients />
-    </div>
+    
+      <select 
+      placeholder="Sort"
+      className=" bg-transparent focus:outline-none "
+      onChange={(e) => handleSort(e.target.value)}>
+        {sortingOptions.map((option) => (
+          <option key={option.value} className="bg-gray-900" value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    
   );
 }

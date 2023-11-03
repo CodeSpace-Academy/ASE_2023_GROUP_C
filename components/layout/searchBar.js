@@ -6,7 +6,7 @@ import { useDebounce } from "use-debounce";
 /**
  * SearchBar component for searching recipes by title.
  */
-export default function       SearchBar() {
+export default function  SearchBar(props) {
 
   const router = useRouter();
   const [searchValue, setSearchValue ] = useState("")
@@ -14,12 +14,7 @@ export default function       SearchBar() {
   
   // Use useEffect to trigger the search when debouncedSearchValue changes.
   useEffect(() => {
-    if (!debouncedSearchValue) {
-      router.push(`/recipeList/1`)
-    }
-      else{
-        router.push(`/search/${debouncedSearchValue}`);
-      }
+    props.setQuery(debouncedSearchValue)
   }, [debouncedSearchValue]);
 
   /**
@@ -31,7 +26,7 @@ export default function       SearchBar() {
   };
 
   return (
-    <form className="search-container">
+    <form className="search-container text-center">
         {/* Input field where users can type their search query. */}
         <input
           type="text"
@@ -39,7 +34,7 @@ export default function       SearchBar() {
           id="titleSearch"
           value={searchValue}
           onChange={handleInputChange}
-          className=" p-2 rounded-full text-black"
+          className=" appearance-none focus:outline-none bg-transparent autofill:bg-transparent p-2 rounded-lg text-slate-400"
         />
     </form>
   );

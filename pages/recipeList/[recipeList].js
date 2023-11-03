@@ -2,6 +2,7 @@ import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
 import NavBar from "../../components/navigation/navbar";
 import { useState } from "react";
+import SearchBar from "../../components/layout/searchBar";
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;

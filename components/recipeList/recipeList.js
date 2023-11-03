@@ -11,6 +11,7 @@ import {
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import { RecipePreviewCard } from "../ui-utils/RecipePreviewCard";
+import SearchBar from "../layout/searchBar";
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -21,9 +22,12 @@ import { RecipePreviewCard } from "../ui-utils/RecipePreviewCard";
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb, searchQuery } = props;
+ 
 
   // State variables
   const [recipes, setRecipes] = useState(initialRecipes);
+  const [ data, setData ] = useState(recipes)
+  const [query, setQuery] = useState('')
   const [visibleRecipes, setVisibleRecipes] = useState(20);
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
@@ -110,6 +114,8 @@ export default function RecipeList(props) {
     return `${minutes} mins`;
   }
 
+  
+
   return (
     <>
 
@@ -117,23 +123,25 @@ export default function RecipeList(props) {
 
   <div className="flex-1 p-4">
 
-      {/* sort */}
-      <div className=" pb-4 flex items-center ">
-      <div className=" p-2 hover:bg-slate-500 flex items-center rounded-lg">
-        <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
-        </div>
-      {isDropdownOpen && (
-        <div className="z-10 border-l-2 m-2 dropdown-options ">
+    
+     
+     
+      <div className=" p-2 flex flex-wrap justify-center gap-2  mb-4 border-slate-500 border rounded-lg items-center md:justify-between ">
+         {/* searchbar */}
+      <SearchBar setQuery = {setQuery} />
+       {/* sort */}
+      <div className=" p-2 flex items-center rounded-lg text-slate-400">
+        <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown} />
           <SortingOption handleSort={handleSort} />
         </div>
-      )}
+      
       </div>
       
 
  
     {/* This here is basically the list */}
     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {recipes.slice(0, visibleRecipes).map((recipe) => (
+      {data.slice(0, visibleRecipes).map((recipe) => (
        <RecipePreviewCard recipe={recipe} key={recipe._id} convertToHours={convertToHours} searchQuery = {searchQuery} />
       ))}
     </ul>
