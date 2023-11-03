@@ -10,14 +10,29 @@ import {
   faTags,
   faBars,
   faSearch,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "../layout/searchBar";
 import NavLink from "../ui-utils/navLink";
 
+const NavLinks = () => {
+
+  return(
+    <>
+    <NavLink href={'/'}><FontAwesomeIcon icon={faHome} size="lg" className=" pr-2"/> Home</NavLink  >
+        <NavLink href={'/search/all'}>
+        <FontAwesomeIcon icon={faSearch} size="lg" className=" pr-2" /> Search
+        </NavLink>
+        <NavLink href={'/favouriteRecipes'}><FontAwesomeIcon icon={faHeart} size="lg" className=" pr-2"/>Favorites</NavLink >
+        <NavLink href={'/recipeList/filters'}><FontAwesomeIcon icon={faFilter} size="lg" className=" pr-2"/>Filters</NavLink  >
+        </>
+  )
+}
+
 const NavBar = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isSearchOpen, setSearchOpen] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false)
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [filtersApplied, setFiltersApplied] = useState(false);
   const [showFilterMessage, setShowFilterMessage] = useState(false);
@@ -29,6 +44,9 @@ const NavBar = () => {
 
   const toggleSearch = () => {
     setSearchOpen(!isSearchOpen);
+  };
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
   };
 
   const toggleFilter = () => {
@@ -54,18 +72,28 @@ const NavBar = () => {
   }, [filtersApplied]);
 
   return (
-    <div className=" bg-gray-900 m-0 text-white flex items-center justify-between pr-4 pl-4 pb-6 pt-6 gap-3 drop-shadow-lg ">
+    <>
+    <header className=" bg-gray-900 m-0 text-white flex items-center top-0 z-[20] sticky justify-between pr-4 pl-4 pb-6 pt-6 gap-3 drop-shadow-lg ">
        <Link href={'/'}  className=" text-2xl font-extrabold">
         Recipe app🍜
        </Link >
-       <div className=" flex items-center gap-4"> 
-       <NavLink href={'/'}><FontAwesomeIcon icon={faHome}/></NavLink  >
-        <NavLink href={'/favouriteRecipes'}><FontAwesomeIcon icon={faHeart}/></NavLink >
-        <NavLink href={'/recipeList/filters'}><FontAwesomeIcon icon={faFilter}/></NavLink  >
-       <SearchBar />
-       </div>
-       
-    </div>
+
+       <nav> 
+        <div className="hidden md:flex items-center w-full gap-6">
+          <NavLinks />
+        </div>
+        <div>
+        <button className=" md:hidden " onClick={toggleNav}>
+            { isOpen? <FontAwesomeIcon icon={faX}/> : <FontAwesomeIcon icon={faBars}/> }
+          </button>
+        </div>
+       </nav>
+    </header>
+    { isOpen && (
+       <div className=" bg-gray-900  text-white flex basis-full flex-col pl-4">
+              <NavLinks />
+        </div>)}
+    </>
   );
 };
 
