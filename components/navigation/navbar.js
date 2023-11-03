@@ -20,21 +20,25 @@ const NavBar = ({ categoriesArr }) => {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [showFilterOverlay, setShowFilterOverlay] = useState(false);
 
+  // Function to toggle the sidebar open/close
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
     setSearchOpen(false);
   };
 
+  // Function to toggle the search bar open/close
   const toggleSearch = () => {
     setSearchOpen(!isSearchOpen);
   };
 
+  // Function to open the filter overlay
   const toggleFilter = () => {
-    setSidebarOpen(false);
-    setSearchOpen(false);
+    setSidebarOpen(false); // Close the sidebar when opening the filter
+    setSearchOpen(false); // Close the search when opening the filter
     setShowFilterOverlay(true);
   };
 
+  // Function to close the filter overlay
   const closeFilterOverlay = () => {
     setShowFilterOverlay(false);
   };
@@ -86,6 +90,7 @@ const NavBar = ({ categoriesArr }) => {
         )}
       </div>
 
+      {/* Display the filter overlay when 'showFilterOverlay' is true */}
       {showFilterOverlay && (
         <Overlay
           categoriesArr={categoriesArr}
