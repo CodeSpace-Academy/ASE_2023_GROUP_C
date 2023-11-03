@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "../layout/searchBar";
-import Overlay from "../ui-utils/overlay/overlay";
+import Overlay from "../ui-utils/overlay/overlay"; // Import your Overlay component
 
 const NavBar = ({ categoriesArr }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -32,7 +32,7 @@ const NavBar = ({ categoriesArr }) => {
   const toggleFilter = () => {
     setSidebarOpen(false);
     setSearchOpen(false);
-    setShowFilterOverlay(!showFilterOverlay);
+    setShowFilterOverlay(true);
   };
 
   const closeFilterOverlay = () => {
@@ -89,7 +89,7 @@ const NavBar = ({ categoriesArr }) => {
       {showFilterOverlay && (
         <Overlay
           categoriesArr={categoriesArr}
-          onClose={closeFilterOverlay}
+          closeFilterOverlay={closeFilterOverlay} // Pass the function as a prop
         />
       )}
     </div>
