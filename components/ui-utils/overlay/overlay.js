@@ -59,13 +59,12 @@ export default function Overlay({categoriesArr}) {
     url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
     }
 
-    if (arrayOfIngrerdients.length !== 0){
-      url = `/recipeList/filters/ingredient/${arrayOfIngrerdients.join('/')}`
+    if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
+      url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
     }
-    
+
     // Use router.push to navigate to the dynamic URL
     router.push(url);
-    console.log(data);
 
   };
 
