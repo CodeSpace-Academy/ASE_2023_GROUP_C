@@ -6,7 +6,7 @@ import { useDebounce } from "use-debounce";
 /**
  * SearchBar component for searching recipes by title.
  */
-export default function SearchBar() {
+export default function       SearchBar() {
 
   const router = useRouter();
   const [searchValue, setSearchValue ] = useState("")
@@ -32,17 +32,15 @@ export default function SearchBar() {
 
   return (
     <form className="search-container">
-      <div className="search-bar-container flex justify-center items-center">
         {/* Input field where users can type their search query. */}
         <input
           type="text"
           placeholder="Search for recipes by title"
           id="titleSearch"
-          className="p-2 border rounded-l text-black w-80" // Adjusted the width (w-80).
           value={searchValue}
           onChange={handleInputChange}
+          className=" p-2 rounded-full text-black"
         />
-      </div>
     </form>
   );
 }

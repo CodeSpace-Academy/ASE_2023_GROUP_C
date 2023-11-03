@@ -119,9 +119,11 @@ export default function RecipeList(props) {
 
       {/* sort */}
       <div className=" pb-4 flex items-center ">
-      <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
+      <div className=" p-2 hover:bg-slate-500 flex items-center rounded-lg">
+        <FontAwesomeIcon icon={faSort} size="lg" onClick={toggleDropdown}  />
+        </div>
       {isDropdownOpen && (
-        <div className="z-10 overflow-x-hidden border-l-2 m-2 dropdown-options ">
+        <div className="z-10 border-l-2 m-2 dropdown-options ">
           <SortingOption handleSort={handleSort} />
         </div>
       )}
