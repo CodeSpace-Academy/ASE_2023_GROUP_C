@@ -1,3 +1,5 @@
+import FilterByIngredients from "../filtering/filterByIngredients";
+
 export default function SortingOption({ handleSort }) {
   return (
     <div className=" flex m-3 gap-2 overflow-x-auto">
@@ -39,6 +41,7 @@ export default function SortingOption({ handleSort }) {
       <button onClick={() => handleSort("byDateNewest")}>Newest</button>
 
       <button onClick={() => handleSort("byDateOldest")}>Oldest</button>
+      <FilterByIngredients />
     </div>
   );
 }
