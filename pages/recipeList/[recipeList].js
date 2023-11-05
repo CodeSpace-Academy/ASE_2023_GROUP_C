@@ -2,7 +2,7 @@ import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
 import NavBar from "../../components/navigation/navbar";
 import { useState } from "react";
-import SearchBar from "../../components/layout/searchBar";
+import SearchSort from "../../components/ui-utils/searchSort";
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -25,10 +25,14 @@ export async function getServerSideProps(context) {
 export default function RecipeCards(props) {
   const { recipes, totalRecipeInDb } = props;
   const [recipesData, setRecipesData] = useState(recipes)
+  const [query, setQuery] = useState('');
 
   return (
     <div>
       <NavBar />
+      <SearchSort 
+        setQuery= {setQuery}
+      />
       <RecipeList recipes={recipesData} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
