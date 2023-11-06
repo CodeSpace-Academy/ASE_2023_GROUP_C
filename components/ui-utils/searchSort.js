@@ -3,6 +3,7 @@ import SearchBar from '../layout/searchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons';
 import SortingOption from './filteringForm';
+import { PropTypes } from 'prop-types'
 
 // Define an interface for the props
 
