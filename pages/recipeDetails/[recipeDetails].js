@@ -16,10 +16,13 @@ export async function getServerSideProps(context) {
     'users-list',
     {'userName': 'The User 1'},
   )
-  
+  // An array of a favourite recipes
   const usersFavouriteLists = favouriteRecipes.userList
+  // Creating a set of recipe Id.
   const favouriteRecipeIds = new Set(usersFavouriteLists.map(recipe => recipe._id));
 
+  // If the recipe ID in context is avaible in the favourite then that 
+  // recipe should be returned.
   if (favouriteRecipeIds.has(recipeId)){
     recipeDocuments = usersFavouriteLists.find(favRecipe => favRecipe._id === recipeId)
 

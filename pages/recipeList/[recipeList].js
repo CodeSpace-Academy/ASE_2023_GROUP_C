@@ -1,12 +1,13 @@
 import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from "../../utils/mongodb-utils";
 import NavBar from "../../components/navigation/navbar";
-import { useContext, useEffect } from "react";
-import { RecipeContext } from "../../components/contextProviders.js/recipeContext";
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
 
+  // Both all recipes and favourite recipe must be fetched to compare them and
+  // decide which one to be returned.
+  
   const recipeDocuments = await getAllRecipes(
     "recipes",
     { _id: -1 },
@@ -30,15 +31,7 @@ export async function getServerSideProps(context) {
 
 export default function RecipeCards(props) {
   const { recipes, totalRecipeInDb, favouriteRecipes } = props;
-
-  const { storedRecipes, setStoredRecipes } = useContext(RecipeContext)
-
-  useEffect(
-    ()=>setStoredRecipes(recipes)
-    ,[recipes]
-  )
-
-  console.log(storedRecipes)
+  
 
   // Create a set of favorite recipe IDs
   const favouriteRecipeIds = new Set(favouriteRecipes.map(recipe => recipe._id));
