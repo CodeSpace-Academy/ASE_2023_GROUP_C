@@ -38,44 +38,57 @@ export default function RecipeList(props) {
    * @param {string} option - The selected sorting option.
    */
   const handleSort = (option) => {
-    // Update the current sorting option
     setCurrentSort(option);
-    let sortedRecipes = [...recipes]; // Use the current state of recipes for sorting
-
+    let sortedRecipes = [...recipes];
+  
     switch (option) {
       case "ascending":
+        // Sort by prep time in ascending order
         sortedRecipes.sort((a, b) => a.prep - b.prep);
         break;
       case "descending":
+        // Sort by prep time in descending order
         sortedRecipes.sort((a, b) => b.prep - a.prep);
         break;
       case "ascendingCook":
+        // Sort by cook time in ascending order
         sortedRecipes.sort((a, b) => a.cook - b.cook);
         break;
       case "descendingCook":
+        // Sort by cook time in descending order
         sortedRecipes.sort((a, b) => b.cook - a.cook);
         break;
+      case "ascendingSteps":
+        // Sort by the number of steps in ascending order
+        sortedRecipes.sort((a, b) => a.instructions.length - b.instructions.length);
+        break;
+      case "descendingSteps":
+        // Sort by the number of steps in descending order
+        sortedRecipes.sort((a, b) => b.instructions.length - a.instructions.length);
+        break;
       case "byDateOldest":
+        // Sort by date (as before)
         sortedRecipes.sort(
           (a, b) => new Date(a.published) - new Date(b.published)
         );
         break;
       case "byDateNewest":
+        // Sort by date (as before)
         sortedRecipes.sort(
           (a, b) => new Date(b.published) - new Date(a.published)
         );
         break;
       case "default":
-        sortedRecipes = initialRecipes.slice(0); // Reset to the initial order
+        sortedRecipes = initialRecipes.slice(0);
         break;
       default:
         break;
     }
-
-    // Update the state with the sorted recipes
+  
     setRecipes(sortedRecipes);
     setIsDropdownOpen(false);
   };
+  
 
   /**
    * Toggles the sorting options dropdown.
