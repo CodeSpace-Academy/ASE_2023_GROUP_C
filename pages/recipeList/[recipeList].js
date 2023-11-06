@@ -1,7 +1,8 @@
 import RecipeList from "../../components/recipeList/recipeList";
-import { getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
+import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from "../../utils/mongodb-utils";
 import NavBar from "../../components/navigation/navbar";
-import { useState } from "react";
+import { useContext, useEffect } from "react";
+import { RecipeContext } from "../../components/contextProviders.js/recipeContext";
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -11,24 +12,50 @@ export async function getServerSideProps(context) {
     { _id: -1 },
     pageNumber
   );
+  const favouriteRecipes = await getFavouriteRecipes(
+    'users-list',
+    {'userName': 'The User 1'},
+  )
+
   const totalRecipeInDb = await getDocumentSize("recipes");
 
   return {
     props: {
       recipes: recipeDocuments,
       totalRecipeInDb: totalRecipeInDb,
+      favouriteRecipes: favouriteRecipes.userList
     },
   };
 }
 
 export default function RecipeCards(props) {
-  const { recipes, totalRecipeInDb } = props;
-  const [recipesData, setRecipesData] = useState(recipes)
+  const { recipes, totalRecipeInDb, favouriteRecipes } = props;
+
+  const { storedRecipes, setStoredRecipes } = useContext(RecipeContext)
+
+  useEffect(
+    ()=>setStoredRecipes(recipes)
+    ,[recipes]
+  )
+
+  console.log(storedRecipes)
+
+  // Create a set of favorite recipe IDs
+  const favouriteRecipeIds = new Set(favouriteRecipes.map(recipe => recipe._id));
+
+  // Create a new array with favorite recipes replaced
+  const updatedRecipes = recipes.map(recipe => {
+    if (favouriteRecipeIds.has(recipe._id)) {
+      const favoriteRecipe = favouriteRecipes.find(favRecipe => favRecipe._id === recipe._id);
+      return favoriteRecipe; // Replace with favorite recipe
+    }
+    return recipe; // Keep the original recipe
+  });
 
   return (
     <div>
       <NavBar />
-      <RecipeList recipes={recipesData} totalRecipeInDb={totalRecipeInDb} />
+      <RecipeList recipes={updatedRecipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
 }
