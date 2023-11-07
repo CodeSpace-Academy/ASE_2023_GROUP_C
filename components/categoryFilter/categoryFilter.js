@@ -48,7 +48,7 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
   }, [searchInput, categories, showMore]);
 
   if (!categories) {
-    return <div>No categories available.</div>;
+    return <div>No Categories available.</div>;
   }
 
   return (
