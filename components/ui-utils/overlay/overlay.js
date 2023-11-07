@@ -17,11 +17,9 @@ export default function Overlay({categoriesArr}) {
 
   const router = useRouter()
 
-  console.log(data.filterByIngredients)
-
   let arrayOfIngrerdients
   function handleIngredientsChange(){
-    const ingredientsValue = data.filterByIngredients
+    const ingredientsValue = filter.filterByIngredients
 
     arrayOfIngrerdients = ingredientsValue.split(' ');
     console.log(arrayOfIngrerdients);
