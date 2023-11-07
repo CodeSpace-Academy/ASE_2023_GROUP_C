@@ -1,6 +1,9 @@
 import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from "../../utils/mongodb-utils";
 import NavBar from "../../components/navigation/navbar";
+import { useState } from "react";
+import SearchSort from "../../components/ui-utils/searchSort";
+
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -30,8 +33,10 @@ export async function getServerSideProps(context) {
 }
 
 export default function RecipeCards(props) {
+
   const { recipes, totalRecipeInDb, favouriteRecipes } = props;
-  
+  const [recipesData, setRecipesData] = useState(recipes)
+  const [query, setQuery] = useState('');
 
   // Create a set of favorite recipe IDs
   const favouriteRecipeIds = new Set(favouriteRecipes.map(recipe => recipe._id));
@@ -45,9 +50,13 @@ export default function RecipeCards(props) {
     return recipe; // Keep the original recipe
   });
 
+
   return (
     <div>
       <NavBar />
+      <SearchSort 
+        setQuery= {setQuery}
+      />
       <RecipeList recipes={updatedRecipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
