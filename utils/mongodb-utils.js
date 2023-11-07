@@ -194,3 +194,21 @@ export async function getRecipes(collection, sort, pageNumber, filter = {}) {
 
     return documents;
 }
+
+/**
+ * Retrieves a paginated list of recipes from a MongoDB collection.
+ * @param {string} collection - The name of the collection to query.
+ * @param {Object} filter - The filter criteria for the recipes.
+ * @returns {Promise<Array>} A Promise that resolves to an array of recipe documents.
+ */
+
+export async function getByAggregation(collection, filter) {
+    const db = client.db(mongodb);
+    
+    const documents = await db
+      .collection(collection)
+      .aggregate(filter)
+      .toArray();
+
+    return documents;
+}
