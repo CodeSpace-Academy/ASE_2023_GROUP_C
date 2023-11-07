@@ -1,44 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import FilterByIngredients from "../filtering/filterByIngredients";
 
-export default function SortingOption({ handleSort, currentSort }) {
-  // Initialize the sorting option state with a default value
-  const [selectedSortOption, setSelectedSortOption] = useState('default');
+/**
+ * SortingOption component for selecting sorting options.
+ *
+ * @param {Function} handleSort - A function to handle the sorting option change.
+ *
+ * @returns {JSX.Element} SortingOption component with a select dropdown.
+ */
+export default function SortingOption({ handleSort }) {
 
-  // Define an array of sorting options
   const sortingOptions = [
-    { value: 'default', label: 'Default' },
-    { value: 'ascending', label: 'Prep Time (Ascending)' },
-    { value: 'descending', label: 'Prep Time (Descending)' },
-    { value: 'ascendingCook', label: 'Cook Time (Ascending)' },
-    { value: 'descendingCook', label: 'Cook Time (Descending)' },
-    { value: 'ascendingSteps', label: 'Steps (Ascending)' },
-    { value: 'descendingSteps', label: 'Steps (Descending)' },
-    { value: 'byDateNewest', label: 'Newest' },
-    { value: 'byDateOldest', label: 'Oldest' },
+    { value: "default", label: "Default" }, // Default sorting option
+    { value: "ascending", label: "Prep Time (Ascending)" }, // Sort by Prep Time in ascending order
+    { value: "descending", label: "Prep Time (Descending)" }, // Sort by Prep Time in descending order
+    { value: "ascendingCook", label: "Cook Time (Ascending)" }, // Sort by Cook Time in ascending order
+    { value: "descendingCook", label: "Cook Time (Descending)" }, // Sort by Cook Time in descending order
+    { value: "byDateNewest", label: "Newest" }, // Sort by date, newest first
+    { value: "byDateOldest", label: "Oldest" }, // Sort by date, oldest first
   ];
 
-  // Handle the click event for sorting options
-  const handleSortingOptionClick = (value) => {
-    setSelectedSortOption(value);
-    handleSort(value);
-  };
-
-  useEffect(() => {
-    // Apply the currentSort to the selectedSortOption when it changes
-    setSelectedSortOption(currentSort);
-  }, [currentSort]);
-
   return (
-    <div>
-      {sortingOptions.map((option) => (
-        <button
-          key={option.value}
-          onClick={() => handleSortingOptionClick(option.value)}
-          className={selectedSortOption === option.value ? 'active' : ''}
-        >
-          {option.label}
-        </button>
-      ))}
-    </div>
+    <select 
+      placeholder="Sort"
+      className="bg-transparent focus:outline-none"
+      onChange={(e) => handleSort(e.target.value)}>
+        {sortingOptions.map((option) => (
+          <option key={option.value} className="bg-gray-900" value={option.value}>
+            {option.label}
+          </option>
+        ))}
+    </select>
   );
 }
