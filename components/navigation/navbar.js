@@ -13,14 +13,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "../layout/searchBar";
 import NavLink from "../ui-utils/navLink";
 
-const NavLinks = () => {
+const NavLinks = (props) => {
 
   return(
     <>
     <NavLink href={'/'}><FontAwesomeIcon icon={faHome} size="lg" className=" pr-2"/> Home</NavLink  >
-        <NavLink href={'/search/all'}>
+        {/* <div href={'/search/all'} onClick={props.toggleSearch} className='  hover:bg-slate-600 p-2 rounded-lg flex items-center'>
         <FontAwesomeIcon icon={faSearch} size="lg" className=" pr-2" /> Search
-        </NavLink>
+        </div> */}
         <NavLink href={'/favouriteRecipes'}><FontAwesomeIcon icon={faHeart} size="lg" className=" pr-2"/>Favorites</NavLink >
         <NavLink href={'/recipeList/filters'}><FontAwesomeIcon icon={faFilter} size="lg" className=" pr-2"/>Filters</NavLink  >
         </>
@@ -33,15 +33,14 @@ const NavBar = () => {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [filtersApplied, setFiltersApplied] = useState(false);
   const [showFilterMessage, setShowFilterMessage] = useState(false);
+  const [ searchOpen, setSearchOpen ] = useState(false)
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
     setSearchOpen(false); // Close the search when opening sidebar
   };
 
-  const toggleSearch = () => {
-    setSearchOpen(!isSearchOpen);
-  };
+  
   const toggleNav = () => {
     setIsOpen(!isOpen);
   };

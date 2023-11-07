@@ -6,6 +6,18 @@ import React from "react";
  * @param {Function} handleSort - A function to handle sorting based on user's selection.
  */
 export default function SortingOption({ handleSort }) {
+
+  const sortingOptions = [
+    { value: "default", label: "Default" },
+    { value: "ascending", label: "Prep Time (Ascending)" },
+    { value: "descending", label: "Prep Time (Descending)" },
+    { value: "ascendingCook", label: "Cook Time (Ascending)" },
+    { value: "descendingCook", label: "Cook Time (Descending)" },
+    { value: "byDateNewest", label: "Newest" },
+    { value: "byDateOldest", label: "Oldest" },
+  ];
+
+
   // Function to handle the default sorting option
   const handleDefaultSort = () => {
     // Call the handleSort function with "default" to apply default sorting criteria
@@ -13,49 +25,17 @@ export default function SortingOption({ handleSort }) {
   };
 
   return (
-    <div className="flex m-3 gap-2 overflow-x-auto">
-      {/* Button for default sorting */}
-      <button onClick={handleDefaultSort}>Default</button>
-
-      {/* Button for sorting by No. of instructions (Ascending) */}
-      <button onClick={() => handleSort("ascendingSteps")}>
-        Number of Steps (Ascending)
-      </button>
-
-      {/* Button for sorting by No. of instructions (Descending) */}
-      <button onClick={() => handleSort("descendingSteps")}>
-        Number of Steps (Descending)
-      </button>
-
-      {/* Button for sorting by prep duration (Ascending) */}
-      <button onClick={() => handleSort("ascending")}>
-        Prep Time (Ascending)
-      </button>
-
-      {/* Button for sorting by prep duration (Descending)*/}
-      <button onClick={() => handleSort("descending")}>
-        Prep Time (Descending)
-      </button>
-
-      {/* Button for sorting by cooking duration (Ascending) */}
-      <button onClick={() => handleSort("ascendingCookTime")}>
-        Cook Time (Ascending)
-      </button>
-
-      {/* Button for sorting by cooking duration (Descending) */}
-      <button onClick={() => handleSort("descendingCookTime")}>
-        Cook Time (Descending)
-      </button>
-
-      {/* Button for sorting by date created (Recent First)  */}
-      <button onClick={() => handleSort("byDateNewest")}>
-        Recent
-        </button>
-
-      {/* Button for sorting by date created (Oldest First) */}
-      <button onClick={() => handleSort("byDateOldest")}>
-        Oldest
-        </button>
-    </div>
+    
+      <select 
+      placeholder="Sort"
+      className=" bg-transparent focus:outline-none "
+      onChange={(e) => handleSort(e.target.value)}>
+        {sortingOptions.map((option) => (
+          <option key={option.value} className="bg-gray-900" value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    
   );
 }
