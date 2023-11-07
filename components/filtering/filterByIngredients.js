@@ -8,7 +8,7 @@ import React, { useRef } from 'react';
  * @returns {JSX.Element} - FilterByIngredients component.
  */
 
-const FilterByIngredients = ({ingredientsInputRef, handleIngredientsChange}) => {
+const FilterByIngredients = ({value, onChange, handleIngredientsChange}) => {
 
   return (
     <div>
@@ -16,8 +16,9 @@ const FilterByIngredients = ({ingredientsInputRef, handleIngredientsChange}) => 
       <input
         type="text"
         className='text-black'
-        name="filterByIngredients"
-        ref={ingredientsInputRef}
+        value={value}
+        name='filterByIngredients'
+        onChange={onChange}
       ></input>
       <button onClick={handleIngredientsChange}>Set</button>
     </div>

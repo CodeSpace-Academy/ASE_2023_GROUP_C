@@ -15,22 +15,21 @@ export default function Overlay({categoriesArr}) {
   const [data, setData] = useState({
     categories: '', 
     numberOfSteps: '', 
+    filterByIngredients: ''
   });
-  const ingredientsInputRef = useRef();
+  // const ing/redientsInputRef = useRef();
 
   const router = useRouter()
 
+  console.log(data.filterByIngredients)
+
   let arrayOfIngrerdients
   function handleIngredientsChange(){
-    const ingredientsValue = ingredientsInputRef.current.value;
-    console.log(ingredientsValue);
+    const ingredientsValue = data.filterByIngredients
 
     arrayOfIngrerdients = ingredientsValue.split(' ');
     console.log(arrayOfIngrerdients);
   }
-
-  
-
 
   /**
    * Handle input change for filtering options.
@@ -75,7 +74,6 @@ export default function Overlay({categoriesArr}) {
           categoriesArr={categoriesArr}
           data={data}
           onChange={handleInputChange}
-          ingredientsInputRef={ingredientsInputRef}
           handleIngredientsChange={handleIngredientsChange}
         />
         <div className={styles.buttonContainer}>
