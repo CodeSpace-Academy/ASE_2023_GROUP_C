@@ -13,7 +13,7 @@ import ConfirmationDialog from "../customPrompt/prompt";
  */
 export default function FavoriteButton(props) {
   const { recipe } = props;
-  const [isFavourate, setIsFavourate] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(recipe.isFavourite);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -22,9 +22,9 @@ export default function FavoriteButton(props) {
    */
   const handleConfirm = () => {
     setMessage('Recipe removed!'); // Set the message
-    setIsFavourate(false);
+    setIsFavourite(false);
     setIsDialogOpen(false);
-    
+
     fetch('/api/unfavour', {
       method: 'POST',
       body: JSON.stringify(recipe),
@@ -45,11 +45,14 @@ export default function FavoriteButton(props) {
    * Handle adding or removing the recipe from favorites and show a confirmation dialog.
    */
   function handleFavorite() {
-    setIsFavourate(true);
+    setIsFavourite(true);
 
-    if (isFavourate) {
+    if (isFavourite) {
       setIsDialogOpen(true);
     }
+    recipe.isFavourite = true
+
+    console.log(recipe)
 
     fetch('/api/favourite', {
       method: 'POST',
@@ -65,11 +68,11 @@ export default function FavoriteButton(props) {
     <div>
       <button
         className={`m-3 rounded-full w-14 h-14 flex items-center justify-center ${
-          isFavourate ? 'bg-red-100' : 'bg-red'
+          isFavourite ? 'bg-red-100' : 'bg-red'
         }`}
         onClick={handleFavorite}
       >
-        {isFavourate ? (
+        {isFavourite ? (
           <FontAwesomeIcon className='text-red-500' icon={faHeart} />
         ) : (
           <FontAwesomeIcon icon={faHeart} />

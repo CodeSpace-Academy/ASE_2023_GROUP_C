@@ -18,7 +18,6 @@ export default function Filtering({
   categoriesArr,
   data,
   onChange,
-  ingredientsInputRef,
   handleIngredientsChange,
 }) {
   return (
@@ -30,7 +29,8 @@ export default function Filtering({
       />
       <FilterBySteps value={data.numberOfSteps} onChange={onChange} />
       <FilterByIngredients
-        ingredientsInputRef={ingredientsInputRef}
+        onChange={onChange}
+        value={data.filterByIngredients}
         handleIngredientsChange={handleIngredientsChange}
       />
     </div>
