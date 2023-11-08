@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import LoadMoreButton from '../ui-utils/loadMoreButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Pagination from '../pagination';
-import SortingOption from '../ui-utils/filteringForm';
-import FavoriteButton from '../ui-utils/FavoriteButton';
-import {
-  faUtensils,
-  faKitchenSet,
-  faSpoon,
-  faSort,
-} from '@fortawesome/free-solid-svg-icons';
-import { RecipePreviewCard } from '../ui-utils/RecipePreviewCard';
+import React, { useState, useEffect } from "react";
+import LoadMoreButton from "../ui-utils/loadMoreButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Pagination from "../pagination";
+import SearchSort from "../ui-utils/searchSort";
+import FavoriteButton from "../ui-utils/FavoriteButton";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { RecipePreviewCard } from "../ui-utils/RecipePreviewCard";
+import NavLink from "../ui-utils/navLink";
+
+const NavLinks = (props) => {
+  return (
+    <>
+      <NavLink href={"/recipeList/filters"}>
+        <FontAwesomeIcon icon={faFilter} size="lg" className=" pr-2" />
+        Filters
+      </NavLink>
+
+    </>
+  );
+};
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -74,6 +82,7 @@ export default function RecipeList(props) {
 
   return (
     <>
+      <NavLinks />
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}

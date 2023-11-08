@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import SearchBar from '../layout/searchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 import SortingOption from './filteringForm';
 import { PropTypes } from 'prop-types'
 
+
 // Define an interface for the props
-
-
 export default function SearchSort(props) {
   //Local state
   const [currentSort, setCurrentSort] = useState('default');
@@ -56,9 +54,8 @@ export default function SearchSort(props) {
   };
 
   return (
-    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 border rounded-lg items-center md:justify-between ">
-      {/* searchbar */}
-      <SearchBar setQuery={setQuery} />
+    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 items-center md:justify-between ">
+  
       {/* sort */}
       <div className=" p-2 flex items-center rounded-lg text-slate-400">
         <FontAwesomeIcon icon={faSort} size="lg" />

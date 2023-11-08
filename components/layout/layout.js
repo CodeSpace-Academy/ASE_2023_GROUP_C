@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import SearchBar from "./searchBar";
+import NavBar from "../navigation/navbar";
 
 /**
  * Layout component that provides a common structure for pages.
@@ -12,6 +12,7 @@ export default function Layout(props) {
       <div>
         <div className="search-bar-container items-center mb-4"></div>
         {/* Render the content passed as children */}
+         <NavBar/>
         {props.children}
       </div>
     </Fragment>

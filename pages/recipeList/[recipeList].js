@@ -1,6 +1,5 @@
 import RecipeList from "../../components/recipeList/recipeList";
 import { getAllRecipes, getDocumentSize } from "../../utils/mongodb-utils";
-import NavBar from "../../components/navigation/navbar";
 import { useState } from "react";
 import SearchSort from "../../components/ui-utils/searchSort";
 
@@ -29,7 +28,7 @@ export default function RecipeCards(props) {
 
   return (
     <div>
-      <NavBar />
+     
       <SearchSort 
         setQuery= {setQuery}
       />
