@@ -50,8 +50,24 @@ export async function getServerSideProps({ query }) {
   console.log('filterObject: ',filterObject)
 
   try {
-    const recipeDocuments = await getRecipes('recipes', { _id: -1 }, 1, filterObject);
-    return { props: { recipeDocuments } };
+    const recipeDocuments = await getRecipes(
+      'recipes', 
+      { _id: -1 }, 
+      1, 
+      filterObject
+    );
+
+    if (recipeDocuments.length === 0 ){
+      return {
+        props: {recipeDocuments: filterObject}
+      }
+    }
+
+
+    return { props: { 
+      recipeDocuments, 
+      filterObject
+    } };
   } catch (error) {
     console.error("Getting recipes failed");
     return {
@@ -61,11 +77,17 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function RecipeCards(props) {
-  const { recipeDocuments } = props;
+  const { recipeDocuments,filterObject = {} } = props;
+  if (Object.keys(filterObject).length === 0){
+    return(
+      <div className='text-white'>
+        <h1>The recipe with the specified filters is not found</h1>    
+      </div>
+    )
+  }
 
   return (
     <div>
-      
       <RecipeList recipes={recipeDocuments} totalRecipeInDb={0} />
     </div>
   );
