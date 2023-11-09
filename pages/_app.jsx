@@ -12,7 +12,6 @@ function MyApp({ Component, pageProps }) {
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
         </RecipeProvider>
-
       </div>
     </UserProvider>
   );
