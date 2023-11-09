@@ -1,34 +1,39 @@
-import FilterByIngredients from "../filtering/filterByIngredients";
+import React, { useState, useEffect } from 'react';
 
-/**
- * SortingOption component for selecting sorting options.
- *
- * @param {Function} handleSort - A function to handle the sorting option change.
- *
- * @returns {JSX.Element} SortingOption component with a select dropdown.
- */
-export default function SortingOption({ handleSort }) {
-
+export default function SortingOption({ handleSort, currentSort, setCurrentSort }) {
   const sortingOptions = [
-    { value: "default", label: "Default" }, // Default sorting option
-    { value: "ascending", label: "Prep Time (Ascending)" }, // Sort by Prep Time in ascending order
-    { value: "descending", label: "Prep Time (Descending)" }, // Sort by Prep Time in descending order
-    { value: "ascendingCook", label: "Cook Time (Ascending)" }, // Sort by Cook Time in ascending order
-    { value: "descendingCook", label: "Cook Time (Descending)" }, // Sort by Cook Time in descending order
-    { value: "byDateNewest", label: "Newest" }, // Sort by date, newest first
-    { value: "byDateOldest", label: "Oldest" }, // Sort by date, oldest first
+    { value: 'default', label: 'Default' },
+    { value: 'ascending', label: 'Prep Time (Ascending)' },
+    { value: 'descending', label: 'Prep Time (Descending)' },
+    { value: 'ascendingCook', label: 'Cook Time (Ascending)' },
+    { value: 'descendingCook', label: 'Cook Time (Descending)' },
+    { value: 'ascendingSteps', label: 'Steps (Ascending)' },
+    { value: 'descendingSteps', label: 'Steps (Descending)' },
+    { value: 'byDateNewest', label: 'Newest' },
+    { value: 'byDateOldest', label: 'Oldest' },
   ];
 
+  const handleSelectChange = (e) => {
+    const selectedValue = e.target.value;
+    setCurrentSort(selectedValue);
+    handleSort(selectedValue);
+  };
+
+  useEffect(() => {
+    setCurrentSort(currentSort);
+  }, [currentSort]);
+
   return (
-    <select 
+    <select
       placeholder="Sort"
-      className="bg-transparent focus:outline-none"
-      onChange={(e) => handleSort(e.target.value)}>
-        {sortingOptions.map((option) => (
-          <option key={option.value} className="bg-gray-900" value={option.value}>
-            {option.label}
-          </option>
-        ))}
+      className="bg-transparent focus:outline-none text-grey p-1 "
+      onChange={handleSelectChange}
+    >
+      {sortingOptions.map((option) => (
+        <option key={option.value} className="bg-gray-900" value={option.value}>
+          {option.label}
+        </option>
+      ))}
     </select>
   );
 }
