@@ -39,6 +39,7 @@ export default function RecipeCard(prop) {
           >
             {recipe.images.map((image) => (
               <div key={uuid()} className=" max-h-80">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={image} alt={recipe.title} className=" " />
               </div>
             ))}

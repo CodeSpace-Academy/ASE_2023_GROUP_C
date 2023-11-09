@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable prefer-destructuring */
 import RecipeList from '../../../components/recipeList/recipeList';
 import { getRecipes } from '../../../utils/mongodb-utils';

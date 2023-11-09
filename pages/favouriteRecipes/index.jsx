@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import NoFavouritesYet from '../../components/favourite/noFavourites';
 import RecipeList from '../../components/recipeList/recipeList';
 import { getFavouriteRecipes } from '../../utils/mongodb-utils';

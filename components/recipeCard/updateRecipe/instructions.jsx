@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import EditRecipeContent from "./editableText";
+import React, { useState } from 'react';
+import { uuid } from 'uuidv4';
+import EditRecipeContent from './editableText';
 
 function RecipeInstruction(props) {
   const { recipe, onEdit } = props;
@@ -8,16 +9,15 @@ function RecipeInstruction(props) {
   const [editedInstruction, setEditedInstruction] = useState(recipe.instructions);
 
   const handleEditInstruction = (newInstruction) => {
-
     setEditedInstruction(
       newInstruction.split('\n').map(
-        (instruction) => instruction.trim()
-      )
+        (instruction) => instruction.trim(),
+      ),
     ); // Split into an array
-    
+
     setIsEditing(false);
 
-    onEdit()
+    onEdit();
   };
 
   return (
@@ -32,10 +32,10 @@ function RecipeInstruction(props) {
         <div>
           <ol>
             {editedInstruction.map((instruction, index) => (
-              <li key={index}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
+              <li key={uuid()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
             ))}
           </ol>
-          <button onClick={() => setIsEditing(true)}>Edit Instructions</button>
+          <button type="button" onClick={() => setIsEditing(true)}>Edit Instructions</button>
         </div>
       )}
     </div>

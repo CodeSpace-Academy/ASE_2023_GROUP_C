@@ -52,13 +52,11 @@ export default function FavoriteButton(props) {
     }
     recipe.isFavourite = true;
 
-    console.log(recipe);
-
-    fetch("/api/favourite", {
-      method: "POST",
+    fetch('/api/favourite', {
+      method: 'POST',
       body: JSON.stringify(recipe),
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
   }
@@ -69,24 +67,25 @@ export default function FavoriteButton(props) {
       <button
         type="button"
         className={`m-3 rounded-full w-14 h-14 flex items-center justify-center ${
-          isFavourite ? "bg-red-100" : "bg-red"
+          isFavourite ? 'bg-red-100' : 'bg-red'
         }`}
         onClick={handleFavorite}
       >
         {isFavourite ? (
-          <FontAwesomeIcon className='text-red-500' icon={faHeart} />
+          <FontAwesomeIcon className="text-red-500" icon={faHeart} />
         ) : (
           <FontAwesomeIcon icon={faHeart} />
         )}
       </button>
       {isDialogOpen && (
         <ConfirmationDialog
-          message='Are you sure you want to delete?'
+          message="Are you sure you want to delete?"
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
       )}
-      <p>{message}</p> {/* Display the message here */}
+      <p>{message}</p>
+      {/* Display the message here */}
     </div>
   );
 }

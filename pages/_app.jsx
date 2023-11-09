@@ -9,6 +9,7 @@ function MyApp({ Component, pageProps }) {
       <div className=" bg-slate-900 ">
         <RecipeProvider>
           <Layout />
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
         </RecipeProvider>
 

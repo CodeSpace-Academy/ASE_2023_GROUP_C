@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { getCategories } from '../../../utils/mongodb-utils';
 import Overlay from '../../../components/ui-utils/overlay/overlay';
 
