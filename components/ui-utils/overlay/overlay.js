@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css'
 import { useRouter } from 'next/router';
+import { FilterContext } from '../../context/recipeContext';
 
 
 /**
@@ -12,25 +13,17 @@ import { useRouter } from 'next/router';
  */
 
 export default function Overlay({categoriesArr}) {
-  const [data, setData] = useState({
-    categories: '', 
-    numberOfSteps: '', 
-  });
-  const ingredientsInputRef = useRef();
+  const { filter, setFilter } = useContext(FilterContext)
 
   const router = useRouter()
 
   let arrayOfIngrerdients
   function handleIngredientsChange(){
-    const ingredientsValue = ingredientsInputRef.current.value;
-    console.log(ingredientsValue);
+    const ingredientsValue = filter.filterByIngredients
 
     arrayOfIngrerdients = ingredientsValue.split(' ');
     console.log(arrayOfIngrerdients);
   }
-
-  
-
 
   /**
    * Handle input change for filtering options.
@@ -38,8 +31,8 @@ export default function Overlay({categoriesArr}) {
    */
 
   const handleInputChange = (e) => {
-    setData({
-      ...data,
+    setFilter({
+      ...filter,
       [e.target.name]: e.target.value,
     });
   };
@@ -51,12 +44,12 @@ export default function Overlay({categoriesArr}) {
   const handleOkButtonClick = () => {
     let url; // Set url of the filtered options
     
-    if (data.numberOfSteps === ''){
-      url = `/recipeList/filters/${data.categories}`
-    } else if (data.categories === ''){
-      url = `/recipeList/filters/steps/${data.numberOfSteps}`
+    if (filter.numberOfSteps === ''){
+      url = `/recipeList/filters/${filter.categories}`
+    } else if (filter.categories === ''){
+      url = `/recipeList/filters/steps/${filter.numberOfSteps}`
     } else {
-    url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
+    url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
     }
 
     if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
@@ -73,9 +66,8 @@ export default function Overlay({categoriesArr}) {
       <div className={styles.dialogBox}>
         <Filtering
           categoriesArr={categoriesArr}
-          data={data}
+          data={filter}
           onChange={handleInputChange}
-          ingredientsInputRef={ingredientsInputRef}
           handleIngredientsChange={handleIngredientsChange}
         />
         <div className={styles.buttonContainer}>

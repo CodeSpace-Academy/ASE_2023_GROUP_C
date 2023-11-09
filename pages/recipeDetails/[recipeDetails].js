@@ -1,5 +1,5 @@
 import React from 'react'
-import { getRecipeDetails,getAllergens } from '../../utils/mongodb-utils';
+import { getRecipeDetails,getAllergens, getFavouriteRecipes } from '../../utils/mongodb-utils';
 import RecipeCard from '../../components/recipeCard/recipeCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -12,20 +12,42 @@ export async function getServerSideProps(context) {
   let recipeDocuments;
   let allergens;
 
-  try {
-    recipeDocuments = await getRecipeDetails("recipes", {
-      _id: recipeId,
-    });
+  const favouriteRecipes = await getFavouriteRecipes(
+    'users-list',
+    {'userName': 'The User 1'},
+  )
+  // An array of a favourite recipes
+  const usersFavouriteLists = favouriteRecipes.userList
+  // Creating a set of recipe Id.
+  const favouriteRecipeIds = new Set(usersFavouriteLists.map(recipe => recipe._id));
+
+  // If the recipe ID in context is avaible in the favourite then that 
+  // recipe should be returned.
+  if (favouriteRecipeIds.has(recipeId)){
+    recipeDocuments = usersFavouriteLists.find(favRecipe => favRecipe._id === recipeId)
+
     allergens = await getAllergens("allergens");
 
     const allergensList = allergens[0].allergens
 
     return { props: { recipeDocuments, allergensList } };
-  } catch (error) {
-    console.error("Getting recipes failed");
-    return {
-      notFound: true,
-    };
+    
+  } else {
+    try {
+      recipeDocuments = await getRecipeDetails("recipes", {
+        _id: recipeId,
+      });
+      allergens = await getAllergens("allergens");
+
+      const allergensList = allergens[0].allergens
+
+      return { props: { recipeDocuments, allergensList } };
+    } catch (error) {
+      console.error("Getting recipes failed");
+      return {
+        notFound: true,
+      };
+    }
   }
 }
 
