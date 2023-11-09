@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from 'mongodb';
 
 const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
 const mongodb = process.env.MONGODB_DATABASE;
@@ -8,13 +8,13 @@ const mongodb = process.env.MONGODB_DATABASE;
  */
 
 const client = await MongoClient.connect(connectionString, {
-    useNewUrlParser: true,  // Add any additional connection options here
+  useNewUrlParser: true, // Add any additional connection options here
 });
 
 export async function getDocumentSize(collection) {
-    const db = client.db(mongodb)
-    const count = db.collection(collection).countDocuments()
-    return count
+  const db = client.db(mongodb);
+  const count = db.collection(collection).countDocuments();
+  return count;
 }
 
 /**
@@ -27,37 +27,38 @@ export async function getDocumentSize(collection) {
  */
 
 export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
-    const pageSize = 50;
-    const skipPage = (pageNumber - 1) * pageSize;
+  const pageSize = 50;
+  const skipPage = (pageNumber - 1) * pageSize;
 
-    const db = client.db(mongodb);
-    
-    const documents = await db
-        .collection(collection)
-        .find(filter)
-        .sort(sort)
-        .skip(skipPage)
-        .limit(pageSize)
-        .toArray();
+  const db = client.db(mongodb);
 
-    return documents;
+  const documents = await db
+    .collection(collection)
+    .find(filter)
+    .sort(sort)
+    .skip(skipPage)
+    .limit(pageSize)
+    .toArray();
+
+  return documents;
 }
 
 /**
  * Retrieves a recipe document from a MongoDB collection based on a unique identifier.
  * @param {string} collection - The name of the collection to query.
  * @param {object} uniqueIdentifier - The unique identifier for the recipe to retrieve.
- * @returns {Promise<object|null>} A Promise that resolves to the recipe document, or null if not found.
+ * @returns {Promise<object|null>} A Promise that resolves to the recipe document,
+ or null if not found.
  */
 
 export async function getRecipeDetails(collection, uniqueIdentifier) {
-    const db = client.db(mongodb);
-    
-    const document = await db
-        .collection(collection)
-        .findOne(uniqueIdentifier)
-    
-    return document
+  const db = client.db(mongodb);
+
+  const document = await db
+    .collection(collection)
+    .findOne(uniqueIdentifier);
+
+  return document;
 }
 
 /**
@@ -68,16 +69,15 @@ export async function getRecipeDetails(collection, uniqueIdentifier) {
  */
 
 export async function getAllergens(collection, filter = {}) {
-    const db = client.db(mongodb);
-    
-    const documents = await db
-      .collection(collection)
-      .find(filter)
-      .toArray();
-  
-    return documents;
-}
+  const db = client.db(mongodb);
 
+  const documents = await db
+    .collection(collection)
+    .find(filter)
+    .toArray();
+
+  return documents;
+}
 
 /**
  * Retrieves a list of recipe categories from a MongoDB collection.
@@ -87,14 +87,14 @@ export async function getAllergens(collection, filter = {}) {
  */
 
 export async function getCategories(collection, filter = {}) {
-    const db = client.db(mongodb);
-    
-    const documents = await db
-      .collection(collection)
-      .find(filter)
-      .toArray();
+  const db = client.db(mongodb);
 
-    return documents;
+  const documents = await db
+    .collection(collection)
+    .find(filter)
+    .toArray();
+
+  return documents;
 }
 /**
  * Check if a document exist in a collection in MongoDB.
@@ -103,15 +103,14 @@ export async function getCategories(collection, filter = {}) {
  */
 
 export async function lookforDocument(filter) {
-    const db = client.db(mongodb);
+  const db = client.db(mongodb);
 
-    const result = await db
-        .collection('users-list')
-        .findOne(filter)
+  const result = await db
+    .collection('users-list')
+    .findOne(filter);
 
-    return result;
+  return result;
 }
-
 
 /**
  * Inserts a document into a MongoDB collection.
@@ -121,13 +120,13 @@ export async function lookforDocument(filter) {
  */
 
 export async function insertDocument(collection, document) {
-    const db = client.db(mongodb);
-   
-    const result = await db
-        .collection(collection)
-        .insertOne(document);
-  
-    return result;
+  const db = client.db(mongodb);
+
+  const result = await db
+    .collection(collection)
+    .insertOne(document);
+
+  return result;
 }
 
 /**
@@ -139,18 +138,17 @@ export async function insertDocument(collection, document) {
  */
 
 export async function updateUsersList(collection, username, filter) {
-    const db = client.db(mongodb);
-  
-    const result = await db
-        .collection(collection)
-        .updateOne(
-            { userName: username},
-            filter
-        );
-  
-    return result;
-}
+  const db = client.db(mongodb);
 
+  const result = await db
+    .collection(collection)
+    .updateOne(
+      { userName: username },
+      filter,
+    );
+
+  return result;
+}
 
 /**
  * Retrieve a fovourite recipe into a MongoDB collection.
@@ -159,14 +157,14 @@ export async function updateUsersList(collection, username, filter) {
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
 
-export async function getFavouriteRecipes(collection, filter = {}) {    
-    const db = client.db(mongodb);
-   
-    const documents = await db
-        .collection(collection)
-        .findOne(filter)
+export async function getFavouriteRecipes(collection, filter = {}) {
+  const db = client.db(mongodb);
 
-    return documents;
+  const documents = await db
+    .collection(collection)
+    .findOne(filter);
+
+  return documents;
 }
 
 /**
@@ -179,20 +177,20 @@ export async function getFavouriteRecipes(collection, filter = {}) {
  */
 
 export async function getRecipes(collection, sort, pageNumber, filter = {}) {
-    const pageSize = 100;
-    const skipPage = (pageNumber - 1) * pageSize;
+  const pageSize = 100;
+  const skipPage = (pageNumber - 1) * pageSize;
 
-    const db = client.db(mongodb);
-    
-    const documents = await db
-        .collection(collection)
-        .find(filter)
-        .sort(sort)
-        .skip(skipPage)
-        .limit(pageSize)
-        .toArray();
+  const db = client.db(mongodb);
 
-    return documents;
+  const documents = await db
+    .collection(collection)
+    .find(filter)
+    .sort(sort)
+    .skip(skipPage)
+    .limit(pageSize)
+    .toArray();
+
+  return documents;
 }
 
 /**
@@ -203,12 +201,12 @@ export async function getRecipes(collection, sort, pageNumber, filter = {}) {
  */
 
 export async function getByAggregation(collection, filter) {
-    const db = client.db(mongodb);
-    
-    const documents = await db
-      .collection(collection)
-      .aggregate(filter)
-      .toArray();
+  const db = client.db(mongodb);
 
-    return documents;
+  const documents = await db
+    .collection(collection)
+    .aggregate(filter)
+    .toArray();
+
+  return documents;
 }
