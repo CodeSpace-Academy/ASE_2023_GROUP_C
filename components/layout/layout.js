@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import SearchBar from "./searchBar";
+
 
 /**
  * Layout component that provides a common structure for pages.

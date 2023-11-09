@@ -1,16 +1,13 @@
-import { useState } from 'react';
-import SearchBar from '../layout/searchBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons';
-import SortingOption from './filteringForm';
-import { PropTypes } from 'prop-types'
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
+import SortingOption from "./filteringForm";
+import { PropTypes } from "prop-types";
 
 // Define an interface for the props
-
-
 export default function SearchSort(props) {
   //Local state
-  const [currentSort, setCurrentSort] = useState('default');
+  const [currentSort, setCurrentSort] = useState("default");
 
   //prop drilling
   const { setRecipes, recipes, initialRecipes, setQuery } = props;
@@ -22,29 +19,29 @@ export default function SearchSort(props) {
     let sortedRecipes = [...recipes]; // Use the current state of recipes for sorting
 
     switch (option) {
-      case 'ascending':
+      case "ascending":
         sortedRecipes.sort((a, b) => a.prep - b.prep);
         break;
-      case 'descending':
+      case "descending":
         sortedRecipes.sort((a, b) => b.prep - a.prep);
         break;
-      case 'ascendingCook':
+      case "ascendingCook":
         sortedRecipes.sort((a, b) => a.cook - b.cook);
         break;
-      case 'descendingCook':
+      case "descendingCook":
         sortedRecipes.sort((a, b) => b.cook - a.cook);
         break;
-      case 'byDateOldest':
+      case "byDateOldest":
         sortedRecipes.sort(
           (a, b) => new Date(a.published) - new Date(b.published)
         );
         break;
-      case 'byDateNewest':
+      case "byDateNewest":
         sortedRecipes.sort(
           (a, b) => new Date(b.published) - new Date(a.published)
         );
         break;
-      case 'default':
+      case "default":
         sortedRecipes = initialRecipes.slice(0); // Reset to the initial order
         break;
       default:
@@ -56,9 +53,7 @@ export default function SearchSort(props) {
   };
 
   return (
-    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 border rounded-lg items-center md:justify-between ">
-      {/* searchbar */}
-      <SearchBar setQuery={setQuery} />
+    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 items-center md:justify-between ">
       {/* sort */}
       <div className=" p-2 flex items-center rounded-lg text-slate-400">
         <FontAwesomeIcon icon={faSort} size="lg" />
@@ -70,10 +65,8 @@ export default function SearchSort(props) {
 
 // Define PropTypes for the expected props
 SearchSort.propTypes = {
-    setRecipes: PropTypes.func.isRequired,
-    recipes: PropTypes.array.isRequired,
-    initialRecipes: PropTypes.array.isRequired,
-    setQuery: PropTypes.func.isRequired,
-  };
-  
- 
+  setRecipes: PropTypes.func.isRequired,
+  recipes: PropTypes.array.isRequired,
+  initialRecipes: PropTypes.array.isRequired,
+  setQuery: PropTypes.func.isRequired,
+};

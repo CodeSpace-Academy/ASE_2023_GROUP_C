@@ -6,13 +6,7 @@ import Image from 'next/image';
 function RecipeHomePage() {
   return (
     <div className="p-4 flex max-h-screen">
-      <style>
-        {`
-          body {
-            background-color: #111827; // Setting the background color
-          }
-        `}
-      </style>
+
       <div className="w-1/2 rounded-2xl">
         {/* Left column for the image */}
         <Image

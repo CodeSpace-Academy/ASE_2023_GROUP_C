@@ -7,7 +7,7 @@ export default function SearchInput(props) {
     const { handleSearch } = props
     return (
 
-    <div className="search-bar-container flex items-center mb-4">
+    <div className="search-bar-container flex items-center mb-4  ">
     <input
       type="text"
       value={searchInput}

@@ -25,7 +25,7 @@ export default function SearchBar(props) {
   };
 
   return (
-    <form className="search-container text-center">
+    <form className="search-container text-center p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 border rounded-lg items-center md:justify-between">
       {/* Input field where users can type their search query. */}
       <FontAwesomeIcon icon={faSearch} size="lg" className="text-slate-400" />
       <input
