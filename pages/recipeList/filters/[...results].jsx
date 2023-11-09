@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import RecipeList from '../../../components/recipeList/recipeList';
 import { getRecipes } from '../../../utils/mongodb-utils';
 
@@ -9,15 +10,15 @@ export async function getServerSideProps({ query }) {
   let numOfInstruction = '';
   let category = '';
 
-  if (results.length > 1 && !isNaN(parseInt(results[1]))) {
+  if (results.length > 1 && !Number.isNaN(parseInt(results[1], 10))) {
     // Parse the number of instructions from the query parameter
-    numOfInstruction = parseInt(results[1]);
+    numOfInstruction = parseInt(results[1], 10);
   }
 
   if (results.length > 2 && numOfInstruction !== '') {
     // If numOfInstruction is provided, use the third parameter as category
     category = results[2];
-  } 
+  }
   if (results[0] !== 'steps' && results[0] !== 'ingredients') {
     // Otherwise, use the first parameter as category
     category = results[0];
@@ -34,7 +35,7 @@ export async function getServerSideProps({ query }) {
     filterObject.category = category;
   }
 
-  // Searching with ingredients. 
+  // Searching with ingredients.
   if (results[0] === 'ingredients') {
     // The filterArray generate a list of object that searches in mongodb.
     const filterArray = results.slice(1).map((ingredient) => {
@@ -45,12 +46,17 @@ export async function getServerSideProps({ query }) {
     if (filterArray.length > 0) {
       filterObject.$and = filterArray;
     }
-  } 
+  }
 
-  console.log('filterObject: ',filterObject)
+  console.log('filterObject: ', filterObject);
 
   try {
-    const recipeDocuments = await getRecipes('recipes', { _id: -1 }, 1, filterObject);
+    const recipeDocuments = await getRecipes(
+      'recipes',
+      { _id: -1 },
+      1,
+      filterObject,
+    );
     return { props: { recipeDocuments } };
   } catch (error) {
     console.error('Getting recipes failed');
@@ -65,7 +71,6 @@ export default function RecipeCards(props) {
 
   return (
     <div>
-      
       <RecipeList recipes={recipeDocuments} totalRecipeInDb={0} />
     </div>
   );
