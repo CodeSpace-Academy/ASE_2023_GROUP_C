@@ -17,7 +17,7 @@ export default function Overlay({categoriesArr}) {
     numberOfSteps: '', 
     filterByIngredients: ''
   });
-  // const ing/redientsInputRef = useRef();
+
 
   const router = useRouter()
 
