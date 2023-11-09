@@ -18,20 +18,22 @@ export default function TagsDisplay(prop) {
 
   return (
     <div>
-  {/* Display a heading for the tags */}
-  <h2 className="text-2xl font-bold">Tags:</h2>
-  <div className="flex flex-wrap mb-4 gap-8 mt-2">
-    {/* Map through each tag and display them in separate div elements */}
-    {recipe.tags.map((tag) => (
-      <div key={tag} className="border rounded-lg border-sky-500 p-2 hover:bg-sky-700">
-        {/* Display a tags icon (e.g., a small tag icon) */}
-        <FontAwesomeIcon icon={faTags} />
-        {/* Display the actual tag text */}
-        {tag}
+      {/* Display a heading for the tags */}
+      <h2 className="text-2xl font-bold">Tags:</h2>
+      <div className="flex flex-wrap mb-4 gap-8 mt-2">
+        {/* Map through each tag and display them in separate div elements */}
+        {recipe.tags.map((tag) => (
+          <div
+            key={tag}
+            className="border rounded-lg border-sky-500 p-2 hover:bg-sky-700"
+          >
+            {/* Display a tags icon (e.g., a small tag icon) */}
+            <FontAwesomeIcon icon={faTags} />
+            {/* Display the actual tag text */}
+            {tag}
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-</div>
-
+    </div>
   );
 }

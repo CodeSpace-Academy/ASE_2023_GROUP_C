@@ -1,10 +1,10 @@
-import RecipeList from "../../../components/recipeList/recipeList";
-import { getRecipes } from "../../../utils/mongodb-utils";
+import RecipeList from '../../../components/recipeList/recipeList';
+import { getRecipes } from '../../../utils/mongodb-utils';
 
 export async function getServerSideProps({ query }) {
   const { results = [] } = query;
 
-  console.log('result: ',results)
+  console.log('result: ', results);
 
   let numOfInstruction = '';
   let category = '';
@@ -53,7 +53,7 @@ export async function getServerSideProps({ query }) {
     const recipeDocuments = await getRecipes('recipes', { _id: -1 }, 1, filterObject);
     return { props: { recipeDocuments } };
   } catch (error) {
-    console.error("Getting recipes failed");
+    console.error('Getting recipes failed');
     return {
       notFound: true,
     };

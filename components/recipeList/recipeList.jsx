@@ -1,16 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import LoadMoreButton from '../ui-utils/loadMoreButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from '../pagination';
-import SortingOption from '../ui-utils/filteringForm';
-import FavoriteButton from '../ui-utils/FavoriteButton';
-import {
-  faUtensils,
-  faKitchenSet,
-  faSpoon,
-  faSort,
-} from '@fortawesome/free-solid-svg-icons';
-import { RecipePreviewCard } from '../ui-utils/RecipePreviewCard';
+import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -23,29 +14,12 @@ export default function RecipeList(props) {
   const { recipes: initialRecipes, totalRecipeInDb, searchQuery } = props;
 
   // State variables
-  const [recipes, setRecipes] = useState(initialRecipes);
-  const [data, setData] = useState(recipes);
+  const [recipes] = useState(initialRecipes);
+  const [data] = useState(recipes);
   const [visibleRecipes, setVisibleRecipes] = useState(20);
   const [remainingRecipes, setRemainingRecipes] = useState(
-    initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0
+    initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0,
   );
-
-  // State for sorting and dropdown visibility
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  /**
-   * Handles sorting of recipes based on the selected option.
-   * @param {string} option - The selected sorting option.
-   */
-
-  /**
-   * Toggles the sorting options dropdown.
-   */
-  const toggleDropdown = () => {
-    // Toggle the visibility of the sorting dropdown
-    setIsDropdownOpen(!isDropdownOpen);
-  };
 
   /**
    * Loads more recipes when the "Load More" button is clicked.
@@ -73,7 +47,7 @@ export default function RecipeList(props) {
   };
 
   return (
-    <>
+    <div>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}
@@ -81,6 +55,7 @@ export default function RecipeList(props) {
             {data.slice(0, visibleRecipes).map((recipe) => (
               <RecipePreviewCard
                 recipe={recipe}
+                // eslint-disable-next-line no-underscore-dangle
                 key={recipe._id}
                 convertToHours={convertToHours}
                 searchQuery={searchQuery}
@@ -103,6 +78,6 @@ export default function RecipeList(props) {
           <Pagination totalRecipeInDb={totalRecipeInDb} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

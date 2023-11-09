@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import ConfirmationDialog from "../customPrompt/prompt";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import ConfirmationDialog from '../customPrompt/prompt';
 
 /**
  * FavoriteButton component for adding and removing recipes from favorites.
@@ -50,15 +50,15 @@ export default function FavoriteButton(props) {
     if (isFavourite) {
       setIsDialogOpen(true);
     }
-    recipe.isFavourite = true
+    recipe.isFavourite = true;
 
-    console.log(recipe)
+    console.log(recipe);
 
-    fetch('/api/favourite', {
-      method: 'POST',
+    fetch("/api/favourite", {
+      method: "POST",
       body: JSON.stringify(recipe),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   }
@@ -67,8 +67,9 @@ export default function FavoriteButton(props) {
     // Favourite button
     <div>
       <button
+        type="button"
         className={`m-3 rounded-full w-14 h-14 flex items-center justify-center ${
-          isFavourite ? 'bg-red-100' : 'bg-red'
+          isFavourite ? "bg-red-100" : "bg-red"
         }`}
         onClick={handleFavorite}
       >
@@ -78,15 +79,13 @@ export default function FavoriteButton(props) {
           <FontAwesomeIcon icon={faHeart} />
         )}
       </button>
-
       {isDialogOpen && (
         <ConfirmationDialog
-          message="Are you sure you want to delete?"
+          message='Are you sure you want to delete?'
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
       )}
-
       <p>{message}</p> {/* Display the message here */}
     </div>
   );

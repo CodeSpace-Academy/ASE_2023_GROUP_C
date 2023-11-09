@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,14 +6,13 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
  * SearchBar component for searching recipes by title.
  */
 export default function SearchBar(props) {
-  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 1000);
-
+  const { setQuery } = props;
   // Use useEffect to trigger the search when debouncedSearchValue changes.
   useEffect(() => {
-    props.setQuery(debouncedSearchValue);
-  }, [debouncedSearchValue]);
+    setQuery(debouncedSearchValue);
+  }, [debouncedSearchValue, setQuery]);
 
   /**
    * Handles the input change when the user types a search query.
@@ -34,7 +32,7 @@ export default function SearchBar(props) {
         id="titleSearch"
         value={searchValue}
         onChange={handleInputChange}
-        className=" appearance-none focus:outline-none bg-transparent autofill:bg-transparent p-2 rounded-lg text-slate-400"
+        className="appearance-none focus:outline-none bg-transparent autofill:bg-transparent p-2 rounded-lg text-slate-400"
       />
     </form>
   );

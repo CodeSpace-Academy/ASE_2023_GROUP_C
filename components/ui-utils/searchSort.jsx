@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import SearchBar from '../layout/searchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { PropTypes } from 'prop-types';
 import SortingOption from './filteringForm';
-import { PropTypes } from 'prop-types'
+import SearchBar from '../layout/searchBar';
 
 // Define an interface for the props
 
-
 export default function SearchSort(props) {
-  //Local state
-  const [currentSort, setCurrentSort] = useState('default');
+  // Local state
+  const [setCurrentSort] = useState('default');
 
-  //prop drilling
-  const { setRecipes, recipes, initialRecipes, setQuery } = props;
+  // prop drilling
+  const {
+    setRecipes, recipes, initialRecipes, setQuery,
+  } = props;
 
   // sort func
   const handleSort = (option) => {
@@ -36,12 +37,12 @@ export default function SearchSort(props) {
         break;
       case 'byDateOldest':
         sortedRecipes.sort(
-          (a, b) => new Date(a.published) - new Date(b.published)
+          (a, b) => new Date(a.published) - new Date(b.published),
         );
         break;
       case 'byDateNewest':
         sortedRecipes.sort(
-          (a, b) => new Date(b.published) - new Date(a.published)
+          (a, b) => new Date(b.published) - new Date(a.published),
         );
         break;
       case 'default':
@@ -70,10 +71,10 @@ export default function SearchSort(props) {
 
 // Define PropTypes for the expected props
 SearchSort.propTypes = {
-    setRecipes: PropTypes.func.isRequired,
-    recipes: PropTypes.array.isRequired,
-    initialRecipes: PropTypes.array.isRequired,
-    setQuery: PropTypes.func.isRequired,
-  };
-  
- 
+  setRecipes: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  recipes: PropTypes.array.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  initialRecipes: PropTypes.array.isRequired,
+  setQuery: PropTypes.func.isRequired,
+};
