@@ -39,7 +39,7 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
         .skip(skipPage)
         .limit(pageSize)
         .toArray();
-
+    console.log(filter)
     return documents;
 }
 

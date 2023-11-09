@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         const userQuery = req.query.searchQuery;
 
         // Create a regular expression pattern for a case-insensitive search
-        const regexPattern = new RegExp(`.*${userQuery}.*`, "i");
+        const regexPattern = new RegExp(`${userQuery}`, "i");
 
         // Fetch recipes from the database that match the search query
         const recipes = await getAllRecipes(
