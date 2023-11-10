@@ -1,5 +1,11 @@
 const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
 
+module.exports = {
+  eslint: {
+    dirs: ['pages/index.jsx'],
+  },
+};
+
 module.exports = (phase) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
