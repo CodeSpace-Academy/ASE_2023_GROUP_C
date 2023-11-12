@@ -11,7 +11,7 @@ import { FilterContext } from '../../context/recipeContext';
  * @returns {JSX.Element} React component.
  */
 
-export default function Overlay({ categoriesArr }) {
+export default function Overlay({ categoriesArr, arrayOfUnigueTags }) {
   const { filter, setFilter } = useContext(FilterContext);
 
   const router = useRouter();
@@ -65,6 +65,7 @@ export default function Overlay({ categoriesArr }) {
       <div className={styles.dialogBox}>
         <Filtering
           categoriesArr={categoriesArr}
+          arrayOfUnigueTags={arrayOfUnigueTags}
           data={filter}
           onChange={handleInputChange}
           // eslint-disable-next-line react/jsx-no-bind

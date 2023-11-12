@@ -1,56 +1,42 @@
-import React, { useState, useEffect } from 'react';
 import FilterByCategory from './filterByCategory';
 import FilterBySteps from './filterBySteps';
 import FilterByIngredients from './filterByIngredients';
+import FilterByTags from './filterByTags';
+
+/**
+ * Filtering component for filtering by category, steps, and ingredients.
+ * @param {object} props - Component props.
+ * @param {array} props.categoriesArr - Array of categories for filtering.
+ * @param {object} props.data - Object containing data for filtering.
+ * @param {function} props.onChange - Function to handle changes in the filtering.
+ * @param {function} props.handleIngredientsChange - Function to handle changes in the ingredients.
+ * @returns {JSX.Element} - Filtering component.
+ */
 
 export default function Filtering({
   categoriesArr,
+  arrayOfUnigueTags,
+  data,
+  onChange,
   handleIngredientsChange,
-  recipes,
-  onCategoryChange,
 }) {
-  const [data, setData] = useState({
-    categories: '', // Initially unselected category
-    numberOfSteps: 1,
-    filterByIngredients: '',
-  });
-
-  const [, setFilteredRecipes] = useState(recipes);
-
-  const handleDataChange = (name, value) => {
-    setData({ ...data, [name]: value });
-  };
-
-  useEffect(() => {
-    // Filter recipes by the selected category
-    if (data.categories) {
-      const newFilteredRecipes = recipes.filter(
-        (recipe) => recipe.category === data.categories,
-      );
-      setFilteredRecipes(newFilteredRecipes);
-    } else {
-      setFilteredRecipes(recipes);
-    }
-  }, [data.categories, recipes]);
-
   return (
     <div className="text-white">
       <FilterByCategory
         categoriesArr={categoriesArr}
         value={data.categories}
-        onChange={(e) => {
-          handleDataChange('categories', e.target.value);
-          onCategoryChange(e.target.value);
-        }}
+        onChange={onChange}
       />
-      <FilterBySteps
-        value={data.numberOfSteps}
-        onChange={(e) => handleDataChange('numberOfSteps', e.target.value)}
-      />
+      <FilterBySteps value={data.numberOfSteps} onChange={onChange} />
       <FilterByIngredients
+        onChange={onChange}
         value={data.filterByIngredients}
-        onChange={(e) => handleDataChange('filterByIngredients', e.target.value)}
         handleIngredientsChange={handleIngredientsChange}
+      />
+      <FilterByTags
+        arrayOfUnigueTags={arrayOfUnigueTags}
+        value={data.tags}
+        onChange={onChange}
       />
     </div>
   );

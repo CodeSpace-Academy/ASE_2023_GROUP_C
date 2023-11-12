@@ -18,8 +18,10 @@ export function RecipeProvider({ children }) {
   // Define initial state for the filter object using useState.
   const [filter, setFilter] = useState({
     categories: '',
+    tags: '',
     numberOfSteps: '',
     filterByIngredients: '',
+
   });
 
   // Create a value object that contains the filter state and the setFilter function.
