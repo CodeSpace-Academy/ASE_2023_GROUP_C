@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
 const mongodb = process.env.MONGODB_DATABASE;
@@ -39,7 +39,6 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
     .skip(skipPage)
     .limit(pageSize)
     .toArray();
-
   return documents;
 }
 
@@ -143,9 +142,7 @@ export async function updateUsersList(collection, username, filter) {
 
 export async function getFavouriteRecipes(collection, filter = {}) {
   const db = client.db(mongodb);
-
   const documents = await db.collection(collection).findOne(filter);
-
   return documents;
 }
 
