@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
 const mongodb = process.env.MONGODB_DATABASE;
@@ -39,7 +39,7 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
     .skip(skipPage)
     .limit(pageSize)
     .toArray();
-  console.log(filter);
+
   return documents;
 }
 
@@ -47,7 +47,7 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
  * Retrieves a recipe document from a MongoDB collection based on a unique identifier.
  * @param {string} collection - The name of the collection to query.
  * @param {object} uniqueIdentifier - The unique identifier for the recipe to retrieve.
- * @returns {Promise<object|null>} A Promise that resolves to the recipe document,
+ * @returns {Promise<object|null>}
  */
 
 export async function getRecipeDetails(collection, uniqueIdentifier) {
