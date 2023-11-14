@@ -8,10 +8,10 @@ module.exports = (phase, { defaultConfig }) => {
         MONGODB_USERNAME: 'groupc',
         MONGODB_PASSWORD: 'UFX6A2FjZLMhDuME',
         MONGODB_CLUSTERNAME: 'groupc',
-        MONGODB_DATABASE: 'dev-dummy',
-      },
+        MONGODB_DATABASE: 'devdb',
+      }
     }
-  }
+    }
 
 
   return {
@@ -20,7 +20,7 @@ module.exports = (phase, { defaultConfig }) => {
       MONGODB_USERNAME: 'groupc',
       MONGODB_PASSWORD: 'UFX6A2FjZLMhDuME',
       MONGODB_CLUSTERNAME: 'groupc',
-      MONGODB_DATABASE: 'devdb',
-    }
+      MONGODB_DATABASE: 'dev-dummy',
+    },
   }
 }

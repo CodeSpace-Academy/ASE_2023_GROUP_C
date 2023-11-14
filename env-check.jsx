@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const envFilePath = 'env.local';
 if (fs.existsSync(envFilePath)) {
 } else {
