@@ -16,7 +16,7 @@ import NavLink from '../ui-utils/navLink';
 
 function NavLinks() {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center ">
       <NavLink href="/recipeList/filters">
         <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
         Filters
