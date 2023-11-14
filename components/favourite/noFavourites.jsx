@@ -1,7 +1,9 @@
 export default function NoFavouritesYet() {
   return (
     <div>
-      <p>You havenot favourited any recipes yet.</p>
+      <p className="bg-gray-800 text-white p-4 Center align flex container.">
+        You have not favourited any recipes yet.
+      </p>
     </div>
   );
 }

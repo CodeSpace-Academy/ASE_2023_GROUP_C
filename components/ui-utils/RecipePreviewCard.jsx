@@ -1,3 +1,6 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable @next/next/no-img-element */
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUtensils,
@@ -9,7 +12,15 @@ import FavoriteButton from './FavoriteButton';
 
 export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
+  const [currentImage, setCurrentImage] = useState(0);
 
+  function nextSlide() {
+    setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
+  }
+
+  function prevSlide() {
+    setCurrentImage((prevImage) => (prevImage - 1 + recipe.images.length) % recipe.images.length);
+  }
   //  Highlighting helper
   function highlightingMatchingWords(text) {
     const regex = new RegExp(searchQuery, 'gi');
@@ -55,12 +66,30 @@ export default function RecipePreviewCard(props) {
         key={recipe._id}
         className="relative bg-gray-800 p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={recipe.images[0]}
-          alt={recipe.title}
-          className="w-full h-48 object-cover rounded-md"
-        />
+        <div className="w-full h-48 overflow-hidden">
+          <div
+            className="flex"
+            style={{ transform: `translateX(${-currentImage * 100}%)` }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {recipe.images.map((image, index) => (
+              // eslint-disable-next-line jsx-a11y/img-redundant-alt
+              <img
+                key={index}
+                src={image}
+                alt={`${recipe.title}-image-${index}`}
+                className="w-full h-48 object-cover rounded-md"
+              />
+            ))}
+
+          </div>
+          <button type="button" className="absolute left-0 top-1/2 transform -translate-y-1/2" onClick={prevSlide}>
+            ❮
+          </button>
+          <button type="button" className="absolute right-0 top-1/2 transform -translate-y-1/2" onClick={nextSlide}>
+            ❯
+          </button>
+        </div>
         <div className=" absolute opacity-70 hover:opacity-100">
           <FavoriteButton recipe={recipe} />
         </div>
