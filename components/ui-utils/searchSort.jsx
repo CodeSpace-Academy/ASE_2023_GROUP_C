@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 import { PropTypes } from 'prop-types';
 import SortingOption from './filteringForm';
+
 import SearchBar from '../layout/searchBar';
 
 export default function SearchSort(props) {
@@ -12,9 +15,7 @@ export default function SearchSort(props) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // prop drilling
-  const {
-    setRecipes, recipes, initialRecipes, setQuery,
-  } = props;
+  const { setRecipes, recipes, initialRecipes } = props;
 
   // State for sorting
   const [currentSort, setCurrentSort] = useState('default');
@@ -76,9 +77,7 @@ export default function SearchSort(props) {
   };
 
   return (
-    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 border rounded-lg items-center md:justify-between ">
-      {/* searchbar */}
-      <SearchBar setQuery={setQuery} />
+    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 items-center md:justify-between ">
       {/* sort */}
       <div className=" p-2 flex items-center rounded-lg text-slate-400">
         <FontAwesomeIcon icon={faSort} size="lg" />
@@ -95,5 +94,5 @@ SearchSort.propTypes = {
   recipes: PropTypes.array.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   initialRecipes: PropTypes.array.isRequired,
-  setQuery: PropTypes.func.isRequired,
+  // setQuery: PropTypes.func.isRequired,
 };
