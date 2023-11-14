@@ -73,10 +73,7 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
       params.set('filter', JSON.stringify(filteredFilter));
     }
 
-    const sorting = {
-      a:'fefe'
-    }
-    params.set('sorting', JSON.stringify(sorting));
+    // params.set('sorting', JSON.stringify(sorting));
 
     const queryString = params.toString();
 
