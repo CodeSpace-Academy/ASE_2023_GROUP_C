@@ -15,6 +15,9 @@ export async function getDocumentSize(collection) {
   const db = client.db(mongodb);
   const count = db.collection(collection).countDocuments();
   return count;
+  const db = client.db(mongodb);
+  const count = db.collection(collection).countDocuments();
+  return count;
 }
 
 /**
@@ -95,6 +98,7 @@ export async function getCategories(collection, filter = {}) {
     .toArray();
 
   return documents;
+  return documents;
 }
 /**
  * Check if a document exist in a collection in MongoDB.
@@ -104,11 +108,13 @@ export async function getCategories(collection, filter = {}) {
 
 export async function lookforDocument(filter) {
   const db = client.db(mongodb);
+  const db = client.db(mongodb);
 
   const result = await db
     .collection('users-list')
     .findOne(filter);
 
+  return result;
   return result;
 }
 
@@ -165,6 +171,7 @@ export async function getFavouriteRecipes(collection, filter = {}) {
     .findOne(filter);
 
   return documents;
+  return documents;
 }
 
 /**
@@ -179,6 +186,8 @@ export async function getFavouriteRecipes(collection, filter = {}) {
 export async function getRecipes(collection, sort, pageNumber, filter = {}) {
   const pageSize = 100;
   const skipPage = (pageNumber - 1) * pageSize;
+  const pageSize = 100;
+  const skipPage = (pageNumber - 1) * pageSize;
 
   const db = client.db(mongodb);
 
@@ -189,7 +198,17 @@ export async function getRecipes(collection, sort, pageNumber, filter = {}) {
     .skip(skipPage)
     .limit(pageSize)
     .toArray();
+  const db = client.db(mongodb);
 
+  const documents = await db
+    .collection(collection)
+    .find(filter)
+    .sort(sort)
+    .skip(skipPage)
+    .limit(pageSize)
+    .toArray();
+
+  return documents;
   return documents;
 }
 
@@ -209,4 +228,6 @@ export async function getByAggregation(collection, filter) {
     .toArray();
 
   return documents;
+  return documents;
 }
+
