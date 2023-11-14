@@ -58,7 +58,7 @@ export default function RecipePreviewCard(props) {
   // highlightedTitle = recipe.title.replace(regex, `<span className=" text-green-300">
   // ${searchQuery}</span>`)
   //  }
-
+  // Carousel
   return (
     <div>
       <li
@@ -67,26 +67,23 @@ export default function RecipePreviewCard(props) {
         className="relative bg-gray-800 p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1"
       >
         <div className="w-full h-48 overflow-hidden">
-          <div
-            className="flex"
-            style={{ transform: `translateX(${-currentImage * 100}%)` }}
+          <img
+            src={recipe.images[currentImage]}
+            alt={recipe.title}
+            className="w-full h-full object-cover rounded-md"
+          />
+          <button
+            type="button"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2"
+            onClick={prevSlide}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            {recipe.images.map((image, index) => (
-              // eslint-disable-next-line jsx-a11y/img-redundant-alt
-              <img
-                key={index}
-                src={image}
-                alt={`${recipe.title}-image-${index}`}
-                className="w-full h-48 object-cover rounded-md"
-              />
-            ))}
-
-          </div>
-          <button type="button" className="absolute left-0 top-1/2 transform -translate-y-1/2" onClick={prevSlide}>
             ❮
           </button>
-          <button type="button" className="absolute right-0 top-1/2 transform -translate-y-1/2" onClick={nextSlide}>
+          <button
+            type="button"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2"
+            onClick={nextSlide}
+          >
             ❯
           </button>
         </div>
