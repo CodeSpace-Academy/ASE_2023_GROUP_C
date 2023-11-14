@@ -3,16 +3,19 @@
 import { getByAggregation } from "../../../utils/mongodb-utils";
 
 export default async function handler(req, res){
-    
-    const filterVal = 'filter=%7B"categories"%3A"Chicken"%2C"numberOfSteps"%3A"9"%2C"filterByIngredients"%3A"butter"%7D'
-    console.log (filterVal)
+    // const { filter, sort } = req.query;
+
+    // console.log('filter:', filter);
+    // console.log('sort:', sort);
+
+    const filterVal = req.query.filter;
 
     // Split the query string by '&'
     const queryParams = filterVal.split('&');
     
     let filterObject
     let sortingObject = 'published(oldest)'
-    
+
     queryParams.forEach(param => {
         if (param.startsWith('filter=')) {
         // Extract the value of 'filter' and decode it
@@ -27,17 +30,10 @@ export default async function handler(req, res){
         sortingObject = JSON.parse(sortingValue);
         }
     });
+    console.log('sortingObj: ',sortingObject)
+    console.log('filterObject: ',filterObject)
 
     if (req.method === 'GET') {
-
-        // let filterObject = {
-        //     categories: "Dessert",
-        //     filterByIngredients: "butter eggs sugar",
-        //     numberOfSteps:"9",
-        //     tags:"Nuts",
-        // }
-
-        // let sortingObject = 'published(oldest)'
 
         function sortingByFunction(sortingBy) {
             const sortingOptions = {
@@ -105,3 +101,13 @@ export default async function handler(req, res){
         }
     } 
 }
+
+
+    // let filterObject = {
+    //     categories: "Dessert",
+    //     filterByIngredients: "butter eggs sugar",
+    //     numberOfSteps:"9",
+    //     tags:"Nuts",
+    // }
+
+    // let sortingObject = 'published(oldest)'
