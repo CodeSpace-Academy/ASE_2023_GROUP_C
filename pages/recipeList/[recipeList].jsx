@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
 import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from '../../utils/mongodb-utils';
-import NavBar from '../../components/navigation/navbar';
 import SearchSort from '../../components/ui-utils/searchSort';
 
 export async function getServerSideProps(context) {
@@ -54,10 +53,7 @@ export default function RecipeCards(props) {
 
   return (
     <div>
-      <NavBar />
-      <SearchSort
-        setQuery={setQuery}
-      />
+
       <RecipeList recipes={updatedRecipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );
