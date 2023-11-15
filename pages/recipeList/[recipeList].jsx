@@ -1,7 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
-import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from '../../utils/mongodb-utils';
+import {
+  getAllRecipes,
+  getDocumentSize,
+  getFavouriteRecipes,
+} from '../../utils/mongodb-utils';
 import SearchSort from '../../components/ui-utils/searchSort';
 
 export async function getServerSideProps(context) {
@@ -15,10 +20,9 @@ export async function getServerSideProps(context) {
     { _id: -1 },
     pageNumber,
   );
-  const favouriteRecipes = await getFavouriteRecipes(
-    'users-list',
-    { userName: 'The User 1' },
-  );
+  const favouriteRecipes = await getFavouriteRecipes('users-list', {
+    userName: 'The User 1',
+  });
 
   const totalRecipeInDb = await getDocumentSize('recipes');
 
@@ -38,14 +42,18 @@ export default function RecipeCards(props) {
 
   // Create a set of favorite recipe IDs
   // eslint-disable-next-line no-underscore-dangle
-  const favouriteRecipeIds = new Set(favouriteRecipes.map((recipe) => recipe._id));
+  const favouriteRecipeIds = new Set(
+    favouriteRecipes.map((recipe) => recipe._id),
+  );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
     // eslint-disable-next-line no-underscore-dangle
     if (favouriteRecipeIds.has(recipe._id)) {
       // eslint-disable-next-line no-underscore-dangle
-      const favoriteRecipe = favouriteRecipes.find((favRecipe) => favRecipe._id === recipe._id);
+      const favoriteRecipe = favouriteRecipes.find(
+        (favRecipe) => favRecipe._id === recipe._id,
+      );
       return favoriteRecipe; // Replace with favorite recipe
     }
     return recipe; // Keep the original recipe
@@ -53,7 +61,6 @@ export default function RecipeCards(props) {
 
   return (
     <div>
-
       <RecipeList recipes={updatedRecipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );

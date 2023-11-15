@@ -71,7 +71,10 @@ export default function Overlay({ categoriesArr }) {
           handleIngredientsChange={handleIngredientsChange}
         />
         <div className={styles.buttonContainer}>
-          <button type="button" className={`${styles.button} ${styles.cancelButton}`}>
+          <button
+            type="button"
+            className={`${styles.button} ${styles.cancelButton}`}
+          >
             Cancel
           </button>
           <button

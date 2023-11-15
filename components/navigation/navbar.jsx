@@ -43,7 +43,6 @@ export default function NavBar() {
         <div className="p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 border rounded-lg items-center md:justify-between">
           {/* SearchBar */}
           <SearchBar setQuery={setQuery} />
-
         </div>
         <nav>
           <div className="hidden md:flex items-center w-full gap-6">

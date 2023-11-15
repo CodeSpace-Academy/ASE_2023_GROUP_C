@@ -11,7 +11,7 @@
     background: rgba(0, 0, 0, 0.155);
     z-index: 999;
 }
-  
+
 .dialogBox {
     background: #ffffff8b;
     width: 800px;
@@ -21,17 +21,17 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
-  
+
 .message {
     font-size: 18px;
     margin-bottom: 20px;
 }
-  
+
 .buttonContainer {
     display: flex;
     justify-content: center;
 }
-  
+
 .button .cancelButton .okButton {
     padding: 10px 20px;
     margin: 0 10px;
@@ -40,18 +40,17 @@
     cursor: pointer;
     font-size: 16px;
 }
-  
+
 .cancelButton {
     background: #f44336;
     color: #fff;
 }
-  
+
 .okButton {
     background: #4CAF50;
     color: #fff;
 }
-  
+
 button:hover .cancelButton:hover .okButton:hover {
     opacity: 0.8;
 }
-  

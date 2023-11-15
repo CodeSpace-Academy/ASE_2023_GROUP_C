@@ -6,13 +6,13 @@ function RecipeInstruction(props) {
   const { recipe, onEdit } = props;
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedInstruction, setEditedInstruction] = useState(recipe.instructions);
+  const [editedInstruction, setEditedInstruction] = useState(
+    recipe.instructions,
+  );
 
   const handleEditInstruction = (newInstruction) => {
     setEditedInstruction(
-      newInstruction.split('\n').map(
-        (instruction) => instruction.trim(),
-      ),
+      newInstruction.split('\n').map((instruction) => instruction.trim()),
     ); // Split into an array
 
     setIsEditing(false);
@@ -35,7 +35,9 @@ function RecipeInstruction(props) {
               <li key={uuid()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
             ))}
           </ol>
-          <button type="button" onClick={() => setIsEditing(true)}>Edit Instructions</button>
+          <button type="button" onClick={() => setIsEditing(true)}>
+            Edit Instructions
+          </button>
         </div>
       )}
     </div>

@@ -28,7 +28,10 @@ export default function HomePage() {
             {user.name}
           </div>
           <Link href="/api/auth/logout" legacyBehavior>
-            <button type="button" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700 mb-6 ml-5">
+            <button
+              type="button"
+              className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700 mb-6 ml-5"
+            >
               Logout
               <FontAwesomeIcon icon={faUser} />
             </button>

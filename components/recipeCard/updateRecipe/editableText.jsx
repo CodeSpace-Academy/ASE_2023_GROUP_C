@@ -17,8 +17,12 @@ function EditRecipeContent(props) {
         className=" text-black"
       />
       <div className=" flex flex-col mt-2 mb-4 gap-4">
-        <button type="button" onClick={handleSave}>Save</button>
-        <button type="button" onClick={onCancel}>Cancel</button>
+        <button type="button" onClick={handleSave}>
+          Save
+        </button>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
       </div>
     </div>
   );
