@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from 'mongodb';
 
 const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
 const mongodb = process.env.MONGODB_DATABASE;
@@ -27,7 +27,7 @@ export async function getDocumentSize(collection) {
  */
 
 export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
-  const pageSize = 50;
+  const pageSize = 500;
   const skipPage = (pageNumber - 1) * pageSize;
 
   const db = client.db(mongodb);

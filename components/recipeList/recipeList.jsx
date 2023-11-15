@@ -17,7 +17,7 @@ import SortingForm from '../ui-utils/sortingForm';
 
 function NavLinks() {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center ">
       <NavLink href="/recipeList/filters">
         <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
         Filters
@@ -34,7 +34,7 @@ export default function RecipeList(props) {
   // State variables
   const [recipes] = useState(initialRecipes);
   const [data] = useState(recipes);
-  const [visibleRecipes, setVisibleRecipes] = useState(20);
+  const [visibleRecipes, setVisibleRecipes] = useState(100);
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0,
   );
@@ -43,7 +43,7 @@ export default function RecipeList(props) {
    * Loads more recipes when the "Load More" button is clicked.
    */
   const loadMore = () => {
-    const additionalRecipes = 20;
+    const additionalRecipes = 100;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     // Update the state with the new visible and remaining recipes
     setVisibleRecipes(newVisibleRecipes);
