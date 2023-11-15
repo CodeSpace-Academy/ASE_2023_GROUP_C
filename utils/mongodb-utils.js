@@ -39,7 +39,6 @@ export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
     .skip(skipPage)
     .limit(pageSize)
     .toArray();
-
   return documents;
 }
 
@@ -143,9 +142,7 @@ export async function updateUsersList(collection, username, filter) {
 
 export async function getFavouriteRecipes(collection, filter = {}) {
   const db = client.db(mongodb);
-
   const documents = await db.collection(collection).findOne(filter);
-
   return documents;
 }
 
