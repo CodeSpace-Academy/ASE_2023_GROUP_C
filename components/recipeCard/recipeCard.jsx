@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMitten, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { Carousel } from 'react-responsive-carousel';
+// eslint-disable-next-line import/no-unresolved
 import { uuid } from 'uuidv4';
 import RecipeInstruction from './updateRecipe/instructions';
 import RecipeDescription from './updateRecipe/description';
