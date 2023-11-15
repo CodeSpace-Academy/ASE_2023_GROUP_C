@@ -27,7 +27,7 @@ export async function getDocumentSize(collection) {
  */
 
 export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
-  const pageSize = 50;
+  const pageSize = 500;
   const skipPage = (pageNumber - 1) * pageSize;
 
   const db = client.db(mongodb);
