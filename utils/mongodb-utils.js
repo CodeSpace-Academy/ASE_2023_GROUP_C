@@ -95,7 +95,7 @@ export async function getCategories(collection, filter = {}) {
 export async function lookforDocument(filter) {
   const db = client.db(mongodb);
 
-  const result = await db.collection("users-list").findOne(filter);
+  const result = await db.collection('users-list').findOne(filter);
 
   return result;
 }
