@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMitten, faTriangleExclamation, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMitten,
+  faTriangleExclamation,
+  faUtensils,
+} from '@fortawesome/free-solid-svg-icons';
 import { Carousel } from 'react-responsive-carousel';
 // eslint-disable-next-line import/no-unresolved
 import { uuid } from 'uuidv4';
@@ -65,7 +69,12 @@ export default function RecipeCard(prop) {
             {recipe.images.map((image) => (
               <div key={uuid()} className=" max-h-80">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image} alt={recipe.title} loading="lazy" className=" " />
+                <img
+                  src={image}
+                  alt={recipe.title}
+                  loading="lazy"
+                  className=" "
+                />
               </div>
             ))}
           </Carousel>
@@ -114,7 +123,7 @@ export default function RecipeCard(prop) {
                     {recipe.ingredients[ingredientKey]}
                     of
                     {ingredientKey}
-                    {' '}
+
                   </li>
                 ))}
               </ul>
@@ -122,25 +131,7 @@ export default function RecipeCard(prop) {
           )}
         </Card>
 
-        <Card>
-          {/* {recipe.instructions && recipe.instructions.length > 0 && (
-            <div className="">
-              {recipe.instructions && recipe.instructions.length > 0 && (
-                <div className="">
-                  <h3 className="text-2xl font-semibold pb-2 pt-2">
-                    Instructions
-                  </h3>
-                  <RecipeInstruction
-                    recipe={recipe}
-                    onEdit={handleDescriptionEdit}
-                  />
-                </div>
-              )}
-            </div>
-          )} */}
-
-          {instructionsContent}
-        </Card>
+        <Card>{instructionsContent}</Card>
       </div>
     </div>
   );
