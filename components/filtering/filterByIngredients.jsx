@@ -12,13 +12,16 @@ function FilterByIngredients({ value, onChange, handleIngredientsChange }) {
     <div>
       <h3>Search by Ingredients</h3>
       <input
-        type="text"
-        className="text-black"
+        type='text'
+        className='text-black'
         value={value}
-        name="filterByIngredients"
+        name='filterByIngredients'
         onChange={onChange}
       />
-      <button type="button" onClick={handleIngredientsChange}> Set </button>
+      <button type='button' onClick={handleIngredientsChange}>
+        {" "}
+        Set{" "}
+      </button>
     </div>
   );
 }

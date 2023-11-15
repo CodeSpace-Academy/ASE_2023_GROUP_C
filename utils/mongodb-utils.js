@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from "mongodb";
 
 const connectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTERNAME}.t9cojsf.mongodb.net/?retryWrites=true&w=majority`;
 const mongodb = process.env.MONGODB_DATABASE;
@@ -96,7 +96,7 @@ export async function getCategories(collection, filter = {}) {
 export async function lookforDocument(filter) {
   const db = client.db(mongodb);
 
-  const result = await db.collection('users-list').findOne(filter);
+  const result = await db.collection("users-list").findOne(filter);
 
   return result;
 }
