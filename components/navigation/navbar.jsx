@@ -24,6 +24,7 @@ function DropdownButton() {
   return (
     <div className="relative inline-block">
       <div
+        aria-label="User Menu"
         role="button"
         tabIndex={0}
         className="p-2 flex flex-wrap justify-center border-slate-400 border rounded-lg items-center md:justify-between cursor-pointer"
@@ -44,17 +45,17 @@ function DropdownButton() {
       >
         {/* Login option */}
         <Link href="/api/auth/login">
-          <button type="button" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
+          <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
             {' '}
             Login
-          </button>
+          </div>
         </Link>
         {/* Sign Up option */}
         <Link href="https://recipe-users-accounts.us.auth0.com/u/signup?state=hKFo2SBhOXFRZ1BYWjZCLXhOQnhYcFJWS3k5NnNkanFVYUJXUqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIGhMLXNuVkx4TEFuUDBZbVZGcnpBNERpcFlhSE0waUY3o2NpZNkgRElIekRMZk9XUXdkcVFyakZFajRrOWJIVmlCb0RXeG4">
-          <button type="button" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
+          <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
             {' '}
             Sign Up
-          </button>
+          </div>
         </Link>
       </div>
     </div>
@@ -62,11 +63,11 @@ function DropdownButton() {
 }
 
 // Took a `query` prop thats is used in the href attribute of the first NavLink
-function NavLinks({ query }) {
+function NavLinks() {
   return (
     <>
       {/* NavLink for navigating to the recipe list page with a specified query */}
-      <NavLink href={`/recipeList/1?q=${query}`}>
+      <NavLink href="/recipeList/1">
         <FontAwesomeIcon icon={faBook} size="lg" className="pr-2" />
         Recipe
       </NavLink>
