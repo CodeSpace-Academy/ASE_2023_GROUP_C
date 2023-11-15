@@ -22,9 +22,13 @@ export function RecipeProvider({ children }) {
     filterByIngredients: '',
   });
 
+  const [selectedOption, setSelectedOption] = useState('');
+
   // Create a value object that contains the filter state and the setFilter function.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const valueObject = { filter, setFilter };
+  const valueObject = {
+    filter, setFilter, selectedOption, setSelectedOption,
+  };
 
   return (
     // Provide the FilterContext with the value object to its children.
