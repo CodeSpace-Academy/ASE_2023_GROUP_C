@@ -1,3 +1,13 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "next/core-web-vitals"]
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["airbnb", "airbnb/hooks", "next/core-web-vitals"],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+    }
 }

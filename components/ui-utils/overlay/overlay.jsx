@@ -1,8 +1,7 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
-import { FilterContext } from '../../context/recipeContext';
 
 /**
  * Overlay component for filtering recipes.
@@ -12,17 +11,20 @@ import { FilterContext } from '../../context/recipeContext';
  */
 
 export default function Overlay({ categoriesArr }) {
-  const { filter, setFilter } = useContext(FilterContext);
+  const [data, setData] = useState({
+    categories: '',
+    numberOfSteps: '',
+    filterByIngredients: '',
+  });
+  // const ing/redientsInputRef = useRef();
 
   const router = useRouter();
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
-    const ingredientsValue = filter.filterByIngredients;
+    const ingredientsValue = data.filterByIngredients;
 
     arrayOfIngrerdients = ingredientsValue.split(' ');
-    // eslint-disable-next-line no-console
-    console.log(arrayOfIngrerdients);
   }
 
   /**
@@ -31,8 +33,8 @@ export default function Overlay({ categoriesArr }) {
    */
 
   const handleInputChange = (e) => {
-    setFilter({
-      ...filter,
+    setData({
+      ...data,
       [e.target.name]: e.target.value,
     });
   };
@@ -44,12 +46,12 @@ export default function Overlay({ categoriesArr }) {
   const handleOkButtonClick = () => {
     let url; // Set url of the filtered options
 
-    if (filter.numberOfSteps === '') {
-      url = `/recipeList/filters/${filter.categories}`;
-    } else if (filter.categories === '') {
-      url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
+    if (data.numberOfSteps === '') {
+      url = `/recipeList/filters/${data.categories}`;
+    } else if (data.categories === '') {
+      url = `/recipeList/filters/steps/${data.numberOfSteps}`;
     } else {
-      url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
+      url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
     }
 
     if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
@@ -65,7 +67,7 @@ export default function Overlay({ categoriesArr }) {
       <div className={styles.dialogBox}>
         <Filtering
           categoriesArr={categoriesArr}
-          data={filter}
+          data={data}
           onChange={handleInputChange}
           // eslint-disable-next-line react/jsx-no-bind
           handleIngredientsChange={handleIngredientsChange}

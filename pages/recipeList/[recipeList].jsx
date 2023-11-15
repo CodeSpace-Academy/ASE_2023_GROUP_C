@@ -2,12 +2,8 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
-import {
-  getAllRecipes,
-  getDocumentSize,
-  getFavouriteRecipes,
-} from '../../utils/mongodb-utils';
-import SearchSort from '../../components/ui-utils/searchSort';
+import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from '../../utils/mongodb-utils';
+import user from '../../utils/dummyUser';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -20,9 +16,10 @@ export async function getServerSideProps(context) {
     { _id: -1 },
     pageNumber,
   );
-  const favouriteRecipes = await getFavouriteRecipes('users-list', {
-    userName: 'The User 1',
-  });
+  const favouriteRecipes = await getFavouriteRecipes(
+    'users-list',
+    { userName: user },
+  );
 
   const totalRecipeInDb = await getDocumentSize('recipes');
 

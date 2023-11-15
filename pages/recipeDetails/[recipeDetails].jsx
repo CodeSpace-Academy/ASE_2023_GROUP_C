@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { useRouter } from 'next/router';
@@ -10,6 +11,8 @@ import {
   getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
 import RecipeCard from '../../components/recipeCard/recipeCard';
+import user from '../../utils/dummyUser';
+import userCollection from '../../utils/mongoConfig';
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
@@ -17,8 +20,8 @@ export async function getServerSideProps(context) {
   let recipeDocuments;
   let allergens;
 
-  const favouriteRecipes = await getFavouriteRecipes('users-list', {
-    userName: 'The User 1',
+  const favouriteRecipes = await getFavouriteRecipes(userCollection, {
+    userName: user,
   });
   // An array of a favourite recipes
   const usersFavouriteLists = favouriteRecipes.userList;
@@ -64,6 +67,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
   return (
     <div>
       <div className="flex font-bold p-5  bg-slate-900 text-white items-center">
+        {/* eslint-disable-next-line */}
         <button type="button" onClick={() => router.back()}>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
           prev

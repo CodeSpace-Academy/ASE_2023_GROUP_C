@@ -1,13 +1,23 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 @layer utilities {
   .opacity-1 {
     opacity: 1;
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(16, 23, 42);
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -34,9 +44,4 @@ button {
   font-size: 18px;
   cursor: pointer;
   flex-wrap: nowrap;
-
-}
-
-body {
-  background-color: rgb(16, 23, 42);
 }
