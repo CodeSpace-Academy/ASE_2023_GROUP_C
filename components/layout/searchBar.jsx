@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 
 /**
- * SearchBar component for searching recipes by title.
+ *SearchBar component for searching recipes by title.
  */
 export default function SearchBar(props) {
   const [searchValue, setSearchValue] = useState('');
