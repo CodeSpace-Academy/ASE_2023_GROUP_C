@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
 import { FilterContext } from '../../context/recipeContext';
@@ -14,7 +14,7 @@ import { FilterContext } from '../../context/recipeContext';
 export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
   const { filter, setFilter } = useContext(FilterContext);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
@@ -47,7 +47,7 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
       Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
     );
 
-    const titleFilter = 'Chocolate'
+    const titleFilter = 'Chocolate';
 
     const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}&search=${JSON.stringify(titleFilter)}`;
 
@@ -89,77 +89,56 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
   );
 }
 
+// const handleOkButtonClick = () => {
+//   // let url; // Set url of the filtered options
 
+//   // if (filter.numberOfSteps === '') {
+//   //   url = `/recipeList/filters/${filter.categories}`;
+//   // } else if (filter.categories === '') {
+//   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
+//   // } else {
+//   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
+//   // }
 
+//   // if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
+//   //   url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
+//   // }
 
+//   // const url = `/recipeList/filters/${JSON.stringify(filter)}`;
 
+//   // const params = new URLSearchParams();
 
+//   // // Filter out empty values
+//   // const filteredFilter = Object.fromEntries(
+//   //   Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
+//   // );
+//   // console.log(filteredFilter)
 
+//   // if (Object.keys(filteredFilter).length > 0) {
+//   //   params.set('filter', JSON.stringify(filteredFilter));
+//   // }
 
+//   // // params.set('sorting', JSON.stringify(sorting));
 
+//   // const queryString = params.toString();
 
+//   // console.log(queryString)
 
+//   // const url = `/recipeList/filters/${queryString}`;
 
+//   // // Use router.push to navigate to the dynamic URL
+//   // router.push(url);
 
+//   // Filter out empty values
+//   const filteredFilter = Object.fromEntries(
+//     Object.entries(filter).filter(
+//  ([key, value]) => value !== '' && value !== null && value !== undefined),
+//   );
 
+//const queryString2=`filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`
 
-
-
-
-
-
-
-
-
-  // const handleOkButtonClick = () => {
-  //   // let url; // Set url of the filtered options
-
-  //   // if (filter.numberOfSteps === '') {
-  //   //   url = `/recipeList/filters/${filter.categories}`;
-  //   // } else if (filter.categories === '') {
-  //   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
-  //   // } else {
-  //   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
-  //   // }
-
-  //   // if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
-  //   //   url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
-  //   // }
-
-  //   // const url = `/recipeList/filters/${JSON.stringify(filter)}`;
-
-  //   // const params = new URLSearchParams();
-
-  //   // // Filter out empty values
-  //   // const filteredFilter = Object.fromEntries(
-  //   //   Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
-  //   // );
-  //   // console.log(filteredFilter)
-
-  //   // if (Object.keys(filteredFilter).length > 0) {
-  //   //   params.set('filter', JSON.stringify(filteredFilter));
-  //   // }
-
-  //   // // params.set('sorting', JSON.stringify(sorting));
-
-  //   // const queryString = params.toString();
-
-  //   // console.log(queryString)
-
-  //   // const url = `/recipeList/filters/${queryString}`;
-
-  //   // // Use router.push to navigate to the dynamic URL
-  //   // router.push(url);
-
-  //   // Filter out empty values
-  //   const filteredFilter = Object.fromEntries(
-  //     Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
-  //   );
-
-  //   const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
-
-  //   fetch(`/api/filter/${queryString2}`)
-  //     .then((response) => response.json())
-  //     .then((data) => console.log(data))
-  //     .catch((error) => console.error(error));
-  // };
+//   fetch(`/api/filter/${queryString2}`)
+//     .then((response) => response.json())
+//     .then((data) => console.log(data))
+//     .catch((error) => console.error(error));
+// };
