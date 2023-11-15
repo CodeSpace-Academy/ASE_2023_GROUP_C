@@ -1,24 +1,15 @@
-//SearchSort.
-
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSort,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { PropTypes } from 'prop-types';
 import SortingOption from './filteringForm';
 
-import SearchBar from '../layout/searchBar';
-
 export default function SearchSort(props) {
   // Local state
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [setCurrentSort] = useState('default');
 
-  // prop drilling
+  // Destructuring props
   const { setRecipes, recipes, initialRecipes } = props;
-
-  // State for sorting
-  const [currentSort, setCurrentSort] = useState('default');
 
   /**
    * Handles sorting of recipes based on the selected option.
@@ -30,40 +21,38 @@ export default function SearchSort(props) {
 
     switch (option) {
       case 'ascending':
-        // Sort by prep time in ascending order
-        sortedRecipes.sort((a, b) => a.prep - b.prep);
-        break;
       case 'descending':
-        // Sort by prep time in descending order
-        sortedRecipes.sort((a, b) => b.prep - a.prep);
+        // Sort by prep time
+        sortedRecipes.sort((a, b) => a.prep - b.prep);
+        if (option === 'descending') {
+          sortedRecipes.reverse();
+        }
         break;
       case 'ascendingCook':
-        // Sort by cook time in ascending order
-        sortedRecipes.sort((a, b) => a.cook - b.cook);
-        break;
       case 'descendingCook':
-        // Sort by cook time in descending order
-        sortedRecipes.sort((a, b) => b.cook - a.cook);
+        // Sort by cook time
+        sortedRecipes.sort((a, b) => a.cook - b.cook);
+        if (option === 'descendingCook') {
+          sortedRecipes.reverse();
+        }
         break;
       case 'ascendingSteps':
-        // Sort by the number of steps in ascending order
-        sortedRecipes.sort((a, b) => a.instructions.length - b.instructions.length);
-        break;
       case 'descendingSteps':
-        // Sort by the number of steps in descending order
-        sortedRecipes.sort((a, b) => b.instructions.length - a.instructions.length);
+        // Sort by the number of steps
+        sortedRecipes.sort((a, b) => a.instructions.length - b.instructions.length);
+        if (option === 'descendingSteps') {
+          sortedRecipes.reverse();
+        }
         break;
       case 'byDateOldest':
-        // Sort by date (as before)
+      case 'byDateNewest':
+        // Sort by date
         sortedRecipes.sort(
           (a, b) => new Date(a.published) - new Date(b.published)
         );
-        break;
-      case 'byDateNewest':
-        // Sort by date (as before)
-        sortedRecipes.sort(
-          (a, b) => new Date(b.published) - new Date(a.published)
-        );
+        if (option === 'byDateNewest') {
+          sortedRecipes.reverse();
+        }
         break;
       case 'default':
         sortedRecipes = initialRecipes.slice(0);
@@ -73,13 +62,12 @@ export default function SearchSort(props) {
     }
 
     setRecipes(sortedRecipes);
-    setIsDropdownOpen(false);
   };
 
   return (
-    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 items-center md:justify-between ">
-      {/* sort */}
-      <div className=" p-2 flex items-center rounded-lg text-slate-400">
+    <div className="p-2 flex flex-wrap justify-center gap-2 mb-3 ml-4 mr-4 border-slate-500 items-center md:justify-between">
+      {/* Sorting */}
+      <div className="p-2 flex items-center rounded-lg text-slate-400">
         <FontAwesomeIcon icon={faSort} size="lg" />
         <SortingOption handleSort={handleSort} />
       </div>
