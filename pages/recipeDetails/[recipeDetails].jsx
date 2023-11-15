@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
@@ -11,6 +10,8 @@ import {
   getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
 import RecipeCard from '../../components/recipeCard/recipeCard';
+import user from '../../utils/dummyUser';
+import userCollection from '../../utils/mongoConfig';
 
 export async function getServerSideProps(context) {
   const recipeId = context.query.recipeDetails;
@@ -18,8 +19,8 @@ export async function getServerSideProps(context) {
   let recipeDocuments;
   let allergens;
 
-  const favouriteRecipes = await getFavouriteRecipes('users-list', {
-    userName: 'The User 1',
+  const favouriteRecipes = await getFavouriteRecipes(userCollection, {
+    userName: user,
   });
   // An array of a favourite recipes
   const usersFavouriteLists = favouriteRecipes.userList;
