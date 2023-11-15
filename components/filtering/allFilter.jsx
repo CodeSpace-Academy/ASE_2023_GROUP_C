@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FilterByCategory from './filterByCategory';
 import FilterBySteps from './filterBySteps';
 import FilterByIngredients from './filterByIngredients';
+import ClearFilters from './clearFilters';
 
 export default function Filtering({
   categoriesArr,
@@ -19,6 +20,15 @@ export default function Filtering({
 
   const handleDataChange = (name, value) => {
     setData({ ...data, [name]: value });
+  };
+
+  const handleClearFilters = () => {
+    setData({
+      categories: '',
+      numberOfSteps: 1,
+      filterByIngredients: '',
+    });
+    setFilteredRecipes(recipes);
   };
 
   useEffect(() => {
@@ -52,6 +62,7 @@ export default function Filtering({
         onChange={(e) => handleDataChange('filterByIngredients', e.target.value)}
         handleIngredientsChange={handleIngredientsChange}
       />
+      <ClearFilters onClearFilters={handleClearFilters} />
     </div>
   );
 }

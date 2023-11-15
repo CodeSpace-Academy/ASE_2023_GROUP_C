@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { uuid } from 'uuidv4';
 
 export default function FilterByCategory({ categoriesArr, value, onChange }) {
