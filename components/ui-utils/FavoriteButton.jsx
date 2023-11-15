@@ -25,6 +25,11 @@ export default function FavoriteButton(props) {
     setIsFavourite(false);
     setIsDialogOpen(false);
 
+    // Clear the message after 2 seconds
+    setTimeout(() => {
+      setMessage('');
+    }, 2000);
+
     fetch('/api/unfavour', {
       method: 'POST',
       body: JSON.stringify(recipe),
