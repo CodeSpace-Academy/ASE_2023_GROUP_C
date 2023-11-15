@@ -3,7 +3,7 @@ import { useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
 import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from '../../utils/mongodb-utils';
 import SearchSort from '../../components/ui-utils/searchSort';
-import { user } from '../../utils/dummyUser';
+import user from '../../utils/dummyUser';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
