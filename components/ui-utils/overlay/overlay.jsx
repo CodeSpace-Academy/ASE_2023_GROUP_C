@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
@@ -15,7 +13,6 @@ import { FilterContext } from '../../context/recipeContext';
 
 export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
   const { filter, setFilter } = useContext(FilterContext);
-  console.log(filter)
 
   const router = useRouter();
 
@@ -45,44 +42,19 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
    */
 
   const handleOkButtonClick = () => {
-    // let url; // Set url of the filtered options
-
-    // if (filter.numberOfSteps === '') {
-    //   url = `/recipeList/filters/${filter.categories}`;
-    // } else if (filter.categories === '') {
-    //   url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
-    // } else {
-    //   url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
-    // }
-
-    // if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
-    //   url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
-    // }
-
-    // const url = `/recipeList/filters/${JSON.stringify(filter)}`;
-
-    const params = new URLSearchParams();
-
     // Filter out empty values
     const filteredFilter = Object.fromEntries(
       Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
     );
-    console.log(filteredFilter)
 
-    if (Object.keys(filteredFilter).length > 0) {
-      params.set('filter', JSON.stringify(filteredFilter));
-    }
+    const titleFilter = 'Chocolate'
 
-    // params.set('sorting', JSON.stringify(sorting));
+    const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}&search=${JSON.stringify(titleFilter)}`;
 
-    const queryString = params.toString();
-
-    console.log(queryString)
-
-    const url = `/recipeList/filters/${queryString}`;
-
-    // Use router.push to navigate to the dynamic URL
-    router.push(url);
+    fetch(`/api/filter/${queryString2}`)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -116,3 +88,78 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const handleOkButtonClick = () => {
+  //   // let url; // Set url of the filtered options
+
+  //   // if (filter.numberOfSteps === '') {
+  //   //   url = `/recipeList/filters/${filter.categories}`;
+  //   // } else if (filter.categories === '') {
+  //   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
+  //   // } else {
+  //   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
+  //   // }
+
+  //   // if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
+  //   //   url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
+  //   // }
+
+  //   // const url = `/recipeList/filters/${JSON.stringify(filter)}`;
+
+  //   // const params = new URLSearchParams();
+
+  //   // // Filter out empty values
+  //   // const filteredFilter = Object.fromEntries(
+  //   //   Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
+  //   // );
+  //   // console.log(filteredFilter)
+
+  //   // if (Object.keys(filteredFilter).length > 0) {
+  //   //   params.set('filter', JSON.stringify(filteredFilter));
+  //   // }
+
+  //   // // params.set('sorting', JSON.stringify(sorting));
+
+  //   // const queryString = params.toString();
+
+  //   // console.log(queryString)
+
+  //   // const url = `/recipeList/filters/${queryString}`;
+
+  //   // // Use router.push to navigate to the dynamic URL
+  //   // router.push(url);
+
+  //   // Filter out empty values
+  //   const filteredFilter = Object.fromEntries(
+  //     Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
+  //   );
+
+  //   const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
+
+  //   fetch(`/api/filter/${queryString2}`)
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.error(error));
+  // };

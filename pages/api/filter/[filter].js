@@ -12,11 +12,18 @@ export default async function handler(req, res){
 
     // Split the query string by '&'
     const queryParams = filterVal.split('&');
+    console.log()
     
-    let filterObject
+    let filterObject, searchTitleQuery;
     let sortingObject = 'published(oldest)'
 
     queryParams.forEach(param => {
+        if (param.startsWith('search=')) {
+            // Extract the value of 'filter' and decode it
+            const filterValue = decodeURIComponent(param.split('=')[1]);
+            // Parse the 'filter' value as JSON
+            searchTitleQuery = JSON.parse(filterValue);
+        }
         if (param.startsWith('filter=')) {
         // Extract the value of 'filter' and decode it
         const filterValue = decodeURIComponent(param.split('=')[1]);
@@ -30,6 +37,7 @@ export default async function handler(req, res){
         sortingObject = JSON.parse(sortingValue);
         }
     });
+    console.log('titleQuery:',searchTitleQuery)
     console.log('sortingObj: ',sortingObject)
     console.log('filterObject: ',filterObject)
 
@@ -50,42 +58,53 @@ export default async function handler(req, res){
             return sortingOptions[sortingBy]  // Default to {_id: 1} if sortingBy is not matched
         }
 
-        // Convert the string to an integer if numberOfSteps is present
-        const numberOfSteps = filterObject.numberOfSteps ? parseInt(filterObject.numberOfSteps) : null;
-        
-        // Create an array of ingredients from the filterByIngredients property
-        const ingredientsArray = filterObject.filterByIngredients ? filterObject.filterByIngredients.split(' ') : [];
-        
         // Build the aggregation pipeline dynamically based on the filterObject
         let aggregationPipeline = [];
 
         //Create a sortinng object in a the pipeline
         aggregationPipeline.push({$sort: sortingByFunction(sortingObject)})
-        
-        // Match based on the provided criteria
-        if (numberOfSteps !== null) {
-            aggregationPipeline.push({
-                $match: { instructions: { $size: numberOfSteps } }
-            });
-        }
-        
-        if (filterObject.categories) {
-            aggregationPipeline.push({
-                $match: { category: { $in: [filterObject.categories] } }
-            });
-        }
-        
-        if (filterObject.tags) {
-            aggregationPipeline.push({
-                $match: { tags: { $in: [filterObject.tags] } }
-            });
+
+        if (searchTitleQuery){
+            aggregationPipeline.push(
+                {$match: {
+                    title: {
+                        $regex: new RegExp(searchTitleQuery, "i")
+                }}}
+            )
         }
 
-        if (ingredientsArray.length > 0) {
-            const ingredientsMatch = ingredientsArray.map(ingredient => ({ [`ingredients.${ingredient}`]: { $exists: true } }));
-            aggregationPipeline.push({
-                $match: { $and: ingredientsMatch }
-            });
+        if (!searchTitleQuery){
+            // Convert the string to an integer if numberOfSteps is present
+            const numberOfSteps = filterObject.numberOfSteps ? parseInt(filterObject.numberOfSteps) : null;
+            
+            // Create an array of ingredients from the filterByIngredients property
+            const ingredientsArray = filterObject.filterByIngredients ? filterObject.filterByIngredients.split(' ') : [];
+
+            // Match based on the provided criteria
+            if (numberOfSteps !== null) {
+                aggregationPipeline.push({
+                    $match: { instructions: { $size: numberOfSteps } }
+                });
+            }
+            
+            if (filterObject.categories) {
+                aggregationPipeline.push({
+                    $match: { category: { $in: [filterObject.categories] } }
+                });
+            }
+            
+            if (filterObject.tags) {
+                aggregationPipeline.push({
+                    $match: { tags: { $in: [filterObject.tags] } }
+                });
+            }
+
+            if (ingredientsArray.length > 0) {
+                const ingredientsMatch = ingredientsArray.map(ingredient => ({ [`ingredients.${ingredient}`]: { $exists: true } }));
+                aggregationPipeline.push({
+                    $match: { $and: ingredientsMatch }
+                });
+            }
         }
         
         try {
@@ -101,13 +120,3 @@ export default async function handler(req, res){
         }
     } 
 }
-
-
-    // let filterObject = {
-    //     categories: "Dessert",
-    //     filterByIngredients: "butter eggs sugar",
-    //     numberOfSteps:"9",
-    //     tags:"Nuts",
-    // }
-
-    // let sortingObject = 'published(oldest)'

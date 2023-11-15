@@ -3,8 +3,6 @@ import RecipeList from '../../components/recipeList/recipeList';
 import {
   getAllRecipes, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
-import NavBar from '../../components/navigation/navbar';
-import SearchSort from '../../components/ui-utils/searchSort';
 import Overlay from '../../components/ui-utils/overlay/overlay';
 
 export async function getServerSideProps(context) {
@@ -102,12 +100,8 @@ export default function RecipeListPage(props) {
 
   return (
     <div>
-      <NavBar
-        filterOverlay={filterOverlay}
-      />
-      <SearchSort
-        setQuery={setQuery}
-      />
+
+
       { filterOverlay
       && (
       <Overlay
