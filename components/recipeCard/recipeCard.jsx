@@ -5,8 +5,8 @@ import {
   faTriangleExclamation,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
-// eslint-disable-next-line import/no-unresolved
 import { uuid } from 'uuidv4';
 import RecipeInstruction from './updateRecipe/instructions';
 import RecipeDescription from './updateRecipe/description';
@@ -68,12 +68,14 @@ export default function RecipeCard(prop) {
           >
             {recipe.images.map((image) => (
               <div key={uuid()} className=" max-h-80">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+
+                <Image
                   src={image}
                   alt={recipe.title}
+                  width={350}
+                  height={250}
                   loading="lazy"
-                  className=" "
+                  placeholder="blur"
                 />
               </div>
             ))}
