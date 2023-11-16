@@ -48,6 +48,7 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
     );
 
     const titleFilter = 'Chocolate';
+    const sortingObject = 'published(Ascending)'
 
     const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}&search=${JSON.stringify(titleFilter)}`;
 

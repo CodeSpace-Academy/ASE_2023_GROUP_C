@@ -12,7 +12,6 @@ export default async function handler(req, res){
 
     // Split the query string by '&'
     const queryParams = filterVal.split('&');
-    console.log()
     
     let filterObject, searchTitleQuery;
     let sortingObject = 'published(oldest)'
@@ -71,9 +70,7 @@ export default async function handler(req, res){
                         $regex: new RegExp(searchTitleQuery, "i")
                 }}}
             )
-        }
-
-        if (!searchTitleQuery){
+        } else {
             // Convert the string to an integer if numberOfSteps is present
             const numberOfSteps = filterObject.numberOfSteps ? parseInt(filterObject.numberOfSteps) : null;
             
