@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
+import { FilterContext } from '../../context/recipeContext';
 
 /**
  * Overlay component for filtering recipes.
@@ -17,9 +18,11 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
-    const ingredientsValue = data.filterByIngredients;
+    const ingredientsValue = filter.filterByIngredients;
 
     arrayOfIngrerdients = ingredientsValue.split(' ');
+    // eslint-disable-next-line no-console
+    console.log(arrayOfIngrerdients);
   }
 
   /**
@@ -28,8 +31,8 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
    */
 
   const handleInputChange = (e) => {
-    setData({
-      ...data,
+    setFilter({
+      ...filter,
       [e.target.name]: e.target.value,
     });
   };
@@ -49,11 +52,12 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
 
     const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
 
+    console.log(`/api/filter/${queryString2}`)
+
     fetch(`/api/filter/${queryString2}`)
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((error) => console.error(error));
-
   };
 
   return (
