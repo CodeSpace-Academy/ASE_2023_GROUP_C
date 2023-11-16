@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
 import { FilterContext } from '../../context/recipeContext';
@@ -14,7 +14,7 @@ import { FilterContext } from '../../context/recipeContext';
 export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
   const { filter, setFilter } = useContext(FilterContext);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
@@ -50,7 +50,7 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
     const titleFilter = 'Chocolate';
     const sortingObject = 'published(Ascending)'
 
-    const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}&search=${JSON.stringify(titleFilter)}`;
+    const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
 
     fetch(`/api/filter/${queryString2}`)
       .then((response) => response.json())
