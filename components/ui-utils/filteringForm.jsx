@@ -5,8 +5,8 @@ export default function SortingOption({ handleSort }) {
     { value: 'descending', label: 'Prep Time (Descending)' },
     { value: 'ascendingCook', label: 'Cook Time (Ascending)' },
     { value: 'descendingCook', label: 'Cook Time (Descending)' },
-    { value: 'byDateNewest', label: 'Newest' },
-    { value: 'byDateOldest', label: 'Oldest' },
+    { value: 'byDateNewest', label: 'Recent Recipes' },
+    { value: 'byDateOldest', label: 'Old Recipes' },
   ];
 
   return (

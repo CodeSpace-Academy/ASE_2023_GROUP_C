@@ -13,13 +13,18 @@ import FilterByTags from './filterByTags';
  * @returns {JSX.Element} - Filtering component.
  */
 
+import ClearFilters from './clearFilters';
+
+
 export default function Filtering({
   categoriesArr,
   arrayOfUnigueTags,
   data,
   onChange,
   handleIngredientsChange,
+  handleClearFilters
 }) {
+
   return (
     <div className="text-white">
       <FilterByCategory
@@ -38,6 +43,7 @@ export default function Filtering({
         value={data.tags}
         onChange={onChange}
       />
+      <ClearFilters onClearFilters={handleClearFilters} />
     </div>
   );
 }

@@ -14,7 +14,6 @@ export default function FavouriteRecipes({ children }) {
       </Link>
 
       <h1 className="text-white p-2">Your Favorite Recipes</h1>
-      <h2 className="text-white p-2">Hellooo</h2>
       <button type="button">Remove favourite</button>
       <div>{children}</div>
     </div>

@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   );
   const favouriteRecipes = await getFavouriteRecipes(
     'users-list',
-    { userName: 'The User 1' },
+    { userName: user },
   );
 
   const patternForTags = [
