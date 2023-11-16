@@ -1,8 +1,5 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import { uuid } from 'uuidv4';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import EditRecipeContent from './editableText';
 
 function RecipeInstruction(props) {
