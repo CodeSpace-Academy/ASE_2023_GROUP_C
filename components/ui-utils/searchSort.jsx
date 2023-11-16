@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 import { PropTypes } from 'prop-types';
 import SortingOption from './filteringForm';
 
@@ -8,66 +10,53 @@ export default function SearchSort(props) {
   // Local state
   const [setCurrentSort] = useState('default');
 
-  // Destructuring props
+  // prop drilling
   const { setRecipes, recipes, initialRecipes } = props;
 
-  /**
-   * Handles sorting of recipes based on the selected option.
-   * @param {string} option - The selected sorting option.
-   */
+  // sort func
   const handleSort = (option) => {
+    // Update the current sorting option
     setCurrentSort(option);
-    let sortedRecipes = [...recipes];
+    let sortedRecipes = [...recipes]; // Use the current state of recipes for sorting
 
     switch (option) {
       case 'ascending':
-      case 'descending':
-        // Sort by prep time
         sortedRecipes.sort((a, b) => a.prep - b.prep);
-        if (option === 'descending') {
-          sortedRecipes.reverse();
-        }
+        break;
+      case 'descending':
+        sortedRecipes.sort((a, b) => b.prep - a.prep);
         break;
       case 'ascendingCook':
-      case 'descendingCook':
-        // Sort by cook time
         sortedRecipes.sort((a, b) => a.cook - b.cook);
-        if (option === 'descendingCook') {
-          sortedRecipes.reverse();
-        }
         break;
-      case 'ascendingSteps':
-      case 'descendingSteps':
-        // Sort by the number of steps
-        sortedRecipes.sort((a, b) => a.instructions.length - b.instructions.length);
-        if (option === 'descendingSteps') {
-          sortedRecipes.reverse();
-        }
+      case 'descendingCook':
+        sortedRecipes.sort((a, b) => b.cook - a.cook);
         break;
       case 'byDateOldest':
-      case 'byDateNewest':
-        // Sort by date
         sortedRecipes.sort(
-          (a, b) => new Date(a.published) - new Date(b.published)
+          (a, b) => new Date(a.published) - new Date(b.published),
         );
-        if (option === 'byDateNewest') {
-          sortedRecipes.reverse();
-        }
+        break;
+      case 'byDateNewest':
+        sortedRecipes.sort(
+          (a, b) => new Date(b.published) - new Date(a.published),
+        );
         break;
       case 'default':
-        sortedRecipes = initialRecipes.slice(0);
+        sortedRecipes = initialRecipes.slice(0); // Reset to the initial order
         break;
       default:
         break;
     }
 
+    // Update the state with the sorted recipes
     setRecipes(sortedRecipes);
   };
 
   return (
-    <div className="p-2 flex flex-wrap justify-center gap-2 mb-3 ml-4 mr-4 border-slate-500 items-center md:justify-between">
-      {/* Sorting */}
-      <div className="p-2 flex items-center rounded-lg text-slate-400">
+    <div className=" p-2 flex flex-wrap justify-center gap-2 ml-4 border-slate-500 items-center md:justify-between ">
+      {/* sort */}
+      <div className=" p-2 flex items-center rounded-lg text-slate-400">
         <FontAwesomeIcon icon={faSort} size="lg" />
         <SortingOption handleSort={handleSort} />
       </div>

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 /**
- * SearchBar component for searching recipes by title.
+ *SearchBar component for searching recipes by title.
  */
 export default function SearchBar(props) {
   const [searchValue, setSearchValue] = useState('');
@@ -25,7 +24,6 @@ export default function SearchBar(props) {
   return (
     <form className="search-container text-center">
       {/* Input field where users can type their search query. */}
-      <FontAwesomeIcon icon={faSearch} size="lg" className="text-slate-400" />
       <input
         type="text"
         placeholder="Search for recipes by title"

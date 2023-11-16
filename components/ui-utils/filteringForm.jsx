@@ -17,6 +17,8 @@ export default function SortingOption({ handleSort, currentSort }) {
     { value: 'descendingSteps', label: 'Steps (Descending)' },
     { value: 'byDateNewest', label: 'Newest' },
     { value: 'byDateOldest', label: 'Oldest' },
+    { value: 'byDateNewest', label: 'Recent Recipes' },
+    { value: 'byDateOldest', label: 'Old Recipes' },
   ];
 
   // Handle the click event for sorting options
