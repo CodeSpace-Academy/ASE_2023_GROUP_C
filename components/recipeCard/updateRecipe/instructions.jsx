@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import { uuid } from 'uuidv4';
 import EditRecipeContent from './editableText';

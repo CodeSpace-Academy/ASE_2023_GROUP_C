@@ -54,7 +54,7 @@ export default function SearchSort(props) {
   };
 
   return (
-    <div className=" p-2 flex flex-wrap justify-center gap-2  mb-3 ml-4 mr-4 border-slate-500 items-center md:justify-between ">
+    <div className=" p-2 flex flex-wrap justify-center gap-2 ml-4 border-slate-500 items-center md:justify-between ">
       {/* sort */}
       <div className=" p-2 flex items-center rounded-lg text-slate-400">
         <FontAwesomeIcon icon={faSort} size="lg" />
