@@ -5,7 +5,6 @@ import LoadMoreButton from '../ui-utils/loadMoreButton';
 import Pagination from '../pagination';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 // import SearchSort from '../ui-utils/searchSort';
-import NavLink from '../ui-utils/navLink';
 import SortingForm from '../ui-utils/sortingForm';
 
 /**
@@ -18,11 +17,13 @@ import SortingForm from '../ui-utils/sortingForm';
 function NavLinks() {
   return (
     <div className="flex items-center ">
-      <NavLink href="/recipeList/filters">
-        <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
-        Filters
-      </NavLink>
-      <SortingForm />
+      <div className="flex items-center ">
+        <button type="button">
+          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          Filters
+        </button>
+        <SortingForm />
+      </div>
     </div>
   );
 }

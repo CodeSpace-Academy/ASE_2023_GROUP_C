@@ -1,9 +1,12 @@
-import { useState } from 'react';
+/* eslint-disable react/jsx-no-bind */
+import { useContext, useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
 import {
   getAllRecipes, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
 import Overlay from '../../components/ui-utils/overlay/overlay';
+import user from '../../utils/dummyUser';
+import { FilterContext } from '../../components/context/recipeContext';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -77,7 +80,7 @@ export default function RecipeListPage(props) {
 
   // eslint-disable-next-line no-unused-vars
   const [query, setQuery] = useState('');
-  const [filterOverlay, setFilterOverlay] = useState(true);
+  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
 
   function handleCancelFiltering() {
     setFilterOverlay(false);
@@ -100,7 +103,6 @@ export default function RecipeListPage(props) {
 
   return (
     <div>
-
 
       { filterOverlay
       && (

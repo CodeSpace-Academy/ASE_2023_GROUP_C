@@ -1,5 +1,5 @@
+/* eslint-disable max-len */
 import { useContext } from 'react';
-import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
 import { FilterContext } from '../../context/recipeContext';
@@ -13,8 +13,6 @@ import { FilterContext } from '../../context/recipeContext';
 
 export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
   const { filter, setFilter } = useContext(FilterContext);
-
-  const router = useRouter();
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
@@ -44,15 +42,14 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
   const handleOkButtonClick = () => {
     // Filter out empty values
     const filteredFilter = Object.fromEntries(
-      Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
+      Object.entries(filter).filter(([, value]) => value !== '' && value !== null && value !== undefined),
     );
 
-    const titleFilter = 'Chocolate';
-    const sortingObject = 'published(Ascending)'
+    const sortingObject = 'published(Ascending)';
 
     const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
 
-    console.log(`/api/filter/${queryString2}`)
+    console.log(`/api/filter/${queryString2}`);
 
     fetch(`/api/filter/${queryString2}`)
       .then((response) => response.json())
@@ -138,7 +135,7 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
 //  ([key, value]) => value !== '' && value !== null && value !== undefined),
 //   );
 
-//const queryString2=`filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`
+// const queryString2=`filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`
 
 //   fetch(`/api/filter/${queryString2}`)
 //     .then((response) => response.json())

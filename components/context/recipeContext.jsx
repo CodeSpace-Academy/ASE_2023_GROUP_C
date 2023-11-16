@@ -24,12 +24,14 @@ export function RecipeProvider({ children }) {
 
   });
 
+  const [filterOverlay, setFilterOverlay] = useState(true);
+
   const [selectedOption, setSelectedOption] = useState('');
 
   // Create a value object that contains the filter state and the setFilter function.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const valueObject = {
-    filter, setFilter, selectedOption, setSelectedOption,
+    filter, setFilter, selectedOption, setSelectedOption, filterOverlay, setFilterOverlay,
   };
 
   return (
