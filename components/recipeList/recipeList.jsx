@@ -5,7 +5,6 @@ import LoadMoreButton from '../ui-utils/loadMoreButton';
 import Pagination from '../pagination';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SearchSort from '../ui-utils/searchSort';
-import NavLink from '../ui-utils/navLink';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -13,18 +12,6 @@ import NavLink from '../ui-utils/navLink';
  * @param {Array} props.recipes - List of recipes to display.
  * @param {number} props.totalRecipeInDb - Total number of recipes in the database.
  */
-
-function NavLinks() {
-  return (
-    <div className="flex items-center ">
-      <NavLink href="/recipeList/filters">
-        <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
-        Filters
-      </NavLink>
-      <SearchSort />
-    </div>
-  );
-}
 
 export default function RecipeList(props) {
   // Destructure props
@@ -65,7 +52,13 @@ export default function RecipeList(props) {
 
   return (
     <div>
-      <NavLinks />
+      <div className="flex items-center ">
+        <button type="button" href="/recipeList/filters">
+          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          Filters
+        </button>
+        <SearchSort />
+      </div>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}

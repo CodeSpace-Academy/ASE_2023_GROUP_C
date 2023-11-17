@@ -8,6 +8,8 @@ import {
   faBars,
   faX,
   faSearch,
+  faMoon,
+  faSun,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NavLink from '../ui-utils/navLink';
@@ -51,13 +53,6 @@ function DropdownButton() {
             Login
           </div>
         </Link>
-        {/* Sign Up option */}
-        <Link href="https://recipe-users-accounts.us.auth0.com/u/signup?state=hKFo2SBhOXFRZ1BYWjZCLXhOQnhYcFJWS3k5NnNkanFVYUJXUqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIGhMLXNuVkx4TEFuUDBZbVZGcnpBNERpcFlhSE0waUY3o2NpZNkgRElIekRMZk9XUXdkcVFyakZFajRrOWJIVmlCb0RXeG4">
-          <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
-            {' '}
-            Sign Up
-          </div>
-        </Link>
       </div>
     </div>
   );
@@ -70,7 +65,7 @@ function NavLinks() {
       {/* NavLink for navigating to the recipe list page with a specified query */}
       <NavLink href="/recipeList/1">
         <FontAwesomeIcon icon={faBook} size="lg" className="pr-2" />
-        Recipe
+        Recipes
       </NavLink>
 
       {/* NavLink for navigating to the favorite recipes page */}
@@ -78,7 +73,11 @@ function NavLinks() {
         <FontAwesomeIcon icon={faHeart} size="lg" className="pr-2" />
         Favorites
       </NavLink>
-
+      {/* Theme Button */}
+      <button type="button">
+        <FontAwesomeIcon icon={faSun} size="lg" className="pr-2" />
+        <FontAwesomeIcon icon={faMoon} size="lg" className="pr-2" />
+      </button>
       {/* DropdownButton for Login and Sign Up options */}
       <DropdownButton />
     </>
@@ -107,8 +106,9 @@ export default function NavBar() {
     <>
       <header className="bg-gray-900 m-0 text-white flex items-center top-0 z-[20] sticky justify-between pr-4 pl-4 pb-6 pt-6 gap-3 drop-shadow-lg">
         <Link href="/" className="text-2xl font-extrabold">
-          Recipe app🍜
+          The Recipe app🍜
         </Link>
+
         <div className="p-2 flex flex-wrap justify-center gap-1 border-slate-500 border rounded-lg items-center md:justify-between ">
           {/* Search icon with onClick to toggle search visibility */}
           <FontAwesomeIcon
