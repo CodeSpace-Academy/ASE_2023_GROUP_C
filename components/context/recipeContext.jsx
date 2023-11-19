@@ -26,12 +26,20 @@ export function RecipeProvider({ children }) {
 
   const [viewRecipes, setViewRecipes] = useState();
 
+  const [filterOverlay, setFilterOverlay] = useState(true);
+
+  const [selectedOption, setSelectedOption] = useState('');
+
   // Create a value object that contains the filter state and the setFilter function.
   const valueObject = {
-    filter, 
-    setFilter, 
-    viewRecipes, 
-    setViewRecipes
+    filter,
+    setFilter,
+    viewRecipes,
+    setViewRecipes,
+    selectedOption,
+ setSelectedOption,
+ filterOverlay,
+ setFilterOverlay,
   };
 
   return (

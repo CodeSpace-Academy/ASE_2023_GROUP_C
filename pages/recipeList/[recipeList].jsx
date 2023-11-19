@@ -8,6 +8,7 @@ import {
 import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
 import { aggregationPipelineForaTags } from '../../utils/dataFiltering';
+import { FilterContext } from '../../components/context/recipeContext';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -59,7 +60,7 @@ export default function RecipeListPage(props) {
     categoriesArr,
   } = props;
 
-  const [filterOverlay, setFilterOverlay] = useState(true);
+  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
 
   function handleCancelFiltering() {
     setFilterOverlay(false);

@@ -15,16 +15,14 @@ import FilterByTags from './filterByTags';
 
 import ClearFilters from './clearFilters';
 
-
 export default function Filtering({
   categoriesArr,
   arrayOfUnigueTags,
   data,
   onChange,
   handleIngredientsChange,
-  handleClearFilters
+  handleClearFilters,
 }) {
-
   return (
     <div className="text-white">
       <FilterByCategory

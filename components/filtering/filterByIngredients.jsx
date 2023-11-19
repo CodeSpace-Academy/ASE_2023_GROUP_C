@@ -18,7 +18,11 @@ function FilterByIngredients({ value, onChange, handleIngredientsChange }) {
         name="filterByIngredients"
         onChange={onChange}
       />
-      <button type="button" onClick={handleIngredientsChange}> Set </button>
+      <button type="button" onClick={handleIngredientsChange}>
+        {' '}
+        Set
+        {' '}
+      </button>
     </div>
   );
 }
