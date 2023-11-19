@@ -13,6 +13,7 @@ import { FilterContext } from '../../context/recipeContext';
 
 export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
   const { filter, setFilter } = useContext(FilterContext);
+  const {setViewRecipes } = useContext(FilterContext);
 
   const router = useRouter();
 
@@ -47,10 +48,11 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
       Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
     );
 
-    const titleFilter = 'Chocolate';
     const sortingObject = 'published(Ascending)'
 
-    const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
+    const pageNumber = 1;
+
+    const queryString2 = `page=${JSON.stringify(pageNumber)}&filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
 
     console.log(`/api/filter/${queryString2}`)
 
