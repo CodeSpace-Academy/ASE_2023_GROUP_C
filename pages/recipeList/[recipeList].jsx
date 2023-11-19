@@ -1,9 +1,13 @@
+/*eslint-disable*/
+
 import { useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
 import {
   getAllRecipes, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
 import Overlay from '../../components/ui-utils/overlay/overlay';
+import user from '../../utils/dummyUser';
+import { aggregationPipelineForaTags } from '../../utils/dataFiltering';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -15,38 +19,18 @@ export async function getServerSideProps(context) {
     'recipes',
     { _id: -1 },
     pageNumber,
-  );
+  )
   const favouriteRecipes = await getFavouriteRecipes(
     'users-list',
     { userName: user },
   );
-
-  const patternForTags = [
-    {
-      $project: {
-        tags: true,
-      },
-    }, {
-      $unwind: {
-        path: '$tags',
-        preserveNullAndEmptyArrays: false,
-      },
-    }, {
-      $group: {
-        _id: null,
-        uniqueTags: {
-          $addToSet: '$tags',
-        },
-      },
-    },
-  ];
 
   const recipeCategories = await getCategories(
     'categories',
   );
   const uniqueTags = await getByAggregation(
     'recipes',
-    patternForTags,
+    aggregationPipelineForaTags,
   );
   const arrayOfUnigueTags = uniqueTags[0].uniqueTags;
 
@@ -75,8 +59,6 @@ export default function RecipeListPage(props) {
     categoriesArr,
   } = props;
 
-  // eslint-disable-next-line no-unused-vars
-  const [query, setQuery] = useState('');
   const [filterOverlay, setFilterOverlay] = useState(true);
 
   function handleCancelFiltering() {
@@ -100,8 +82,6 @@ export default function RecipeListPage(props) {
 
   return (
     <div>
-
-
       { filterOverlay
       && (
       <Overlay
@@ -114,3 +94,28 @@ export default function RecipeListPage(props) {
     </div>
   );
 }
+
+
+// const { viewRecipes, setViewRecipes } = useContext(FilterContext);
+
+// function handleCancelFiltering() {
+//   setFilterOverlay(false);
+// }
+
+// // Create a set of favorite recipe IDs
+// // eslint-disable-next-line no-underscore-dangle
+// const favouriteRecipeIds = new Set(favouriteRecipes.map((recipe) => recipe._id));
+
+// // Create a new array with favorite recipes replaced
+// const updatedRecipes = recipes.map((recipe) => {
+//   // eslint-disable-next-line no-underscore-dangle
+//   if (favouriteRecipeIds.has(recipe._id)) {
+//     // eslint-disable-next-line no-underscore-dangle
+//     const favoriteRecipe = favouriteRecipes.find((favRecipe) => favRecipe._id === recipe._id);
+//     setViewRecipes(favoriteRecipe); // Replace with favorite recipe
+//   } else {
+//     // Keep the original recipe
+//     setViewRecipes(recipe);
+//   }
+//   return viewRecipes;
+// });
