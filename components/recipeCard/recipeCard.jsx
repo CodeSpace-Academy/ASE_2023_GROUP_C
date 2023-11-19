@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMitten, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMitten,
+  faTriangleExclamation,
+  faUtensils,
+} from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
-// eslint-disable-next-line import/no-unresolved
 import { uuid } from 'uuidv4';
 import RecipeInstruction from './updateRecipe/instructions';
 import RecipeDescription from './updateRecipe/description';
@@ -29,6 +33,30 @@ export default function RecipeCard(prop) {
     return `${minutes} minutes`;
   };
 
+  let instructionsContent;
+
+  if (recipe.instructions && recipe.instructions.length > 0) {
+    instructionsContent = (
+      <div className="">
+        <div className="">
+          <h3 className="text-2xl font-semibold pb-2 pt-2">Instructions</h3>
+          <RecipeInstruction recipe={recipe} onEdit={handleDescriptionEdit} />
+        </div>
+      </div>
+    );
+  } else {
+    instructionsContent = (
+      <div className="flex items-center gap-3">
+        <FontAwesomeIcon icon={faTriangleExclamation} bounce size="xl" />
+        <p>
+          {recipe.instructions
+            ? 'Error: Recipe instructions are empty.'
+            : 'Error: Failed to load recipe instructions.'}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       {/* {isEdited && <p>Recipe was edited</p>} */}
@@ -40,8 +68,15 @@ export default function RecipeCard(prop) {
           >
             {recipe.images.map((image) => (
               <div key={uuid()} className=" max-h-80">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image} alt={recipe.title} className=" " />
+
+                <Image
+                  src={image}
+                  alt={recipe.title}
+                  width={350}
+                  height={250}
+                  loading="lazy"
+                  placeholder="blur"
+                />
               </div>
             ))}
           </Carousel>
@@ -90,7 +125,7 @@ export default function RecipeCard(prop) {
                     {recipe.ingredients[ingredientKey]}
                     of
                     {ingredientKey}
-                    {' '}
+
                   </li>
                 ))}
               </ul>
@@ -98,23 +133,7 @@ export default function RecipeCard(prop) {
           )}
         </Card>
 
-        <Card>
-          {recipe.instructions && recipe.instructions.length > 0 && (
-            <div className="">
-              {recipe.instructions && recipe.instructions.length > 0 && (
-                <div className="">
-                  <h3 className="text-2xl font-semibold pb-2 pt-2">
-                    Instructions
-                  </h3>
-                  <RecipeInstruction
-                    recipe={recipe}
-                    onEdit={handleDescriptionEdit}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </Card>
+        <Card>{instructionsContent}</Card>
       </div>
     </div>
   );
