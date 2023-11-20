@@ -15,20 +15,6 @@ import { FilterContext } from '../context/recipeContext';
  * @param {number} props.totalRecipeInDb - Total number of recipes in the database.
  */
 
-// function NavLinks() {
-//   return (
-//     <div className="flex items-center ">
-//       <div className="flex items-center ">
-//         <button type="button">
-//           <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
-//           Filters
-//         </button>
-//         <SortingForm />
-//       </div>
-//     </div>
-//   );
-// }
-
 export default function RecipeList(props) {
   // Destructure props
   const { recipes: initialRecipes, totalRecipeInDb, searchQuery } = props;
