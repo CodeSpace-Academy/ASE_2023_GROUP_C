@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+/* eslint-disable max-len */
+import { useContext } from 'react';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
+import { FilterContext } from '../../context/recipeContext';
 
 /**
  * Overlay component for filtering recipes.
@@ -10,21 +11,16 @@ import styles from './overlay.module.css';
  * @returns {JSX.Element} React component.
  */
 
-export default function Overlay({ categoriesArr }) {
-  const [data, setData] = useState({
-    categories: '',
-    numberOfSteps: '',
-    filterByIngredients: '',
-  });
-  // const ing/redientsInputRef = useRef();
-
-  const router = useRouter();
+export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
+  const { filter, setFilter } = useContext(FilterContext);
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
-    const ingredientsValue = data.filterByIngredients;
+    const ingredientsValue = filter.filterByIngredients;
 
     arrayOfIngrerdients = ingredientsValue.split(' ');
+    // eslint-disable-next-line no-console
+    console.log(arrayOfIngrerdients);
   }
 
   /**
@@ -33,8 +29,8 @@ export default function Overlay({ categoriesArr }) {
    */
 
   const handleInputChange = (e) => {
-    setData({
-      ...data,
+    setFilter({
+      ...filter,
       [e.target.name]: e.target.value,
     });
   };
@@ -44,22 +40,21 @@ export default function Overlay({ categoriesArr }) {
    */
 
   const handleOkButtonClick = () => {
-    let url; // Set url of the filtered options
+    // Filter out empty values
+    const filteredFilter = Object.fromEntries(
+      Object.entries(filter).filter(([, value]) => value !== '' && value !== null && value !== undefined),
+    );
 
-    if (data.numberOfSteps === '') {
-      url = `/recipeList/filters/${data.categories}`;
-    } else if (data.categories === '') {
-      url = `/recipeList/filters/steps/${data.numberOfSteps}`;
-    } else {
-      url = `/recipeList/filters/steps/${data.numberOfSteps}/${data.categories}`;
-    }
+    const sortingObject = 'published(Ascending)';
 
-    if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
-      url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
-    }
+    const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
 
-    // Use router.push to navigate to the dynamic URL
-    router.push(url);
+    console.log(`/api/filter/${queryString2}`);
+
+    fetch(`/api/filter/${queryString2}`)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -67,7 +62,8 @@ export default function Overlay({ categoriesArr }) {
       <div className={styles.dialogBox}>
         <Filtering
           categoriesArr={categoriesArr}
-          data={data}
+          arrayOfUnigueTags={arrayOfUnigueTags}
+          data={filter}
           onChange={handleInputChange}
           // eslint-disable-next-line react/jsx-no-bind
           handleIngredientsChange={handleIngredientsChange}
@@ -76,6 +72,7 @@ export default function Overlay({ categoriesArr }) {
           <button
             type="button"
             className={`${styles.button} ${styles.cancelButton}`}
+            onClick={handleCancelFiltering}
           >
             Cancel
           </button>
@@ -91,3 +88,57 @@ export default function Overlay({ categoriesArr }) {
     </div>
   );
 }
+
+// const handleOkButtonClick = () => {
+//   // let url; // Set url of the filtered options
+
+//   // if (filter.numberOfSteps === '') {
+//   //   url = `/recipeList/filters/${filter.categories}`;
+//   // } else if (filter.categories === '') {
+//   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
+//   // } else {
+//   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
+//   // }
+
+//   // if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
+//   //   url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
+//   // }
+
+//   // const url = `/recipeList/filters/${JSON.stringify(filter)}`;
+
+//   // const params = new URLSearchParams();
+
+//   // // Filter out empty values
+//   // const filteredFilter = Object.fromEntries(
+//   //   Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
+//   // );
+//   // console.log(filteredFilter)
+
+//   // if (Object.keys(filteredFilter).length > 0) {
+//   //   params.set('filter', JSON.stringify(filteredFilter));
+//   // }
+
+//   // // params.set('sorting', JSON.stringify(sorting));
+
+//   // const queryString = params.toString();
+
+//   // console.log(queryString)
+
+//   // const url = `/recipeList/filters/${queryString}`;
+
+//   // // Use router.push to navigate to the dynamic URL
+//   // router.push(url);
+
+//   // Filter out empty values
+//   const filteredFilter = Object.fromEntries(
+//     Object.entries(filter).filter(
+//  ([key, value]) => value !== '' && value !== null && value !== undefined),
+//   );
+
+// const queryString2=`filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`
+
+//   fetch(`/api/filter/${queryString2}`)
+//     .then((response) => response.json())
+//     .then((data) => console.log(data))
+//     .catch((error) => console.error(error));
+// };

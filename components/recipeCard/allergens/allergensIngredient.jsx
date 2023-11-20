@@ -3,8 +3,7 @@ export default function Allergens({ recipe, allergensList }) {
 
   if (Array.isArray(allergensList)) {
     const ingredientsWithAllergensInRecipe = Object.keys(ingredients)
-      .filter((key) => allergensList.some((allergen) => key.toLowerCase().includes(allergen)))
-      .map((key) => ingredients[key]);
+      .filter((key) => allergensList.some((allergen) => key.toLowerCase().includes(allergen)));
 
     return <div>{ingredientsWithAllergensInRecipe.join(', ')}</div>;
   }
