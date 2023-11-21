@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadMoreButton from '../ui-utils/loadMoreButton';
 import Pagination from '../pagination';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SearchSort from '../ui-utils/searchSort';
+// import SearchSort from '../ui-utils/searchSort';
+import SortingForm from '../ui-utils/sortingForm';
+import { FilterContext } from '../context/recipeContext';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -24,6 +27,7 @@ export default function RecipeList(props) {
   const [remainingRecipes, setRemainingRecipes] = useState(
     initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0,
   );
+  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
 
   /**
    * Loads more recipes when the "Load More" button is clicked.
@@ -49,6 +53,10 @@ export default function RecipeList(props) {
     }
     return `${minutes} mins`;
   };
+  // filter button
+  const filterButton = () => {
+    setFilterOverlay(!filterOverlay);
+  };
 
   return (
     <div>
@@ -58,6 +66,13 @@ export default function RecipeList(props) {
           Filters
         </button>
         <SearchSort />
+      </div>
+      <div className="flex items-center ">
+        <button type="button" onClick={filterButton}>
+          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          Filters
+        </button>
+        <SortingForm />
       </div>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
