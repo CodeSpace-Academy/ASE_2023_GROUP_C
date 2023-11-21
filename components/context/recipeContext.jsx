@@ -24,7 +24,7 @@ export function RecipeProvider({ children }) {
 
   });
 
-  const [filterOverlay, setFilterOverlay] = useState(true);
+  const [filterOverlay, setFilterOverlay] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState('');
 

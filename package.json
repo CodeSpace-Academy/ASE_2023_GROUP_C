@@ -24,7 +24,7 @@
     "react-dom": "^18.2.0",
     "react-responsive-carousel": "^3.2.23",
     "use-debounce": "^9.0.4",
-    "uuidv4": "^6.2.13"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.0.2",
