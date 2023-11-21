@@ -6,7 +6,7 @@ import Pagination from '../pagination';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SearchSort from '../ui-utils/searchSort';
 // import SearchSort from '../ui-utils/searchSort';
-import SortingForm from '../ui-utils/sortingForm';
+// import SortingForm from '../ui-utils/sortingForm';
 import { FilterContext } from '../context/recipeContext';
 
 /**
@@ -72,7 +72,7 @@ export default function RecipeList(props) {
           <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
           Filters
         </button>
-        <SortingForm />
+
       </div>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
