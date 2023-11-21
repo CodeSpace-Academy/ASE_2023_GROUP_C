@@ -6,7 +6,9 @@ function RecipeInstruction(props) {
   const { recipe, onEdit } = props;
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedInstruction, setEditedInstruction] = useState(recipe.instructions);
+  const [editedInstruction, setEditedInstruction] = useState(
+    recipe.instructions,
+  );
 
   const handleEditInstruction = (newInstruction) => {
     setEditedInstruction(
