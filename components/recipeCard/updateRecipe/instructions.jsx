@@ -27,6 +27,7 @@ function RecipeInstruction(props) {
           initialValue={editedInstruction.join('\n')} // Join the array with line breaks
           onSave={handleEditInstruction}
           onCancel={() => setIsEditing(false)}
+          rows={editedInstruction.length}
         />
       ) : (
         <div>

@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
-import { v4 as uuidv4 } from 'uuidv4';
+import {  uuid } from 'uuidv4';
 import RecipeInstruction from './updateRecipe/instructions';
 import RecipeDescription from './updateRecipe/description';
 import TagsDisplay from '../tags/tagsDisplay';
@@ -67,15 +67,14 @@ export default function RecipeCard(prop) {
             showArrows
           >
             {recipe.images.map((image) => (
-              <div key={uuidv4()} className=" max-h-80">
+              <div key={uuid()} className=" max-h-80">
 
-                <Image
+                <img
                   src={image}
                   alt={recipe.title}
                   width={350}
                   height={250}
                   loading="lazy"
-                  placeholder="blur"
                 />
               </div>
             ))}
@@ -120,7 +119,7 @@ export default function RecipeCard(prop) {
               </h3>
               <ul>
                 {Object.keys(recipe.ingredients).map((ingredientKey) => (
-                  <li key={uuidv4()}>
+                  <li key={uuid()}>
                     {' '}
                     {recipe.ingredients[ingredientKey]}
                     of
