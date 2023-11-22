@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 import EditRecipeContent from './editableText';
 
 function RecipeInstruction(props) {
@@ -33,7 +32,7 @@ function RecipeInstruction(props) {
         <div>
           <ol>
             {editedInstruction.map((instruction, index) => (
-              <li key={uuid()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
+              <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
             ))}
           </ol>
           <button type="button" className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-700" onClick={() => setIsEditing(true)}>

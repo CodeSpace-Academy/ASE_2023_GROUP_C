@@ -1,9 +1,12 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-vars */
-import { useState } from 'react';
+/* eslint-disable react/jsx-no-bind */
+import { useContext, useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
-import { getAllRecipes, getDocumentSize, getFavouriteRecipes } from '../../utils/mongodb-utils';
+import {
+  getAllRecipes, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
+} from '../../utils/mongodb-utils';
+import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
+import { FilterContext } from '../../components/context/recipeContext';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
@@ -21,6 +24,37 @@ export async function getServerSideProps(context) {
     { userName: user },
   );
 
+  const patternForTags = [
+    {
+      $project: {
+        tags: true,
+      },
+    }, {
+      $unwind: {
+        path: '$tags',
+        preserveNullAndEmptyArrays: false,
+      },
+    }, {
+      $group: {
+        _id: null,
+        uniqueTags: {
+          $addToSet: '$tags',
+        },
+      },
+    },
+  ];
+
+  const recipeCategories = await getCategories(
+    'categories',
+  );
+  const uniqueTags = await getByAggregation(
+    'recipes',
+    patternForTags,
+  );
+  const arrayOfUnigueTags = uniqueTags[0].uniqueTags;
+
+  const categoriesArr = recipeCategories[0].categories;
+
   const totalRecipeInDb = await getDocumentSize('recipes');
 
   return {
@@ -28,14 +62,29 @@ export async function getServerSideProps(context) {
       recipes: recipeDocuments,
       totalRecipeInDb,
       favouriteRecipes: favouriteRecipes.userList,
+      arrayOfUnigueTags,
+      categoriesArr,
+
     },
   };
 }
 
-export default function RecipeCards(props) {
-  const { recipes, totalRecipeInDb, favouriteRecipes } = props;
+export default function RecipeListPage(props) {
+  const {
+    recipes,
+    totalRecipeInDb,
+    favouriteRecipes,
+    arrayOfUnigueTags,
+    categoriesArr,
+  } = props;
 
+  // eslint-disable-next-line no-unused-vars
   const [query, setQuery] = useState('');
+  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
+
+  function handleCancelFiltering() {
+    setFilterOverlay(false);
+  }
 
   // Create a set of favorite recipe IDs
   // eslint-disable-next-line no-underscore-dangle
@@ -58,6 +107,15 @@ export default function RecipeCards(props) {
 
   return (
     <div>
+
+      { filterOverlay
+      && (
+      <Overlay
+        categoriesArr={categoriesArr}
+        arrayOfUnigueTags={arrayOfUnigueTags}
+        handleCancelFiltering={handleCancelFiltering}
+      />
+      )}
       <RecipeList recipes={updatedRecipes} totalRecipeInDb={totalRecipeInDb} />
     </div>
   );

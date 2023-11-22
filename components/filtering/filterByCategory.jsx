@@ -1,5 +1,4 @@
-/* eslint-disable import/no-unresolved */
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 export default function FilterByCategory({ categoriesArr, value, onChange }) {
   return (
@@ -12,7 +11,7 @@ export default function FilterByCategory({ categoriesArr, value, onChange }) {
         onChange={onChange}
       >
         {categoriesArr.map((category) => (
-          <option key={uuid()} value={category}>
+          <option key={v4()} value={category}>
             {category}
           </option>
         ))}

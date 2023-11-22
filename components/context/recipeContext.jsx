@@ -18,13 +18,21 @@ export function RecipeProvider({ children }) {
   // Define initial state for the filter object using useState.
   const [filter, setFilter] = useState({
     categories: '',
+    tags: '',
     numberOfSteps: '',
     filterByIngredients: '',
+
   });
+
+  const [filterOverlay, setFilterOverlay] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState('');
 
   // Create a value object that contains the filter state and the setFilter function.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const valueObject = { filter, setFilter };
+  const valueObject = {
+    filter, setFilter, selectedOption, setSelectedOption, filterOverlay, setFilterOverlay,
+  };
 
   return (
     // Provide the FilterContext with the value object to its children.
