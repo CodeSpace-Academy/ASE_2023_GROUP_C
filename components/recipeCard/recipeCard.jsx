@@ -5,9 +5,8 @@ import {
   faTriangleExclamation,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
-import {  uuid } from 'uuidv4';
+import { uuid } from 'uuidv4';
 import RecipeInstruction from './updateRecipe/instructions';
 import RecipeDescription from './updateRecipe/description';
 import TagsDisplay from '../tags/tagsDisplay';
@@ -18,7 +17,7 @@ import FavoriteButton from '../ui-utils/FavoriteButton';
 export default function RecipeCard(prop) {
   const { recipe, allergensList } = prop;
 
-  const [setIsEdited] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const handleDescriptionEdit = () => {
     setIsEdited(true);
