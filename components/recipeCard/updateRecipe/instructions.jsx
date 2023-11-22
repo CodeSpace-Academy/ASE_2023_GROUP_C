@@ -36,7 +36,7 @@ function RecipeInstruction(props) {
               <li key={uuid()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
             ))}
           </ol>
-          <button type="button" onClick={() => setIsEditing(true)}>
+          <button type="button" className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700" onClick={() => setIsEditing(true)}>
             Edit Instructions
           </button>
         </div>

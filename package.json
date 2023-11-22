@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lintFix": "next lint --fix"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.2.0",

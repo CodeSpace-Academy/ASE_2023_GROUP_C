@@ -32,7 +32,7 @@ function RecipeDescription(props) {
             <p>{editedDescription}</p>
             <button
               type="button"
-              className=" mt-5 mb-8"
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
               onClick={() => setIsEditing(true)}
             >
               Edit Description
