@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { v4 } from 'uuid';
 import EditRecipeContent from './editableText';
 

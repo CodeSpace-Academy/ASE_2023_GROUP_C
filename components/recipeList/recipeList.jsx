@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SortingForm from '../ui-utils/sortingForm';
 import PaginationControls from '../ui-utils/PaginationControls';
+import { FilterContext } from '../context/recipeContext';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -17,7 +18,7 @@ export default function RecipeList(props) {
   const { recipes, searchQuery, pageNumber } = props;
 
   // stateVariables
-  const [filterOverlay, setFilterOverlay] = useState(false);
+  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
 
   /**
    * Converts minutes to hours and minutes format.
@@ -40,7 +41,7 @@ export default function RecipeList(props) {
   return (
     <div>
 
-      <div className="flex">
+      <div className="flex items-center">
         <button type="button" onClick={filterButton}>
           <FontAwesomeIcon icon={faFilter} size="lg" />
           Filters
