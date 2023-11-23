@@ -56,7 +56,6 @@ export default function RecipeList(props) {
   const filterButton = () => {
     setFilterOverlay(!filterOverlay);
   };
-
   return (
     <div>
       <div className="flex items-center ">
