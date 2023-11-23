@@ -141,6 +141,7 @@ export default function RecipeListPage(props) {
         setFilter={setFilter}
         categoriesArr={categoriesArr}
         arrayOfUnigueTags={arrayOfUnigueTags}
+        // eslint-disable-next-line react/jsx-no-bind
         handleCancelFiltering={handleCancelFiltering}
       />
       )}
