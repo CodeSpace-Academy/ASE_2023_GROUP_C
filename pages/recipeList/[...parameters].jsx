@@ -19,19 +19,11 @@ export default function RecipeListPage(props) {
   const { recipes } = props;
   const router = useRouter();
   const pageNumber = router.query.parameters[0].replace('page=', '') * 1;
-  const convertToHours = (minutes) => {
-    if (minutes >= 60) {
-      const hours = Math.floor(minutes / 60);
-      const remainingMinutes = minutes % 60;
-      return `${hours} hours ${remainingMinutes} mins`;
-    }
-    return `${minutes} mins`;
-  };
 
   return (
     <>
       <PaginationControls pageNumber={pageNumber} />
-      <RecipeList recipes={recipes} convertToHours={convertToHours} />
+      <RecipeList recipes={recipes} />
     </>
   );
 }
