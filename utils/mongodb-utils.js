@@ -27,7 +27,7 @@ export async function getDocumentSize(collection) {
  */
 
 export async function fetchRecipes(collection, sort, pageNumber, filter = {}) {
-  const pageSize = 500;
+  const pageSize = 100;
   const skipPage = (pageNumber - 1) * pageSize;
 
   const db = client.db(mongodb);
@@ -53,9 +53,7 @@ export async function fetchRecipes(collection, sort, pageNumber, filter = {}) {
 export async function getRecipeDetails(collection, uniqueIdentifier) {
   const db = client.db(mongodb);
 
-  const document = await db
-    .collection(collection)
-    .findOne(uniqueIdentifier);
+  const document = await db.collection(collection).findOne(uniqueIdentifier);
 
   return document;
 }
@@ -70,10 +68,7 @@ export async function getRecipeDetails(collection, uniqueIdentifier) {
 export async function getAllergens(collection, filter = {}) {
   const db = client.db(mongodb);
 
-  const documents = await db
-    .collection(collection)
-    .find(filter)
-    .toArray();
+  const documents = await db.collection(collection).find(filter).toArray();
 
   return documents;
 }
@@ -88,10 +83,7 @@ export async function getAllergens(collection, filter = {}) {
 export async function getCategories(collection, filter = {}) {
   const db = client.db(mongodb);
 
-  const documents = await db
-    .collection(collection)
-    .find(filter)
-    .toArray();
+  const documents = await db.collection(collection).find(filter).toArray();
 
   return documents;
 }
@@ -104,9 +96,7 @@ export async function getCategories(collection, filter = {}) {
 export async function lookforDocument(filter) {
   const db = client.db(mongodb);
 
-  const result = await db
-    .collection('users-list')
-    .findOne(filter);
+  const result = await db.collection('users-list').findOne(filter);
 
   return result;
 }
@@ -121,9 +111,7 @@ export async function lookforDocument(filter) {
 export async function insertDocument(collection, document) {
   const db = client.db(mongodb);
 
-  const result = await db
-    .collection(collection)
-    .insertOne(document);
+  const result = await db.collection(collection).insertOne(document);
 
   return result;
 }
@@ -141,10 +129,7 @@ export async function updateUsersList(collection, username, filter) {
 
   const result = await db
     .collection(collection)
-    .updateOne(
-      { userName: username },
-      filter,
-    );
+    .updateOne({ userName: username }, filter);
 
   return result;
 }
@@ -158,9 +143,7 @@ export async function updateUsersList(collection, username, filter) {
 
 export async function getFavouriteRecipes(collection, filter = {}) {
   const db = client.db(mongodb);
-  const documents = await db
-    .collection(collection)
-    .findOne(filter);
+  const documents = await db.collection(collection).findOne(filter);
 
   return documents;
 }
@@ -201,11 +184,7 @@ export async function getRecipes(collection, sort, pageNumber, filter = {}) {
 export async function getByAggregation(collection, filter) {
   const db = client.db(mongodb);
 
-  const documents = await db
-    .collection(collection)
-    .aggregate(filter)
-    .toArray();
+  const documents = await db.collection(collection).aggregate(filter).toArray();
 
   return documents;
 }
-
