@@ -15,7 +15,6 @@ export const FilterContext = createContext();
  */
 
 export function RecipeProvider({ children }) {
-
   const [filterOverlay, setFilterOverlay] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState('');
