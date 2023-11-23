@@ -54,6 +54,7 @@ export async function getServerSideProps(context) {
     page,
     mongoFilterObject
   );
+  const currentDocumentSize = await getDocumentSize('recipes', mongoFilterObject)
   const favouriteRecipes = await getFavouriteRecipes('users-list', {
     userName: user,
   });
@@ -74,6 +75,7 @@ export async function getServerSideProps(context) {
       arrayOfUnigueTags,
       categoriesArr,
       page,
+      currentDocumentSize,
     },
   };
 }
@@ -86,8 +88,9 @@ export default function RecipeListPage(props) {
     arrayOfUnigueTags,
     categoriesArr,
     page,
+    currentDocumentSize,
   } = props;
-
+  console.log(currentDocumentSize)
   // Define initial state for the filter object using useState.
   const [filter, setFilter] = useState({
     categories: '',
@@ -157,6 +160,7 @@ export default function RecipeListPage(props) {
         totalRecipeInDb={totalRecipeInDb}
         pageNumber={page}
         query={query}
+        currentDocumentSize={currentDocumentSize}
 
       />
     </div>

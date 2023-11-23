@@ -10,15 +10,17 @@ import { FilterContext } from '../context/recipeContext';
  * RecipeList component for displaying and filtering recipes.
  * @param {Object} props - Component properties.
  * @param {Array} props.recipes - List of recipes to display.
- * @param {number} pageNumber
+ * @param {number} props.pageNumber
+ * @param {number} props.currentDocumentSize
  */
 
 export default function RecipeList(props) {
   // Destructure props
-  const { recipes, searchQuery, pageNumber } = props;
+  const { recipes, searchQuery, pageNumber, currentDocumentSize } = props;
 
   // stateVariables
   const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
+  const [recipeCount, setRecipeCount] = useState(currentDocumentSize - 100)
 
   /**
    * Converts minutes to hours and minutes format.
@@ -48,7 +50,7 @@ export default function RecipeList(props) {
         </button>
         <SortingForm />
       </div>
-      <PaginationControls pageNumber={pageNumber} />
+      <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount}/>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}
@@ -63,7 +65,7 @@ export default function RecipeList(props) {
               />
             ))}
           </ul>
-          <PaginationControls pageNumber={pageNumber} />
+          <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount} />
         </div>
       </div>
     </div>

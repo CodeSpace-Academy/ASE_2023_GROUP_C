@@ -11,9 +11,9 @@ const client = await MongoClient.connect(connectionString, {
   useNewUrlParser: true, // Add any additional connection options here
 });
 
-export async function getDocumentSize(collection) {
+export async function getDocumentSize(collection, filter = {}) {
   const db = client.db(mongodb);
-  const count = db.collection(collection).countDocuments();
+  const count = await db.collection(collection).countDocuments(filter);
   return count;
 }
 
