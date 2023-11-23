@@ -3,16 +3,18 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SortingForm from '../ui-utils/sortingForm';
+import PaginationControls from '../ui-utils/PaginationControls';
 
 /**
  * RecipeList component for displaying and filtering recipes.
  * @param {Object} props - Component properties.
  * @param {Array} props.recipes - List of recipes to display.
+ * @param {number} pageNumber
  */
 
 export default function RecipeList(props) {
   // Destructure props
-  const { recipes, searchQuery } = props;
+  const { recipes, searchQuery, pageNumber } = props;
 
   // stateVariables
   const [filterOverlay, setFilterOverlay] = useState(false);
@@ -45,6 +47,7 @@ export default function RecipeList(props) {
         </button>
         <SortingForm />
       </div>
+      <PaginationControls pageNumber={pageNumber} />
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}
@@ -59,6 +62,7 @@ export default function RecipeList(props) {
               />
             ))}
           </ul>
+          <PaginationControls pageNumber={pageNumber} />
         </div>
       </div>
     </div>

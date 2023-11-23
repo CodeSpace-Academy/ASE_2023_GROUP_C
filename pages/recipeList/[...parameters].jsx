@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { fetchRecipes } from '../../utils/mongodb-utils';
 import RecipeList from '../../components/recipeList/recipeList';
-import PaginationControls from '../../components/ui-utils/PaginationControls';
 
 export async function getServerSideProps(context) {
   const {
@@ -21,9 +20,6 @@ export default function RecipeListPage(props) {
   const pageNumber = router.query.parameters[0].replace('page=', '') * 1;
 
   return (
-    <>
-      <PaginationControls pageNumber={pageNumber} />
-      <RecipeList recipes={recipes} />
-    </>
+    <RecipeList recipes={recipes} pageNumber={pageNumber} />
   );
 }
