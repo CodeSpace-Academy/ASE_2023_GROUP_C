@@ -1,5 +1,5 @@
 import { getAllRecipesByFind } from '../../utils/mongodb-utils';
-import RecipeList from '../../components/recipeList/recipeList';
+import RecipeList from '../recipeList/recipeList';
 
 export default function SortingPage({ recipes, pageNumber }) {
   return (

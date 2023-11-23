@@ -9,7 +9,7 @@ export default function SortingForm() {
     const selectedValue = event.target.value;
     const currentPageNumber = router.query.pageNumber || '1';
     // Update the URL with the selected sorting option
-    router.push(`/recipeList/${currentPageNumber}?sort=${selectedValue}`);
+    router.push(`/recipeList/${currentPageNumber}?${selectedValue}`);
   };
 
   return (
@@ -23,15 +23,15 @@ export default function SortingForm() {
             className="bg-transparent focus:outline-none"
             onChange={handleOptionChange}
           >
-            <option className="bg-gray-900" value="default">Default </option>
-            <option className="bg-gray-900" value="prepTime(Ascending)">Prep Time (Ascending) </option>
-            <option className="bg-gray-900" value="prepTime(Descending)">Prep Time (Descending)</option>
-            <option className="bg-gray-900" value="cookTime(Ascending)">Cook Time (Ascending) </option>
-            <option className="bg-gray-900" value="cookTime(Descending)">Cook Time (Descending) </option>
-            <option className="bg-gray-900" value="numberOfSteps(Ascending)">Number of Steps (Ascending) </option>
-            <option className="bg-gray-900" value="numberOfSteps(Descending)">Number of Steps (Descending) </option>
-            <option className="bg-gray-900" value="published(latest)">Newest </option>
-            <option className="bg-gray-900" value="published(oldest)">Oldest </option>
+            <option className="bg-gray-900" value="sortBy=default order=1">Default </option>
+            <option className="bg-gray-900" value="sortBy=prepTimeAsc order=1">Prep Time (Ascending) </option>
+            <option className="bg-gray-900" value="sortBy=prepTimeDesc order=-1">Prep Time (Descending)</option>
+            <option className="bg-gray-900" value="sortBy=cookTimeAsc order=1">Cook Time (Ascending) </option>
+            <option className="bg-gray-900" value="sortBy=cookTimeDesc order=-1">Cook Time (Descending) </option>
+            <option className="bg-gray-900" value="sortBy=numberOfStepsAsc order=1">Number of Steps (Ascending) </option>
+            <option className="bg-gray-900" value="sortBy=numberOfStepsDesc order=-1">Number of Steps (Descending) </option>
+            <option className="bg-gray-900" value="sortBy=publishedLatest order=1">Newest </option>
+            <option className="bg-gray-900" value="sortBy=publishedOldest order=-1">Oldest </option>
           </select>
         </form>
       </div>
