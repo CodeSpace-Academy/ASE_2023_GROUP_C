@@ -2,7 +2,7 @@
 import { useContext, useState } from 'react';
 import RecipeList from '../../components/recipeList/recipeList';
 import {
-  getAllRecipes, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
+  getAllRecipesByFind, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
 import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
@@ -10,13 +10,31 @@ import { FilterContext } from '../../components/context/recipeContext';
 
 export async function getServerSideProps(context) {
   const pageNumber = context.query.recipeList;
+  const sorting = context.query.sort || '';
 
   // Both all recipes and favourite recipe must be fetched to compare them and
   // decide which one to be returned.
 
-  const recipeDocuments = await getAllRecipes(
+  function sortingByFunction(sortingBy) {
+    const sortingOptions = {
+      default: { _id: 1 },
+      'published(latest)': { published: 1 },
+      'published(oldest)': { published: -1 },
+      'prepTime(Ascending)': { prep: 1 },
+      'prepTime(Descending)': { prep: -1 },
+      'cookTime(Ascending)': { cook: 1 },
+      'cookTime(Descending)': { cook: -1 },
+      'numberOfSteps(Ascending)': { instructions: 1 },
+      'numberOfSteps(Descending)': { instructions: -1 },
+    };
+
+    // Use the sortingBy value to get the corresponding sorting object
+    return sortingOptions[sortingBy] || sortingOptions.default;
+  }
+
+  const recipeDocuments = await getAllRecipesByFind(
     'recipes',
-    { _id: -1 },
+    sortingByFunction(sorting),
     pageNumber,
   );
   const favouriteRecipes = await getFavouriteRecipes(
