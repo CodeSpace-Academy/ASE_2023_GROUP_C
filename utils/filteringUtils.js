@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-export const pipelineForTags = [
+const pipelineForTags = [
   {
     $project: {
       tags: true,
@@ -19,3 +17,5 @@ export const pipelineForTags = [
     },
   },
 ];
+
+export default pipelineForTags;

@@ -48,7 +48,7 @@ export default function Overlay(props) {
       Object.entries(filter).filter(([, value]) => value !== '' && value !== null && value !== undefined),
     );
     const url = `/recipes?page=1&filter=${JSON.stringify(filteredFilter)}`;
-    router.replace(url);
+    router.push(url);
   };
 
   return (

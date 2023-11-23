@@ -7,7 +7,7 @@ import {
 import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
 import { FilterContext } from '../../components/context/recipeContext';
-import { pipelineForTags } from '../../utils/filteringUtils';
+import pipelineForTags from '../../utils/filteringUtils';
 
 export async function getServerSideProps(context) {
   const page = context.query.page || 1;
