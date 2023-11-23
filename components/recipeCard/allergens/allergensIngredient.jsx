@@ -12,5 +12,4 @@ export default function Allergens({ recipe, allergensList }) {
         ? ingredientsWithAllergensInRecipe.join(', ')
         : 'No allergens'}
     </div>
-  );
-}
+  );}
