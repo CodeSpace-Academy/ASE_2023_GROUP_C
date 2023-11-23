@@ -26,7 +26,7 @@ export async function getDocumentSize(collection) {
  * @returns {Promise<Array>} A Promise that resolves to an array of recipe documents.
  */
 
-export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
+export async function fetchRecipes(collection, sort, pageNumber, filter = {}) {
   const pageSize = 500;
   const skipPage = (pageNumber - 1) * pageSize;
 
