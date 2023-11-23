@@ -27,7 +27,6 @@ export default async function handler(req, res) {
         userName: username,
         userList: [recipe],
       };
-
       try {
         const recipeDocuments = await insertDocument(
           'users-list',
