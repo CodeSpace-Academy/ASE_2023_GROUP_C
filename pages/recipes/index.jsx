@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-no-bind */
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import RecipeList from '../../components/recipeList/recipeList';
 import {
   getAllRecipesByFind, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
@@ -7,67 +7,56 @@ import {
 import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
 import { FilterContext } from '../../components/context/recipeContext';
+import pipelineForTags from '../../utils/filteringUtils';
 
 export async function getServerSideProps(context) {
-  const pageNumber = context.query.recipeList;
-  const sorting = context.query.sort || '';
+  const page = context.query.page || 1;
+  const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
+  // const sorting = context.query.sorting || 'default';
+
+  const mongoFilterObject = {};
+
+  if (filter.categories) {
+    mongoFilterObject.category = { $in: [filter.categories] };
+  }
+  if (filter.tags) {
+    mongoFilterObject.tags = { $in: [filter.tags] };
+  }
+  if (filter.numberOfSteps) {
+    mongoFilterObject.instructions = { $size: parseInt(filter.numberOfSteps, 10) };
+  }
+  if (filter.filterByIngredients) {
+    // The filterArray generate a list of object that searches in mongodb.
+    const filterArray = filter.filterByIngredients.slice(1).map((ingredient) => {
+      const key = `ingredients.${ingredient}`;
+      return { [key]: { $exists: true } };
+    });
+
+    if (filterArray.length > 0) {
+      mongoFilterObject.$and = filterArray;
+    }
+  }
 
   // Both all recipes and favourite recipe must be fetched to compare them and
   // decide which one to be returned.
 
-  function sortingByFunction(sortingBy) {
-    const sortingOptions = {
-      default: { _id: 1 },
-      'published(latest)': { published: 1 },
-      'published(oldest)': { published: -1 },
-      'prepTime(Ascending)': { prep: 1 },
-      'prepTime(Descending)': { prep: -1 },
-      'sortBy=cookTimeAsc&order=1': { cook: 1 },
-      'sortBy=cookTimeDesc&order=-1': { cook: -1 },
-      'numberOfSteps(Ascending)': { instructions: 1 },
-      'numberOfSteps(Descending)': { instructions: -1 },
-    };
-
-    // Use the sortingBy value to get the corresponding sorting object
-    return sortingOptions[sortingBy] || sortingOptions.default;
-  }
-
   const recipeDocuments = await getAllRecipesByFind(
     'recipes',
-    sortingByFunction(sorting),
-    pageNumber,
+    { _id: -1 },
+    page,
+    mongoFilterObject,
   );
   const favouriteRecipes = await getFavouriteRecipes(
     'users-list',
     { userName: user },
   );
 
-  const patternForTags = [
-    {
-      $project: {
-        tags: true,
-      },
-    }, {
-      $unwind: {
-        path: '$tags',
-        preserveNullAndEmptyArrays: false,
-      },
-    }, {
-      $group: {
-        _id: null,
-        uniqueTags: {
-          $addToSet: '$tags',
-        },
-      },
-    },
-  ];
-
   const recipeCategories = await getCategories(
     'categories',
   );
   const uniqueTags = await getByAggregation(
     'recipes',
-    patternForTags,
+    pipelineForTags,
   );
   const arrayOfUnigueTags = uniqueTags[0].uniqueTags;
 
@@ -96,9 +85,33 @@ export default function RecipeListPage(props) {
     categoriesArr,
   } = props;
 
-  // eslint-disable-next-line no-unused-vars
-  const [query, setQuery] = useState('');
+  // Define initial state for the filter object using useState.
+  const [filter, setFilter] = useState({
+    categories: '',
+    tags: '',
+    numberOfSteps: '',
+    filterByIngredients: '',
+  });
   const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
+
+  // Use the useRouter hook to access params and query
+  const router = useRouter();
+
+  // Access the filter and sorting query parameters
+  const { filter: filterObject } = router.query;
+
+  // Update the filter state when filterObject changes
+  useEffect(() => {
+    if (filterObject) {
+      const parsedFilter = JSON.parse(filterObject);
+
+      // Merge the existing state with the parsed filter object
+      setFilter((prevFilter) => ({
+        ...prevFilter,
+        ...parsedFilter,
+      }));
+    }
+  }, [filterObject]);
 
   function handleCancelFiltering() {
     setFilterOverlay(false);
@@ -121,12 +134,14 @@ export default function RecipeListPage(props) {
 
   return (
     <div>
-
       { filterOverlay
       && (
       <Overlay
+        filter={filter}
+        setFilter={setFilter}
         categoriesArr={categoriesArr}
         arrayOfUnigueTags={arrayOfUnigueTags}
+        // eslint-disable-next-line react/jsx-no-bind
         handleCancelFiltering={handleCancelFiltering}
       />
       )}

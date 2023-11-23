@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
@@ -68,7 +67,7 @@ function NavLinks() {
   return (
     <>
       {/* NavLink for navigating to the recipe list page with a specified query */}
-      <NavLink href="/recipeList/1">
+      <NavLink href="/recipes">
         <FontAwesomeIcon icon={faBook} size="lg" className="pr-2" />
         Recipe
       </NavLink>
