@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 export default function FilterByTags({ arrayOfUnigueTags, value, onChange }) {
   return (
@@ -12,7 +12,7 @@ export default function FilterByTags({ arrayOfUnigueTags, value, onChange }) {
       >
         {arrayOfUnigueTags.map((tag) => (
           // eslint-disable-next-line react/no-array-index-key
-          <option key={uuid()} value={tag}>
+          <option key={v4()} value={tag}>
             {tag}
           </option>
         ))}
