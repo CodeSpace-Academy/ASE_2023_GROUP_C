@@ -19,27 +19,25 @@ function NavBar() {
   };
 
   return (
-    <div className="bg-gray-800 p-6 fixed w-full top-0 z-50">
-      <div className="flex items-center justify-between">
-        <HomeButton />
-        {/* Set text color to white */}
-        <div className="flex items-center space-x-4 text-white p-2 flex flex-wrap justify-center gap-1 border-slate-500 border rounded-lg items-center md:justify-between">
-          <SearchIcon onClick={toggleSearchBar} />
-          {isSearchBarVisible && <SearchBar setQuery={setQuery} />}
+    <div className="relative z-50">
+      <div className="bg-gray-800 p-4 fixed w-full top-0">
+        <div className="flex items-center justify-between">
+          <HomeButton />
+          <div className="flex items-center space-x-2 text-white p-2 flex flex-wrap justify-center gap-1 border-slate-500 border rounded-lg items-center md:justify-between">
+            <SearchIcon onClick={toggleSearchBar} />
+            {isSearchBarVisible && <SearchBar setQuery={setQuery} />}
+          </div>
+          <div className="hidden md:flex items-center space-x-2 text-white">
+            <NavLinks />
+          </div>
+          <MobileMenuButton isOpen={isOpen} onClick={toggleNav} />
         </div>
-        {/* Set text color to white */}
-        <div className="hidden md:flex items-center space-x-4 text-white">
-          <NavLinks />
-        </div>
-
-        <MobileMenuButton isOpen={isOpen} onClick={toggleNav} />
+        {isOpen && (
+          <div className="bg-gray-900 text-white p-2 mt-2 md:hidden">
+            <NavLinks query={query} />
+          </div>
+        )}
       </div>
-
-      {isOpen && (
-        <div className="bg-gray-900 text-white p-4 mt-4 md:hidden">
-          <NavLinks query={query} />
-        </div>
-      )}
     </div>
   );
 }
