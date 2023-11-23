@@ -7,9 +7,8 @@ export default function SortingForm() {
 
   const handleOptionChange = (event) => {
     const selectedValue = event.target.value;
-    const currentPageNumber = router.query.pageNumber || '1';
     // Update the URL with the selected sorting option
-    router.push(`/recipeList/${currentPageNumber}?${selectedValue}`);
+    router.push(`/recipes?${selectedValue}`);
   };
 
   return (

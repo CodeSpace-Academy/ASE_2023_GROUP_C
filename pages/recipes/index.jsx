@@ -12,7 +12,7 @@ import pipelineForTags from '../../utils/filteringUtils';
 export async function getServerSideProps(context) {
   const page = context.query.page || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
-  // const sorting = context.query.sorting || 'default';
+  const sorting = context.query.sorting || 'default';
 
   const mongoFilterObject = {};
 
@@ -39,10 +39,27 @@ export async function getServerSideProps(context) {
 
   // Both all recipes and favourite recipe must be fetched to compare them and
   // decide which one to be returned.
+  function sortingByFunction(sortingBy) {
+    const sortingOptions = {
+      default: { _id: 1 },
+      'published(latest)': { published: 1 },
+      'published(oldest)': { published: -1 },
+      'prepTime(Ascending)': { prep: 1 },
+      'prepTime(Descending)': { prep: -1 },
+      'sortBy=cookTimeAsc&order=1': { cook: 1 },
+      'sortBy=cookTimeDesc&order=-1': { cook: -1 },
+      'numberOfSteps(Ascending)': { instructions: 1 },
+      'numberOfSteps(Descending)': { instructions: -1 },
+    };
+
+    // Use the sortingBy value to get the corresponding sorting object
+    return sortingOptions[sortingBy] || sortingOptions.default;
+  }
 
   const recipeDocuments = await getAllRecipesByFind(
     'recipes',
-    { _id: -1 },
+    sortingByFunction(sorting),
+
     page,
     mongoFilterObject,
   );
