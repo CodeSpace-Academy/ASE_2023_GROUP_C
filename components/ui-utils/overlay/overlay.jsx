@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
-import { useContext } from 'react';
+import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
 import styles from './overlay.module.css';
-import { FilterContext } from '../../context/recipeContext';
 
 /**
  * Overlay component for filtering recipes.
@@ -11,8 +10,12 @@ import { FilterContext } from '../../context/recipeContext';
  * @returns {JSX.Element} React component.
  */
 
-export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancelFiltering }) {
-  const { filter, setFilter } = useContext(FilterContext);
+export default function Overlay(props) {
+  const {
+    categoriesArr, arrayOfUnigueTags, filter, setFilter, handleCancelFiltering,
+  } = props;
+
+  const router = useRouter();
 
   let arrayOfIngrerdients;
   function handleIngredientsChange() {
@@ -44,17 +47,8 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
     const filteredFilter = Object.fromEntries(
       Object.entries(filter).filter(([, value]) => value !== '' && value !== null && value !== undefined),
     );
-
-    const sortingObject = 'published(Ascending)';
-
-    const queryString2 = `filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`;
-
-    console.log(`/api/filter/${queryString2}`);
-
-    fetch(`/api/filter/${queryString2}`)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+    const url = `/recipes?page=1&filter=${JSON.stringify(filteredFilter)}`;
+    router.replace(url);
   };
 
   return (
@@ -88,57 +82,3 @@ export default function Overlay({ categoriesArr, arrayOfUnigueTags, handleCancel
     </div>
   );
 }
-
-// const handleOkButtonClick = () => {
-//   // let url; // Set url of the filtered options
-
-//   // if (filter.numberOfSteps === '') {
-//   //   url = `/recipeList/filters/${filter.categories}`;
-//   // } else if (filter.categories === '') {
-//   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}`;
-//   // } else {
-//   //   url = `/recipeList/filters/steps/${filter.numberOfSteps}/${filter.categories}`;
-//   // }
-
-//   // if (arrayOfIngrerdients && arrayOfIngrerdients.length !== 0) {
-//   //   url = `/recipeList/filters/ingredients/${arrayOfIngrerdients.join('/')}`;
-//   // }
-
-//   // const url = `/recipeList/filters/${JSON.stringify(filter)}`;
-
-//   // const params = new URLSearchParams();
-
-//   // // Filter out empty values
-//   // const filteredFilter = Object.fromEntries(
-//   //   Object.entries(filter).filter(([key, value]) => value !== '' && value !== null && value !== undefined),
-//   // );
-//   // console.log(filteredFilter)
-
-//   // if (Object.keys(filteredFilter).length > 0) {
-//   //   params.set('filter', JSON.stringify(filteredFilter));
-//   // }
-
-//   // // params.set('sorting', JSON.stringify(sorting));
-
-//   // const queryString = params.toString();
-
-//   // console.log(queryString)
-
-//   // const url = `/recipeList/filters/${queryString}`;
-
-//   // // Use router.push to navigate to the dynamic URL
-//   // router.push(url);
-
-//   // Filter out empty values
-//   const filteredFilter = Object.fromEntries(
-//     Object.entries(filter).filter(
-//  ([key, value]) => value !== '' && value !== null && value !== undefined),
-//   );
-
-// const queryString2=`filter=${JSON.stringify(filteredFilter)}&sort=${JSON.stringify(sortingObject)}`
-
-//   fetch(`/api/filter/${queryString2}`)
-//     .then((response) => response.json())
-//     .then((data) => console.log(data))
-//     .catch((error) => console.error(error));
-// };
