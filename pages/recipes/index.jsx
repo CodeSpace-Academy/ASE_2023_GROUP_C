@@ -90,7 +90,7 @@ export default function RecipeListPage(props) {
     page,
     currentDocumentSize,
   } = props;
-  console.log(currentDocumentSize)
+
   // Define initial state for the filter object using useState.
   const [filter, setFilter] = useState({
     categories: '',

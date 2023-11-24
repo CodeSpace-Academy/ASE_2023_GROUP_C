@@ -1,9 +1,14 @@
+import { parse } from 'dotenv';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export default function PaginationControls(props) {
   const { pageNumber, currentDocumentSize, recipeCount, setRecipeCount } = props;
+  const router = useRouter()
+  const { query } = router
+  const { page, ...otherQueryParams } = query
+  const parsedValue = parseInt(page, 10)
   
 
   let prevDisplay
@@ -26,17 +31,12 @@ export default function PaginationControls(props) {
   }
 
   const increaseCounter = () => {
-    setRecipeCount(prevValue => prevValue + 100);
+    setRecipeCount(currentDocumentSize + (parsedValue * 100));
   };
   
   const decreaseCounter = () => {
-    setRecipeCount(prevValue => prevValue - 100);
+    setRecipeCount(currentDocumentSize - 100);
   }
-
-  const router = useRouter()
-  const { query } = router
-  const { page, ...otherQueryParams } = query
-
   return (
     <div className={` flex justify-center ${controlsDisplay}`}>
       <Link

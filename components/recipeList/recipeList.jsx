@@ -5,6 +5,7 @@ import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SortingForm from '../ui-utils/sortingForm';
 import PaginationControls from '../ui-utils/PaginationControls';
 import { FilterContext } from '../context/recipeContext';
+import { useRouter } from 'next/router';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -17,10 +18,13 @@ import { FilterContext } from '../context/recipeContext';
 export default function RecipeList(props) {
   // Destructure props
   const { recipes, searchQuery, pageNumber, currentDocumentSize } = props;
+  const { query } = useRouter()
+  const { page } = query
+  const parsedValue = parseInt(page, 10)
 
   // stateVariables
   const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
-  const [recipeCount, setRecipeCount] = useState(currentDocumentSize - 100)
+  const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100))
 
   /**
    * Converts minutes to hours and minutes format.
