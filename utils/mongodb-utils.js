@@ -26,8 +26,8 @@ export async function getDocumentSize(collection) {
  * @returns {Promise<Array>} A Promise that resolves to an array of recipe documents.
  */
 
-export async function getAllRecipes(collection, sort, pageNumber, filter = {}) {
-  const pageSize = 500;
+export async function getAllRecipesByFind(collection, sort, pageNumber, filter = {}) {
+  const pageSize = 100;
   const skipPage = (pageNumber - 1) * pageSize;
 
   const db = client.db(mongodb);
@@ -208,4 +208,3 @@ export async function getByAggregation(collection, filter) {
 
   return documents;
 }
-

@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import { useRouter } from 'next/router';
 import RecipeList from '../../components/recipeList/recipeList';
-import { getAllRecipes } from '../../utils/mongodb-utils';
+import { getAllRecipesByFind } from '../../utils/mongodb-utils';
 import NoRecipeMessage from '../noRecipeMessage';
 
 export default function SearchResultPage(props) {
@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
 
   try {
     // Call a function to get matching recipes from the MongoDB database
-    recipes = await getAllRecipes(
+    recipes = await getAllRecipesByFind(
       'recipes', // Collection name
       { _id: -1 }, // Sort by _id in descending order
       2, // Limit the number of results to 2
