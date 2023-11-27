@@ -7,7 +7,7 @@ import DropdownButton from './dropdownButton';
 function NavLinks() {
   return (
     <>
-      <NavLink href="/recipeList/1">
+      <NavLink href="/recipes">
         <FontAwesomeIcon icon={faBook} size="lg" className="pr-2" />
         Recipes
       </NavLink>
