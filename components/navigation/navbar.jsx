@@ -5,6 +5,7 @@ import NavLinks from './navlinks';
 import MobileMenuButton from './mobileMenuButton';
 import HomeButton from './homeButton';
 
+
 /**
  * Responsive navigation bar component.
  * The NavBar component includes a home button, search functionality with a search bar,
