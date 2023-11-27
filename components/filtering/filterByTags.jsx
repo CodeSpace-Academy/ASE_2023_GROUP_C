@@ -1,22 +1,24 @@
+import Select from 'react-dropdown-select';
 import { v4 } from 'uuid';
 
-export default function FilterByTags({ arrayOfUnigueTags, value, onChange }) {
+export default function FilterByCategory({ arrayOfUnigueTags, onChange, selectedValues }) {
+  // Map categories array to objects with 'label' and 'value'
+  const options = arrayOfUnigueTags.map((tags) => ({ label: tags, value: v4() }));
+
   return (
-    <div>
+    <div className="text-black">
       <h3>Tags</h3>
-      <select
-        className="text-black"
+      <Select
         name="tags"
-        value={value}
+        options={options}
+        labelField="label"
+        valueField="value"
+        multi
         onChange={onChange}
-      >
-        {arrayOfUnigueTags.map((tag) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <option key={v4()} value={tag}>
-            {tag}
-          </option>
-        ))}
-      </select>
+        values={selectedValues}
+        color="red"
+        dropdownPosition="bottom"
+      />
     </div>
   );
 }

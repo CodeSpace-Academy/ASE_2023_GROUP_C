@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import RecipeList from '../../components/recipeList/recipeList';
 import {
   getAllRecipes, getByAggregation, getCategories, getDocumentSize, getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
-import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
-import { FilterContext } from '../../components/context/recipeContext';
 import pipelineForTags from '../../utils/filteringUtils';
+import SortingForm from '../../components/ui-utils/sortingForm';
+import FilteringModal from '../../components/ui-utils/overlay/filteringModal';
 
 export async function getServerSideProps(context) {
   const page = context.query.page || 1;
@@ -17,17 +18,17 @@ export async function getServerSideProps(context) {
   const mongoFilterObject = {};
 
   if (filter.categories) {
-    mongoFilterObject.category = { $in: [filter.categories] };
+    mongoFilterObject.category = { $in: [...filter.categories] };
   }
   if (filter.tags) {
-    mongoFilterObject.tags = { $in: [filter.tags] };
+    mongoFilterObject.tags = { $in: [...filter.tags] };
   }
   if (filter.numberOfSteps) {
     mongoFilterObject.instructions = { $size: parseInt(filter.numberOfSteps, 10) };
   }
   if (filter.filterByIngredients) {
     // The filterArray generate a list of object that searches in mongodb.
-    const filterArray = filter.filterByIngredients.slice(1).map((ingredient) => {
+    const filterArray = [filter.filterByIngredients].slice(1).map((ingredient) => {
       const key = `ingredients.${ingredient}`;
       return { [key]: { $exists: true } };
     });
@@ -85,37 +86,15 @@ export default function RecipeListPage(props) {
     categoriesArr,
   } = props;
 
-  // Define initial state for the filter object using useState.
-  const [filter, setFilter] = useState({
-    categories: '',
-    tags: '',
-    numberOfSteps: '',
-    filterByIngredients: '',
-  });
-  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
+  const [filterOverlay, setFilterOverlay] = useState(false);
 
-  // Use the useRouter hook to access params and query
-  const router = useRouter();
-
-  // Access the filter and sorting query parameters
-  const { filter: filterObject } = router.query;
-
-  // Update the filter state when filterObject changes
-  useEffect(() => {
-    if (filterObject) {
-      const parsedFilter = JSON.parse(filterObject);
-
-      // Merge the existing state with the parsed filter object
-      setFilter((prevFilter) => ({
-        ...prevFilter,
-        ...parsedFilter,
-      }));
-    }
-  }, [filterObject]);
-
-  function handleCancelFiltering() {
+  function handleCloseFiltering() {
     setFilterOverlay(false);
   }
+
+  const handleOpenFilterModal = () => {
+    setFilterOverlay(true);
+  };
 
   // Create a set of favorite recipe IDs
   // eslint-disable-next-line no-underscore-dangle
@@ -132,17 +111,25 @@ export default function RecipeListPage(props) {
     return recipe; // Keep the original recipe
   });
 
+  console.log(updatedRecipes);
+
   return (
     <div>
+      <div>
+        <button type="button" onClick={handleOpenFilterModal}>
+          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          Filters
+        </button>
+        <SortingForm />
+      </div>
       { filterOverlay
       && (
-      <Overlay
-        filter={filter}
-        setFilter={setFilter}
+      <FilteringModal
         categoriesArr={categoriesArr}
         arrayOfUnigueTags={arrayOfUnigueTags}
         // eslint-disable-next-line react/jsx-no-bind
-        handleCancelFiltering={handleCancelFiltering}
+        handleCancelFiltering={handleCloseFiltering}
+        isOpen={filterOverlay}
       />
       )}
       <RecipeList recipes={updatedRecipes} totalRecipeInDb={totalRecipeInDb} />
