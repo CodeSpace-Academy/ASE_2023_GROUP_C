@@ -44,7 +44,6 @@ export default function RecipeList(props) {
   const filterButton = () => {
     setFilterOverlay(!filterOverlay);
   };
-
   return (
     <div className='p-12'>
 
