@@ -31,6 +31,7 @@ export default function RecipeList(props) {
    * @param {number} minutes - Duration in minutes.
    * @returns {string} - Formatted duration string.
    */
+
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
@@ -39,7 +40,7 @@ export default function RecipeList(props) {
     }
     return `${minutes} mins`;
   };
-  // filter button
+
   const filterButton = () => {
     setFilterOverlay(!filterOverlay);
   };
@@ -62,8 +63,7 @@ export default function RecipeList(props) {
             {recipes.map((recipe) => (
               <RecipePreviewCard
                 recipe={recipe}
-                // eslint-disable-next-line no-underscore-dangle
-                key={recipe._id}
+                key={recipe.id}
                 convertToHours={convertToHours}
                 searchQuery={searchQuery}
               />
