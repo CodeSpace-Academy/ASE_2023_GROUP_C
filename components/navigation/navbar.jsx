@@ -5,6 +5,7 @@ import NavLinks from './navlinks';
 import MobileMenuButton from './mobileMenuButton';
 import HomeButton from './homeButton';
 
+
 function NavBar() {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
