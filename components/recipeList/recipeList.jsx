@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadMoreButton from '../ui-utils/loadMoreButton';
 import Pagination from '../pagination';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
-// import SearchSort from '../ui-utils/searchSort';
 import SortingForm from '../ui-utils/sortingForm';
 import { FilterContext } from '../context/recipeContext';
 
@@ -35,6 +34,7 @@ export default function RecipeList(props) {
     const additionalRecipes = 100;
     const newVisibleRecipes = visibleRecipes + additionalRecipes;
     // Update the state with the new visible and remaining recipes
+
     setVisibleRecipes(newVisibleRecipes);
     setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
   };
@@ -44,6 +44,7 @@ export default function RecipeList(props) {
    * @param {number} minutes - Duration in minutes.
    * @returns {string} - Formatted duration string.
    */
+
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
@@ -52,29 +53,33 @@ export default function RecipeList(props) {
     }
     return `${minutes} mins`;
   };
-  // filter button
+
   const filterButton = () => {
     setFilterOverlay(!filterOverlay);
   };
 
   return (
-    <div>
-      <div className="flex items-center ">
-        <button type="button" onClick={filterButton}>
-          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
-          Filters
-        </button>
-        <SortingForm />
+    <div className="p-12">
+      {/* Add margin-bottom for spacing */}
+      <div className="mb-13">
+        <div className="flex items-center mb-13">
+          {/* Add margin-right for spacing */}
+          <button type="button" onClick={filterButton} className="mr-11">
+            <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+            Filters
+          </button>
+          <SortingForm />
+        </div>
       </div>
+
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
-          {/* This here is basically the list */}
+          {/* This is the recipe list */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.slice(0, visibleRecipes).map((recipe) => (
               <RecipePreviewCard
                 recipe={recipe}
-                // eslint-disable-next-line no-underscore-dangle
-                key={recipe._id}
+                key={recipe.id}
                 convertToHours={convertToHours}
                 searchQuery={searchQuery}
               />
