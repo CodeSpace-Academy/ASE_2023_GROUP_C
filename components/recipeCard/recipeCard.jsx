@@ -17,11 +17,12 @@ import FavoriteButton from '../ui-utils/FavoriteButton';
 export default function RecipeCard(prop) {
   const { recipe, allergensList } = prop;
 
-  const [setIsEdited] = useState(false);
+const [isEditing, setIsEditing] = useState(false);
 
-  const handleDescriptionEdit = () => {
-    setIsEdited(true);
-  };
+const handleDescriptionEdit = () => {
+  setIsEditing(true);
+};
+
 
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
