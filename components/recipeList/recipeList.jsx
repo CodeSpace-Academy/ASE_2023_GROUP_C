@@ -46,9 +46,9 @@ export default function RecipeList(props) {
   };
 
   return (
-    <div>
+    <div className='p-12'>
 
-      <div className="flex items-center">
+      <div className="flex items-center mb-13">
         <button type="button" onClick={filterButton}>
           <FontAwesomeIcon icon={faFilter} size="lg" />
           Filters
