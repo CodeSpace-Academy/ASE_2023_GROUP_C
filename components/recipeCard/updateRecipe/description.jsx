@@ -10,11 +10,42 @@ function RecipeDescription(props) {
     recipe.description,
   );
 
-  const handleEditDescription = (newDescription) => {
+  const handleEditDescription = async (newDescription) => {
     setEditedDescription(newDescription);
     setIsEditing(false);
 
+    // Save the edited description to MongoDB
+    await saveEditedDescriptionToMongoDB(newDescription);
+    
+    // Trigger the onEdit callback
     onEdit();
+  };
+
+  const saveEditedDescriptionToMongoDB = async (newDescription) => {
+    const data = {
+      description: newDescription,
+      _id: recipe._id,
+    };
+
+    try {
+      const response = await fetch('/api/favourite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // Corrected the variable name here
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save edited description');
+      }
+
+      // Handle the response as needed
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
