@@ -11,58 +11,47 @@ import {
 import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
 import { FilterContext } from '../../components/context/recipeContext';
-import pipelineForTags from '../../utils/filteringUtils';
+import { pipelineForTags, sortingByFunction } from '../../utils/filteringUtils';
 
 export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
   const sortBy = context.query.sortBy || 'default';
+  const search = context.query.search;
 
   const mongoFilterObject = {};
 
-  if (filter.categories) {
-    mongoFilterObject.category = { $in: [filter.categories] };
-  }
-  if (filter.tags) {
-    mongoFilterObject.tags = { $in: [filter.tags] };
-  }
-  if (filter.numberOfSteps) {
-    mongoFilterObject.instructions = {
-      $size: parseInt(filter.numberOfSteps, 10),
-    };
-  }
-  if (filter.filterByIngredients) {
-    // The filterArray generate a list of object that searches in mongodb.
-    const filterArray = filter.filterByIngredients
-      .slice(1)
-      .map((ingredient) => {
-        const key = `ingredients.${ingredient}`;
-        return { [key]: { $exists: true } };
-      });
+  if (search){
+    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' }
+  } else {
+    if (filter.categories) {
+      mongoFilterObject.category = { $in: [filter.categories] };
+    }
+    if (filter.tags) {
+      mongoFilterObject.tags = { $in: [filter.tags] };
+    }
+    if (filter.numberOfSteps) {
+      mongoFilterObject.instructions = {
+        $size: parseInt(filter.numberOfSteps, 10),
+      };
+    }
+    if (filter.filterByIngredients) {
+      // The filterArray generate a list of object that searches in mongodb.
+      const filterArray = filter.filterByIngredients
+        .slice(1)
+        .map((ingredient) => {
+          const key = `ingredients.${ingredient}`;
+          return { [key]: { $exists: true } };
+        });
 
-    if (filterArray.length > 0) {
-      mongoFilterObject.$and = filterArray;
+      if (filterArray.length > 0) {
+        mongoFilterObject.$and = filterArray;
+      }
     }
   }
 
   // Both all recipes and favourite recipe must be fetched to compare them and
   // decide which one to be returned.
-
-  function sortingByFunction(sortingBy) {
-    const sortingOptions = {
-      default: { _id: -1 },
-      'published(latest)': { published: 1 },
-      'published(oldest)': { published: -1 },
-      'prepTime(Ascending)': { prep: 1 },
-      'prepTime(Descending)': { prep: -1 },
-      'cookTime(Ascending)': { cook: 1 },
-      'cookTime(Descending)': { cook: -1 },
-      'numberOfSteps(Ascending)': { instructions: 1 },
-      'numberOfSteps(Descending)': { instructions: -1 },
-    };
-    // Use the sortingBy value to get the corresponding sorting object
-    return sortingOptions[sortingBy] || sortingOptions.default;
-  }
 
   const recipeDocuments = await fetchRecipes(
     'recipes',
