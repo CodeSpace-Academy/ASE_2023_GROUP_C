@@ -16,7 +16,7 @@ import pipelineForTags from '../../utils/filteringUtils';
 export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
-  const sorting = context.query.sorting || 'default';
+  const sortBy = context.query.sortBy || 'default';
 
   const mongoFilterObject = {};
 
@@ -50,24 +50,23 @@ export async function getServerSideProps(context) {
 
   function sortingByFunction(sortingBy) {
     const sortingOptions = {
-      default: { _id: 1 },
+      default: { _id: -1 },
       'published(latest)': { published: 1 },
       'published(oldest)': { published: -1 },
       'prepTime(Ascending)': { prep: 1 },
       'prepTime(Descending)': { prep: -1 },
-      'sortBy=cookTimeAsc&order=1': { cook: 1 },
-      'sortBy=cookTimeDesc&order=-1': { cook: -1 },
+      'cookTime(Ascending)': { cook: 1 },
+      'cookTime(Descending)': { cook: -1 },
       'numberOfSteps(Ascending)': { instructions: 1 },
       'numberOfSteps(Descending)': { instructions: -1 },
     };
-
     // Use the sortingBy value to get the corresponding sorting object
     return sortingOptions[sortingBy] || sortingOptions.default;
   }
+
   const recipeDocuments = await fetchRecipes(
     'recipes',
-    sortingByFunction(sorting),
-
+    sortingByFunction(sortBy),
     page,
     mongoFilterObject
   );
