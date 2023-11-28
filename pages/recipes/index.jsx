@@ -49,7 +49,7 @@ export async function getServerSideProps(context) {
 
   function sortingByFunction(sortingBy) {
     const sortingOptions = {
-      default: { _id: -1 },
+      'default': {},
       'published(latest)': { published: 1 },
       'published(oldest)': { published: -1 },
       'prepTime(Ascending)': { prep: 1 },
@@ -60,7 +60,7 @@ export async function getServerSideProps(context) {
       'numberOfSteps(Descending)': { instructions: -1 },
     };
     // Use the sortingBy value to get the corresponding sorting object
-    return sortingOptions[sortingBy] || sortingOptions.default;
+    return sortingOptions[sortingBy];
   }
 
   const recipeDocuments = await fetchRecipes(
