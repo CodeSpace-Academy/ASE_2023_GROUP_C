@@ -23,8 +23,6 @@ export default function RecipeList(props) {
   const searchQuery = query.search ? JSON.parse(query.search) : ''
   const parsedValue = parseInt(page, 10)
 
-  console.log('---', searchQuery)
-
   // stateVariables
   const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
   const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100))
