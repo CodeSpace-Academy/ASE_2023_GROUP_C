@@ -65,7 +65,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
   const router = useRouter();
 
   return (
-    <div>
+    <div className='mt-20 md:ml-32 md:mr-32 '>
       <div className="flex font-bold p-5  bg-slate-900 text-white items-center">
         {/* eslint-disable-next-line */}
         <button type="button" onClick={() => router.back()}>
