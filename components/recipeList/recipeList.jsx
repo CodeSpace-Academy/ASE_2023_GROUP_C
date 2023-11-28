@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SortingForm from '../ui-utils/sortingForm';
+import { useRouter } from 'next/router';
+import PaginationControls from '../ui-utils/PaginationControls';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -18,7 +20,6 @@ export default function RecipeList(props) {
   const parsedValue = parseInt(page, 10)
 
   // stateVariables
-  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
   const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100))
 
   /**
