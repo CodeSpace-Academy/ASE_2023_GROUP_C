@@ -17,7 +17,7 @@ import FavoriteButton from '../ui-utils/FavoriteButton';
 export default function RecipeCard(prop) {
   const { recipe, allergensList } = prop;
 
-  const [setIsEdited] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const handleDescriptionEdit = () => {
     setIsEdited(true);
