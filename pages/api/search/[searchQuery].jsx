@@ -1,4 +1,4 @@
-import { getAllRecipes } from '../../../utils/mongodb-utils';
+import { getAllRecipesByFind } from '../../../utils/mongodb-utils';
 
 export default async function handler(req, res) {
   // Check if the HTTP method is GET
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     const regexPattern = new RegExp(`.*${userQuery}.*`, 'i');
 
     // Fetch recipes from the database that match the search query
-    const recipes = await getAllRecipes(
+    const recipes = await getAllRecipesByFind(
       'recipes', // Collection name
       { _id: -1 }, // Sort by _id in descending order
       2, // Limit the number of results to 2

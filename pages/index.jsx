@@ -31,10 +31,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      <main class="py-16 text-white">
+      <main className="py-16 text-white">
         <Link
           className="flex justify-center text-2xl hover:opacity-50 hover:underline"
-          href="/recipeList/1"
+          href="/recipes"
         >
           Visit Recipes
         </Link>

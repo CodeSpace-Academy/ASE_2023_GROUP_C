@@ -1,49 +1,37 @@
 import React, { useContext, useState } from 'react';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LoadMoreButton from '../ui-utils/loadMoreButton';
-import Pagination from '../pagination';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
-// import SearchSort from '../ui-utils/searchSort';
 import SortingForm from '../ui-utils/sortingForm';
+import PaginationControls from '../ui-utils/PaginationControls';
 import { FilterContext } from '../context/recipeContext';
+import { useRouter } from 'next/router';
 
 /**
  * RecipeList component for displaying and filtering recipes.
  * @param {Object} props - Component properties.
  * @param {Array} props.recipes - List of recipes to display.
- * @param {number} props.totalRecipeInDb - Total number of recipes in the database.
+ * @param {number} props.pageNumber
+ * @param {number} props.currentDocumentSize
  */
 
 export default function RecipeList(props) {
   // Destructure props
-  const { recipes: initialRecipes, totalRecipeInDb, searchQuery } = props;
+  const { recipes, searchQuery, pageNumber, currentDocumentSize } = props;
+  const { query } = useRouter()
+  const { page } = query
+  const parsedValue = parseInt(page, 10)
 
-  // State variables
-  const [recipes] = useState(initialRecipes);
-  const [data] = useState(recipes);
-  const [visibleRecipes, setVisibleRecipes] = useState(100);
-  const [remainingRecipes, setRemainingRecipes] = useState(
-    initialRecipes ? Math.max(initialRecipes.length - visibleRecipes, 0) : 0,
-  );
+  // stateVariables
   const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
-
-  /**
-   * Loads more recipes when the "Load More" button is clicked.
-   */
-  const loadMore = () => {
-    const additionalRecipes = 100;
-    const newVisibleRecipes = visibleRecipes + additionalRecipes;
-    // Update the state with the new visible and remaining recipes
-    setVisibleRecipes(newVisibleRecipes);
-    setRemainingRecipes(Math.max(recipes.length - newVisibleRecipes, 0));
-  };
+  const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100))
 
   /**
    * Converts minutes to hours and minutes format.
    * @param {number} minutes - Duration in minutes.
    * @returns {string} - Formatted duration string.
    */
+
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
@@ -52,48 +40,35 @@ export default function RecipeList(props) {
     }
     return `${minutes} mins`;
   };
-  // filter button
+
   const filterButton = () => {
     setFilterOverlay(!filterOverlay);
   };
-
   return (
-    <div>
-      <div className="flex items-center ">
+    <div className='p-12'>
+
+      <div className="flex items-center mb-13">
         <button type="button" onClick={filterButton}>
-          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          <FontAwesomeIcon icon={faFilter} size="lg" />
           Filters
         </button>
         <SortingForm />
       </div>
+      <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount}/>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.slice(0, visibleRecipes).map((recipe) => (
+          <ul className="grid pb-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {recipes.map((recipe) => (
               <RecipePreviewCard
+              key={recipe._id}
                 recipe={recipe}
-                // eslint-disable-next-line no-underscore-dangle
-                key={recipe._id}
                 convertToHours={convertToHours}
                 searchQuery={searchQuery}
               />
             ))}
           </ul>
-
-          {/* Load More  */}
-          <div className="bg-gray-900 p-4 flex justify-center items-center">
-            {remainingRecipes > 0 && (
-              <LoadMoreButton
-                onClick={loadMore}
-                remainingRecipes={remainingRecipes}
-                className="bg-blue-700 text-white px-2 py-1 rounded-full hover-bg-blue-800"
-              />
-            )}
-          </div>
-
-          {/* pagination */}
-          <Pagination totalRecipeInDb={totalRecipeInDb} />
+          <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount} />
         </div>
       </div>
     </div>

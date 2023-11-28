@@ -6,7 +6,7 @@ import {
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import { Carousel } from 'react-responsive-carousel';
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'; // Import v4 as alias from 'uuid'
 import RecipeInstruction from './updateRecipe/instructions';
 import RecipeDescription from './updateRecipe/description';
 import TagsDisplay from '../tags/tagsDisplay';
@@ -16,14 +16,13 @@ import FavoriteButton from '../ui-utils/FavoriteButton';
 
 export default function RecipeCard(prop) {
   const { recipe, allergensList } = prop;
+  const [isEditing, setIsEditing] = useState(false);
 
-const [isEditing, setIsEditing] = useState(false);
+  const handleDescriptionEdit = () => {
+    setIsEditing(true);
+  };
 
-const handleDescriptionEdit = () => {
-  setIsEditing(true);
-};
-
-
+  const [isEdited, setIsEdited] = useState(false);
   const convertToHours = (minutes) => {
     if (minutes >= 60) {
       const hours = Math.floor(minutes / 60);
@@ -67,7 +66,7 @@ const handleDescriptionEdit = () => {
             showArrows
           >
             {recipe.images.map((image) => (
-              <div key={v4()} className=" max-h-80">
+              <div key={uuidv4()} className=" max-h-80">
                 <img
                   src={image}
                   alt={recipe.title}
@@ -118,7 +117,7 @@ const handleDescriptionEdit = () => {
               </h3>
               <ul>
                 {Object.keys(recipe.ingredients).map((ingredientKey) => (
-                  <li key={v4()}>
+                  <li key={uuidv4()}>
                     {' '}
                     {recipe.ingredients[ingredientKey]}
                     of

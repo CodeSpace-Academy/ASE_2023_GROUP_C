@@ -11,7 +11,6 @@ export default function FilterByTags({ arrayOfUnigueTags, value, onChange }) {
         onChange={onChange}
       >
         {arrayOfUnigueTags.map((tag) => (
-          // eslint-disable-next-line react/no-array-index-key
           <option key={v4()} value={tag}>
             {tag}
           </option>
