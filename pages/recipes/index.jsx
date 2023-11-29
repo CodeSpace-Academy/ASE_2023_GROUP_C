@@ -160,14 +160,14 @@ export default function RecipeListPage(props) {
           handleCancelFiltering={handleCancelFiltering}
         />
       )}
-      <RecipeList
-        recipes={updatedRecipes}
-        totalRecipeInDb={totalRecipeInDb}
-        pageNumber={page}
-        query={query}
-        currentDocumentSize={currentDocumentSize}
+  {updatedRecipes ?<RecipeList
+    recipes={updatedRecipes}
+    totalRecipeInDb={totalRecipeInDb}
+    pageNumber={page}
+    query={query}
+    currentDocumentSize={currentDocumentSize}
 
-      />
+  />: <p>No Recipes Found that match the query!!</p>}
     </div>
   );
 }
