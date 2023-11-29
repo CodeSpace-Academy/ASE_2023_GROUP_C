@@ -54,8 +54,6 @@ export async function getServerSideProps(context) {
   // Both all recipes and favourite recipe must be fetched to compare them and
   // decide which one to be returned.
 
-  console.log('....', mongoFilterObject)
-
   const recipeDocuments = await fetchRecipes(
     'recipes',
     sortingByFunction(sortBy),
