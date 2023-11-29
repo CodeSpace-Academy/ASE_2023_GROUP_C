@@ -1,11 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
 import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import SortingForm from '../ui-utils/sortingForm';
-import PaginationControls from '../ui-utils/PaginationControls';
-import { FilterContext } from '../context/recipeContext';
 import { useRouter } from 'next/router';
+import PaginationControls from '../ui-utils/PaginationControls';
 
 /**
  * RecipeList component for displaying and filtering recipes.
@@ -24,7 +21,6 @@ export default function RecipeList(props) {
   const parsedValue = parseInt(page, 10)
 
   // stateVariables
-  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
   const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100))
 
   /**
@@ -42,19 +38,8 @@ export default function RecipeList(props) {
     return `${minutes} mins`;
   };
 
-  const filterButton = () => {
-    setFilterOverlay(!filterOverlay);
-  };
   return (
-    <div className='p-12'>
-
-      <div className="flex items-center mb-13">
-        <button type="button" onClick={filterButton}>
-          <FontAwesomeIcon icon={faFilter} size="lg" />
-          Filters
-        </button>
-        <SortingForm />
-      </div>
+    <div>
       <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount}/>
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
@@ -62,7 +47,7 @@ export default function RecipeList(props) {
           <ul className="grid pb-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {recipes.map((recipe) => (
               <RecipePreviewCard
-              key={recipe._id}
+                key={recipe._id}
                 recipe={recipe}
                 convertToHours={convertToHours}
                 searchQuery={searchQuery}

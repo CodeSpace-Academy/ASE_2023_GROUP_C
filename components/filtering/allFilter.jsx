@@ -18,28 +18,40 @@ import ClearFilters from './clearFilters';
 export default function Filtering({
   categoriesArr,
   arrayOfUnigueTags,
-  data,
+  selectedStepsAndIngredients,
+  setSelectedTagsAndCategories,
+  selectedValuesCategories,
+  selectedValuesTags,
   onChange,
   handleIngredientsChange,
   handleClearFilters,
 }) {
+  // Handler function to update the selected values for all filters
+  const handleFilterChange = (key, selectedValues) => {
+    const labels = selectedValues.map((item) => item.label);
+    setSelectedTagsAndCategories((prevSelectedValues) => ({
+      ...prevSelectedValues,
+      [key]: labels,
+    }));
+  };
+
   return (
     <div className="text-white">
       <FilterByCategory
         categoriesArr={categoriesArr}
-        value={data.categories}
-        onChange={onChange}
-      />
-      <FilterBySteps value={data.numberOfSteps} onChange={onChange} />
-      <FilterByIngredients
-        onChange={onChange}
-        value={data.filterByIngredients}
-        handleIngredientsChange={handleIngredientsChange}
+        selectedValues={selectedValuesCategories}
+        onChange={(selectedValues) => handleFilterChange('categories', selectedValues)}
       />
       <FilterByTags
         arrayOfUnigueTags={arrayOfUnigueTags}
-        value={data.tags}
+        selectedValues={selectedValuesTags}
+        onChange={(selectedValues) => handleFilterChange('tags', selectedValues)}
+      />
+      <FilterBySteps value={selectedStepsAndIngredients.numberOfSteps} onChange={onChange} />
+      <FilterByIngredients
         onChange={onChange}
+        value={selectedStepsAndIngredients.filterByIngredients}
+        handleIngredientsChange={handleIngredientsChange}
       />
       <ClearFilters onClearFilters={handleClearFilters} />
     </div>

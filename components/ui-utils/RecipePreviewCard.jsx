@@ -15,6 +15,11 @@ export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
   const [currentImage, setCurrentImage] = useState(0);
 
+  // Check if recipe is undefined or null
+  if (!recipe || !recipe.images || !recipe.images.length) {
+    return null; // or handle the error in another way
+  }
+
   function nextSlide() {
     setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
   }
