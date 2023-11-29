@@ -19,6 +19,7 @@ export async function getServerSideProps(context) {
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
   const sortBy = context.query.sortBy || 'default';
   const search = context.query.search;
+  const search = context.query.search;
 
   const mongoFilterObject = {};
 
@@ -44,7 +45,32 @@ export async function getServerSideProps(context) {
           const key = `ingredients.${ingredient}`;
           return { [key]: { $exists: true } };
         });
+  if (search){
+    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' }
+  } else {
+    if (filter.categories) {
+      mongoFilterObject.category = { $in: [filter.categories] };
+    }
+    if (filter.tags) {
+      mongoFilterObject.tags = { $in: [filter.tags] };
+    }
+    if (filter.numberOfSteps) {
+      mongoFilterObject.instructions = {
+        $size: parseInt(filter.numberOfSteps, 10),
+      };
+    }
+    if (filter.filterByIngredients) {
+      // The filterArray generate a list of object that searches in mongodb.
+      const filterArray = filter.filterByIngredients
+        .slice(1)
+        .map((ingredient) => {
+          const key = `ingredients.${ingredient}`;
+          return { [key]: { $exists: true } };
+        });
 
+      if (filterArray.length > 0) {
+        mongoFilterObject.$and = filterArray;
+      }
       if (filterArray.length > 0) {
         mongoFilterObject.$and = filterArray;
       }
