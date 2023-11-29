@@ -17,9 +17,10 @@ import { useRouter } from 'next/router';
 
 export default function RecipeList(props) {
   // Destructure props
-  const { recipes, searchQuery, pageNumber, currentDocumentSize } = props;
+  const { recipes, pageNumber, currentDocumentSize } = props;
   const { query } = useRouter()
   const { page } = query
+  const searchQuery = query.search ? JSON.parse(query.search) : ''
   const parsedValue = parseInt(page, 10)
 
   // stateVariables

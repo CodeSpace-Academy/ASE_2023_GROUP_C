@@ -164,7 +164,6 @@ export default function RecipeListPage(props) {
         recipes={updatedRecipes}
         totalRecipeInDb={totalRecipeInDb}
         pageNumber={page}
-        query={query}
         currentDocumentSize={currentDocumentSize}
 
       />
