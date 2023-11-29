@@ -15,10 +15,13 @@ export default function SearchBar(props) {
     // Check if debouncedSearchValue is not empty before updating the query and triggering the search
     if (debouncedSearchValue !== '') {
       setQuery(debouncedSearchValue);
-      const queryString = `page=1&search=${JSON.stringify(debouncedSearchValue)}`;
+      const queryString = `page=1&search=${JSON.stringify(debouncedSearchValue)}&sortBy=Default`;
       const url = `recipes?${queryString}`; 
       // Use router.replace instead of router.push to prevent adding unnecessary entries to the browser's history
       router.replace(url);
+    }
+    if (debouncedSearchValue === ''){
+      router.push('/recipes')
     }
   }, [debouncedSearchValue, setQuery]);
 

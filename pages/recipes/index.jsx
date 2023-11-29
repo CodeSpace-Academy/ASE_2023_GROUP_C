@@ -126,8 +126,6 @@ export default function RecipeListPage(props) {
     return recipe; // Keep the original recipe
   });
 
-  console.log(updatedRecipes);
-
   return (
     <div className='p-12'>
       <div >
@@ -151,7 +149,6 @@ export default function RecipeListPage(props) {
     recipes={updatedRecipes}
     totalRecipeInDb={totalRecipeInDb}
     pageNumber={page}
-    query={query}
     currentDocumentSize={currentDocumentSize}
 
   />: <p>No Recipes Found that match the query!!</p>}
