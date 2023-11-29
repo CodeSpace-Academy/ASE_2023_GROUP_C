@@ -1,21 +1,27 @@
+
+import Select from 'react-dropdown-select';
 import { v4 } from 'uuid';
 
-export default function FilterByCategory({ categoriesArr, value, onChange }) {
+export default function FilterByCategory({ categoriesArr, selectedValues, onChange }) {
+  // Map categories array to objects with 'label' and 'value'
+  const options = categoriesArr.map((category) => ({ label: category, value: v4() }));
+
+  // const defaultOptions = selectedValues.map((category) => ({ label: category, value: v4() }));
+
   return (
-    <div>
+    <div className="text-black">
       <h3>Categories</h3>
-      <select
-        className="text-black"
+      <Select
         name="categories"
-        value={value}
+        options={options}
+        labelField="label"
+        valueField="value"
+        multi
         onChange={onChange}
-      >
-        {categoriesArr.map((category) => (
-          <option key={v4()} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+        values={selectedValues}
+        color="red"
+        dropdownPosition="bottom"
+      />
     </div>
   );
 }
