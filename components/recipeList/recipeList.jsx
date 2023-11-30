@@ -50,14 +50,16 @@ export default function RecipeList(props) {
         <div className="flex-1 p-4">
           {/* This here is basically the list */}
           <ul className="grid pb-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {!recipes.length < 1 ?(recipes.map((recipe) => (
-              <RecipePreviewCard
-                key={recipe._id}
-                recipe={recipe}
-                convertToHours={convertToHours}
-                searchQuery={searchQuery}
-              />
-            ))): <NoResultsMessage />}
+            {!recipes.length < 1 ? (recipes.map((recipe) => {
+              return (
+                <RecipePreviewCard
+                  key={recipe._id}
+                  recipe={recipe}
+                  convertToHours={convertToHours}
+                  searchQuery={searchQuery}
+                />
+              );
+            })) : <NoResultsMessage />}
           </ul>
           <PaginationControls
             pageNumber={pageNumber}
