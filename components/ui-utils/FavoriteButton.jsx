@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState } from 'react';
-import ConfirmationDialog from '../customPrompt/prompt';
 import { AppContext } from '../context/recipeContext';
+import DeleteConfirmationModal from './overlay/deleteConfirmationModal';
 
 /**
  * FavoriteButton component for adding and removing recipes from favorites.
@@ -89,10 +89,11 @@ export default function FavoriteButton(props) {
         )}
       </button>
       {isDialogOpen && (
-        <ConfirmationDialog
+        <DeleteConfirmationModal
           message="Are you sure you want to delete?"
           onConfirm={handleConfirm}
           onCancel={handleCancel}
+          isOpen={isDialogOpen}
         />
       )}
       <p>{message}</p>
