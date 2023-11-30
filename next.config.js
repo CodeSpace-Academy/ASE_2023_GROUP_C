@@ -16,6 +16,6 @@ module.exports = (phase) => {
       MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
       MONGODB_CLUSTERNAME: process.env.MONGODB_CLUSTERNAME,
       MONGODB_DATABASE: mongodbDatabase,
-    },
+    }
   };
 };
