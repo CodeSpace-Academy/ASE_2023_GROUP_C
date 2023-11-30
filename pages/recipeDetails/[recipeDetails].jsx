@@ -70,6 +70,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
         {/* eslint-disable-next-line */}
         <button type="button" onClick={() => router.back()}>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
+          prev
         </button>
         <h1 className=" text-center font-bold p-5 text-xl bg-slate-900 text-white">
           RecipeDetails
