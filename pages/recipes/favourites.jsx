@@ -1,8 +1,8 @@
-import RecipeList from "../../components/recipeList/recipeList";
-import SortingForm from "../../components/ui-utils/sortingForm";
-import user from "../../utils/dummyUser";
-import { sortingByFunction } from "../../utils/filteringUtils";
-import { fetchRecipes, getDocumentSize } from "../../utils/mongodb-utils";
+import RecipeList from '../../components/recipeList/recipeList';
+import SortingForm from '../../components/ui-utils/sortingForm';
+import user from '../../utils/dummyUser';
+import { sortingByFunction } from '../../utils/filteringUtils';
+import { fetchRecipes, getDocumentSize } from '../../utils/mongodb-utils';
 
 export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
@@ -12,9 +12,9 @@ export async function getServerSideProps(context) {
     'users-list',
     sortingByFunction(sortBy),
     page,
-    { userName: user }
+    { userName: user },
   );
-  const currentDocumentSize = await getDocumentSize('users-list', { userName: user })
+  const currentDocumentSize = await getDocumentSize('users-list', { userName: user });
 
   return {
     props: {
@@ -32,16 +32,14 @@ export default function Favourite(props) {
     currentDocumentSize,
   } = props;
 
-  console.log('recipeDocuments-- ', favouriteRecipes)
-
   return (
-    <div className='p-12'>
-        <SortingForm />
-        <RecipeList
-            recipes={favouriteRecipes}
-            pageNumber={page}
-            currentDocumentSize={currentDocumentSize}
-        />
+    <div className="p-12">
+      <SortingForm />
+      <RecipeList
+        recipes={favouriteRecipes}
+        pageNumber={page}
+        currentDocumentSize={currentDocumentSize}
+      />
     </div>
   );
 }
