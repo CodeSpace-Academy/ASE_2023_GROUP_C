@@ -16,7 +16,7 @@ body,
 html {
   height: 100%;
   font-family: 'Roboto', sans-serif;
-  background-color: rgb(16, 23, 42);
+  /* background-color: rgb(16, 23, 42); */
 }
 
 :root {
@@ -33,6 +33,13 @@ html {
   }
 }
 
+.dark-mode {
+  background-color:rgb(16, 23, 42);
+}
+.light-mode {
+  background-color:purple;
+}
+
 button {
   display: flex;
   align-items: center;
@@ -45,3 +52,24 @@ button {
   cursor: pointer;
   flex-wrap: nowrap;
 }
+/* styling for the view recipe button */
+.hover\:shake:hover {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+/* styling for the ingredients */
+.inputWithShadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
