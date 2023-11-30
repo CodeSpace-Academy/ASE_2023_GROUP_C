@@ -16,7 +16,7 @@ export default function SortingForm() {
       <div className="p-2 flex items-center rounded-lg text-slate-400">
         <form className="text-white">
           <FontAwesomeIcon icon={faSort} size="lg" />
-          Sort By:
+        
           <select
             placeholder="Sort"
             className="bg-transparent focus:outline-none"

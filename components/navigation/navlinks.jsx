@@ -1,24 +1,37 @@
-import React from 'react';
-import { faBook, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import NavLink from '../ui-utils/navLink';
-import DropdownButton from './dropdownButton';
+import React from "react";
+import {
+  faBook,
+  faHeart,
+  faSun,
+  faMoon,
+  faFilter,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NavLink from "../ui-utils/navLink";
+import DropdownButton from "./dropdownButton";
+import SortingForm from "../../components/ui-utils/sortingForm";
 
 function NavLinks() {
   return (
-    <>
-      <NavLink href="/recipes">
-        <FontAwesomeIcon icon={faBook} size="lg" className="pr-2" />
+    <div className='flex items-center'>
+      <NavLink href='/recipes' className='mr-4'>
+        <FontAwesomeIcon icon={faBook} size='lg' className='pr-2' />
         Recipes
       </NavLink>
 
-      <NavLink href="/favouriteRecipes">
-        <FontAwesomeIcon icon={faHeart} size="lg" className="pr-2" />
-        Favorites
+      <NavLink href='/' className='mr-4'>
+        <FontAwesomeIcon icon={faSun} size='lg' className='pr-2' />
+        <FontAwesomeIcon icon={faMoon} size='lg' className='pr-2' />
       </NavLink>
 
+      <NavLink href='/' className='mr-4'>
+        <FontAwesomeIcon icon={faFilter} size='lg' className='pr-2' />
+        Filter
+      </NavLink>
+
+      <SortingForm className='mr-5' />
       <DropdownButton />
-    </>
+    </div>
   );
 }
 
