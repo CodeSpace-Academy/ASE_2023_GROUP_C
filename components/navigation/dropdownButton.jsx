@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { faUser, faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ThemeChange from './themeChange';
 
 function DropdownButton() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -39,6 +40,10 @@ function DropdownButton() {
           <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
             {' '}
             Login
+          </div>
+          <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
+            {' '}
+            <ThemeChange />
           </div>
         </Link>
       </div>
