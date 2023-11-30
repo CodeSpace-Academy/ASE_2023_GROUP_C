@@ -7,7 +7,7 @@ function RecipeDescription(props) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(
-    recipe.description || 'No instructions available.',
+    recipe.description || 'No description available.',
   );
 
   const handleEditDescription = (newDescription) => {
