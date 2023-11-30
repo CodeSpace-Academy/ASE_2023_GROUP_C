@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // Import v4 as alias from 'uuid'
+import { v4 } from 'uuid';
 import EditRecipeContent from './editableText';
 
 function RecipeInstruction(props) {
@@ -29,7 +29,7 @@ function RecipeInstruction(props) {
     (instruction, index) => `${index + 1}. ${instruction}`,
   );
 
-  // smooth snap onto the editing title
+  // Smooth snap onto the editing title
   useEffect(() => {
     if (isEditing && editedInstructionRef.current) {
       editedInstructionRef.current.scrollIntoView({
@@ -82,7 +82,7 @@ function RecipeInstruction(props) {
         <div>
           <ol>
             {editedInstruction.map((instruction, index) => (
-              <li key={uuidv4()}>{`${index + 1}. ${instruction}`}</li>
+              <li key={v4()}>{`${index + 1}. ${instruction}`}</li>
             ))}
           </ol>
           <button type="button" onClick={() => setIsEditing(true)}>
@@ -95,4 +95,3 @@ function RecipeInstruction(props) {
 }
 
 export default RecipeInstruction;
-
