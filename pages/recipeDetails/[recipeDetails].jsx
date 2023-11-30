@@ -28,14 +28,14 @@ export async function getServerSideProps(context) {
   // Creating a set of recipe Id.
   // eslint-disable-next-line no-underscore-dangle
   const favouriteRecipeIds = new Set(
-    usersFavouriteLists.map((recipe) => recipe._id),
+    usersFavouriteLists.map((recipe) => { return recipe._id; }),
   );
 
   // If the recipe ID in context is avaible in the favourite then that
   // recipe should be returned.
   if (favouriteRecipeIds.has(recipeId)) {
     recipeDocuments = usersFavouriteLists.find(
-      (favRecipe) => favRecipe._id === recipeId,
+      (favRecipe) => { return favRecipe._id === recipeId; },
     );
 
     allergens = await getAllergens('allergens');
@@ -65,17 +65,17 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
   const router = useRouter();
 
   return (
-    <div className='mt-20 md:ml-32 md:mr-32 '>
+    <div className="mt-20 md:ml-32 md:mr-32 ">
       <div className="flex font-bold p-5  bg-slate-900 text-white items-center">
         {/* eslint-disable-next-line */}
         <button
-  type="button"
-  className="hover:text-green-500 transition-transform duration-300 transform-gpu motion-safe:hover:animate-bounce"
-  onClick={() => router.back()}
->
-  <FontAwesomeIcon icon={faChevronLeft} size="xl" />
-  Prev
-</button>
+          type="button"
+          className="hover:text-green-500 transition-transform duration-300 transform-gpu motion-safe:hover:animate-bounce"
+          onClick={() => { return router.back(); }}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} size="xl" />
+          Prev
+        </button>
 
         <h1 className=" text-center font-bold p-5 text-xl bg-slate-900 text-white">
           RecipeDetails

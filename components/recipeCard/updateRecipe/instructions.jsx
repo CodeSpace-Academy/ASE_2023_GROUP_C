@@ -7,23 +7,21 @@ function RecipeInstruction(props) {
   const editedInstructionRef = useRef();
   const [isEditing, setIsEditing] = useState(false);
   const [editedInstruction, setEditedInstruction] = useState(
-    recipe.instructions
+    recipe.instructions,
   );
 
   const handleEditInstruction = (newInstruction) => {
     setEditedInstruction(
       newInstruction
         .split('\n')
-        .map((instruction, index) =>
-          instruction.replace(`${index + 1}.`, '').trim()
-        )
+        .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); }),
     ); // Split into an array
 
     setIsEditing(false);
     onEdit();
   };
   const numberedText = editedInstruction.map(
-    (instruction, index) => `${index + 1}. ${instruction}`
+    (instruction, index) => { return `${index + 1}. ${instruction}`; },
   );
 
   // smooth snap onto the editing title
@@ -43,7 +41,7 @@ function RecipeInstruction(props) {
           <EditRecipeContent
             initialValue={numberedText.join('\n')} // Join the array with line breaks
             onSave={handleEditInstruction}
-            onCancel={() => setIsEditing(false)}
+            onCancel={() => { return setIsEditing(false); }}
             rows={editedInstruction.length || 2}
             isOpen={isEditing}
           />
@@ -51,13 +49,15 @@ function RecipeInstruction(props) {
       ) : (
         <div>
           <ol>
-            {editedInstruction.map((instruction, index) => (
-              <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
-            ))}
+            {editedInstruction.map((instruction, index) => {
+              return (
+                <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
+              );
+            })}
           </ol>
           <button
             type="button"
-            onClick={() => setIsEditing(true)}
+            onClick={() => { return setIsEditing(true); }}
             className="px-3 py-1 bg-green-500 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-white-900 hover:font-semibold hover:tracking-wider hover:bg-green-700 hover:shadow-md"
           >
             Edit Instructions
