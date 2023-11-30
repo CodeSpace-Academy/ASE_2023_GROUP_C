@@ -7,21 +7,23 @@ function RecipeInstruction(props) {
   const editedInstructionRef = useRef();
   const [isEditing, setIsEditing] = useState(false);
   const [editedInstruction, setEditedInstruction] = useState(
-    recipe.instructions,
+    recipe.instructions
   );
 
   const handleEditInstruction = (newInstruction) => {
     setEditedInstruction(
       newInstruction
         .split('\n')
-        .map((instruction, index) => instruction.replace(`${index + 1}.`, '').trim()),
+        .map((instruction, index) =>
+          instruction.replace(`${index + 1}.`, '').trim()
+        )
     ); // Split into an array
 
     setIsEditing(false);
     onEdit();
   };
   const numberedText = editedInstruction.map(
-    (instruction, index) => `${index + 1}. ${instruction}`,
+    (instruction, index) => `${index + 1}. ${instruction}`
   );
 
   // smooth snap onto the editing title
@@ -53,7 +55,11 @@ function RecipeInstruction(props) {
               <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
             ))}
           </ol>
-          <button type="button" onClick={() => setIsEditing(true)}>
+          <button
+            type="button"
+            onClick={() => setIsEditing(true)}
+            className="px-3 py-1 bg-green-500 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-white-900 hover:font-semibold hover:tracking-wider hover:bg-green-700 hover:shadow-md"
+          >
             Edit Instructions
           </button>
         </div>
