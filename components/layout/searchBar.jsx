@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 
@@ -5,12 +6,23 @@ import { useDebounce } from 'use-debounce';
  *SearchBar component for searching recipes by title.
  */
 export default function SearchBar(props) {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 1000);
   const { setQuery } = props;
   // Use useEffect to trigger the search when debouncedSearchValue changes.
   useEffect(() => {
-    setQuery(debouncedSearchValue);
+    // Check if debouncedSearchValue is not empty before updating the query and triggering the search
+    if (debouncedSearchValue !== '') {
+      setQuery(debouncedSearchValue);
+      const queryString = `page=1&search=${JSON.stringify(debouncedSearchValue)}&sortBy=Default`;
+      const url = `recipes?${queryString}`; 
+      // Use router.replace instead of router.push to prevent adding unnecessary entries to the browser's history
+      router.replace(url);
+    }
+    if (debouncedSearchValue === ''){
+      router.push('/recipes')
+    }
   }, [debouncedSearchValue, setQuery]);
 
   /**
