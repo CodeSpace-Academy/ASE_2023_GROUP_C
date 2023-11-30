@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import RecipeList from '../../components/recipeList/recipeList';
 import {
   fetchRecipes,
@@ -8,61 +9,50 @@ import {
   getDocumentSize,
   getFavouriteRecipes,
 } from '../../utils/mongodb-utils';
-import Overlay from '../../components/ui-utils/overlay/overlay';
 import user from '../../utils/dummyUser';
-import { FilterContext } from '../../components/context/recipeContext';
-import pipelineForTags from '../../utils/filteringUtils';
+import { pipelineForTags, sortingByFunction } from '../../utils/filteringUtils';
+import SortingForm from '../../components/ui-utils/sortingForm';
+import FilteringModal from '../../components/ui-utils/overlay/filteringModal';
 
 export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
   const sortBy = context.query.sortBy || 'default';
+  const search = context.query.search;
 
   const mongoFilterObject = {};
 
-  if (filter.categories) {
-    mongoFilterObject.category = { $in: [filter.categories] };
-  }
-  if (filter.tags) {
-    mongoFilterObject.tags = { $in: [filter.tags] };
-  }
-  if (filter.numberOfSteps) {
-    mongoFilterObject.instructions = {
-      $size: parseInt(filter.numberOfSteps, 10),
-    };
-  }
-  if (filter.filterByIngredients) {
-    // The filterArray generate a list of object that searches in mongodb.
-    const filterArray = filter.filterByIngredients
-      .slice(1)
-      .map((ingredient) => {
-        const key = `ingredients.${ingredient}`;
-        return { [key]: { $exists: true } };
-      });
+  if (search){
+    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' }
+  } else {
+    if (filter.categories) {
+      mongoFilterObject.category = { $in: [...filter.categories] };
+    }
+    if (filter.tags) {
+      mongoFilterObject.tags = { $in: [...filter.tags] };
+    }
+    if (filter.numberOfSteps) {
+      mongoFilterObject.instructions = {
+        $size: parseInt(filter.numberOfSteps, 10),
+      };
+    }
+    if (filter.filterByIngredients) {
+      // The filterArray generate a list of object that searches in mongodb.
+      const filterArray = filter.filterByIngredients
+        .slice(1)
+        .map((ingredient) => {
+          const key = `ingredients.${ingredient}`;
+          return { [key]: { $exists: true } };
+        });
 
-    if (filterArray.length > 0) {
-      mongoFilterObject.$and = filterArray;
+      if (filterArray.length > 0) {
+        mongoFilterObject.$and = filterArray;
+      }
     }
   }
 
   // Both all recipes and favourite recipe must be fetched to compare them and
   // decide which one to be returned.
-
-  function sortingByFunction(sortingBy) {
-    const sortingOptions = {
-      default: {},
-      'published(latest)': { published: 1 },
-      'published(oldest)': { published: -1 },
-      'prepTime(Ascending)': { prep: 1 },
-      'prepTime(Descending)': { prep: -1 },
-      'cookTime(Ascending)': { cook: 1 },
-      'cookTime(Descending)': { cook: -1 },
-      'numberOfSteps(Ascending)': { instructions: 1 },
-      'numberOfSteps(Descending)': { instructions: -1 },
-    };
-    // Use the sortingBy value to get the corresponding sorting object
-    return sortingOptions[sortingBy];
-  }
 
   const recipeDocuments = await fetchRecipes(
     'recipes',
@@ -107,38 +97,15 @@ export default function RecipeListPage(props) {
     currentDocumentSize,
   } = props;
 
-  // Define initial state for the filter object using useState.
-  const [filter, setFilter] = useState({
-    categories: '',
-    tags: '',
-    numberOfSteps: '',
-    filterByIngredients: '',
-  });
-  const { filterOverlay, setFilterOverlay } = useContext(FilterContext);
+  const [filterOverlay, setFilterOverlay] = useState(false);
 
-  // Use the useRouter hook to access params and query
-  const router = useRouter();
-  const query = router.query
-
-  // Access the filter and sorting query parameters
-  const { filter: filterObject } = router.query;
-
-  // Update the filter state when filterObject changes
-  useEffect(() => {
-    if (filterObject) {
-      const parsedFilter = JSON.parse(filterObject);
-
-      // Merge the existing state with the parsed filter object
-      setFilter((prevFilter) => ({
-        ...prevFilter,
-        ...parsedFilter,
-      }));
-    }
-  }, [filterObject]);
-
-  function handleCancelFiltering() {
+  function handleCloseFiltering() {
     setFilterOverlay(false);
   }
+
+  const handleOpenFilterModal = () => {
+    setFilterOverlay(true);
+  };
 
   // Create a set of favorite recipe IDs
   // eslint-disable-next-line no-underscore-dangle
@@ -160,25 +127,31 @@ export default function RecipeListPage(props) {
   });
 
   return (
-    <div>
-      {filterOverlay && (
-        <Overlay
-          filter={filter}
-          setFilter={setFilter}
-          categoriesArr={categoriesArr}
-          arrayOfUnigueTags={arrayOfUnigueTags}
-          // eslint-disable-next-line react/jsx-no-bind
-          handleCancelFiltering={handleCancelFiltering}
-        />
-      )}
-      <RecipeList
-        recipes={updatedRecipes}
-        totalRecipeInDb={totalRecipeInDb}
-        pageNumber={page}
-        query={query}
-        currentDocumentSize={currentDocumentSize}
-
+    <div className='p-12'>
+      <div >
+        <button type="button" onClick={handleOpenFilterModal}>
+          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          Filters
+        </button>
+        <SortingForm />
+      </div>
+      { filterOverlay
+      && (
+      <FilteringModal
+        categoriesArr={categoriesArr}
+        arrayOfUnigueTags={arrayOfUnigueTags}
+        // eslint-disable-next-line react/jsx-no-bind
+        handleCancelFiltering={handleCloseFiltering}
+        isOpen={filterOverlay}
       />
+      )}
+  {updatedRecipes ?<RecipeList
+    recipes={updatedRecipes}
+    totalRecipeInDb={totalRecipeInDb}
+    pageNumber={page}
+    currentDocumentSize={currentDocumentSize}
+
+  />: <p>No Recipes Found that match the query!!</p>}
     </div>
   );
 }

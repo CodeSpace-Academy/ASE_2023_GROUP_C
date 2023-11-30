@@ -1,18 +1,24 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUtensils,
   faKitchenSet,
   faSpoon,
+  faCircleChevronRight,
+  faCircleChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import FavoriteButton from './FavoriteButton';
+import { v4 } from 'uuid';
 
 export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
   const [currentImage, setCurrentImage] = useState(0);
+
+  // Check if recipe is undefined or null
+  if (!recipe || !recipe.images || !recipe.images.length) {
+    return null; // or handle the error in another way
+  }
 
   function nextSlide() {
     setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
@@ -23,24 +29,23 @@ export default function RecipePreviewCard(props) {
   }
   //  Highlighting helper
   function highlightingMatchingWords(text) {
+    if (!searchQuery || searchQuery === '') {
+      return text; // Return original text if there's no search query
+    }
+  
     const regex = new RegExp(searchQuery, 'gi');
-
-    // const highlightedTitle = text.replace(regex, `<span style={{ backgroundColor:
-    // 'green', color: 'white' } >${searchQuery}</span>`)
-
-    // return (
-    //   <span  dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
-    // );
-    const segments = text.split(regex);
     const matches = text.match(regex);
-
+  
+    if (!matches) {
+      return text; // Return original text if there are no matches
+    }
+  
     return (
       <span>
-        {segments.map((segment, index) => (
-          // eslint-disable-next-line react/no-array-index-key
+        {text.split(regex).map((segment, index) => (
           <span key={index}>
             {segment}
-            {matches && index < matches.length && (
+            {index < matches.length && (
               <span className="bg-green-500 text-white font-extrabold">
                 {matches[index]}
               </span>
@@ -50,17 +55,12 @@ export default function RecipePreviewCard(props) {
       </span>
     );
   }
+  
 
   const title = highlightingMatchingWords(recipe.title, searchQuery);
 
-  //  if (searchQuery){
-  //   const regex = new RegExp( searchQuery, 'gi')
-  // highlightedTitle = recipe.title.replace(regex, `<span className=" text-green-300">
-  // ${searchQuery}</span>`)
-  //  }
-  // Carousel
   return (
-    <div>
+    <div className="group relative">
       <li
         // eslint-disable-next-line no-underscore-dangle
         key={recipe._id}
@@ -74,20 +74,20 @@ export default function RecipePreviewCard(props) {
           />
           <button
             type="button"
-            className="absolute left-0 top-1/2 transform -translate-y-1/2"
+            className="absolute left-0 top-28 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             onClick={prevSlide}
           >
-            ❮
+            <FontAwesomeIcon icon={faCircleChevronLeft} />
           </button>
           <button
             type="button"
-            className="absolute right-0 top-1/2 transform -translate-y-1/2"
+            className="absolute right-0 top-28 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             onClick={nextSlide}
           >
-            ❯
+            <FontAwesomeIcon icon={faCircleChevronRight} />
           </button>
         </div>
-        <div className=" absolute opacity-70 hover:opacity-100">
+        <div className=" absolute opacity-70 group-hover:opacity-100">
           <FavoriteButton recipe={recipe} />
         </div>
 
@@ -109,9 +109,9 @@ export default function RecipePreviewCard(props) {
           Total:
           {convertToHours(recipe.prep + recipe.cook)}
         </p>
-        {/* eslint-disable-next-line no-underscore-dangle */}
+       
         <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
-          {/* eslint-disable-next-line react/button-has-type */}
+         
           <button>View Recipe</button>
         </Link>
       </li>

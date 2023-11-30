@@ -84,20 +84,14 @@ export default function RecipeCard(prop) {
               <FavoriteButton recipe={recipe} />
             </h2>
 
-            <div className="flex mt-4 space-x-4 justify-center gap-8 mb-2">
+            <div className="flex mt-4 space-x-4 gap-8 mb-2">
               <p>
-                <FontAwesomeIcon icon={faUtensils} size="xl" />
-                Prep:
-                {' '}
-                {convertToHours(recipe.prep)}
-                {' '}
+                <FontAwesomeIcon icon={faUtensils} size="lg" />
+                {` Prep: ${convertToHours(recipe.prep)}`}
               </p>
               <p>
-                <FontAwesomeIcon icon={faMitten} size="xl" />
-                Cook:
-                {' '}
-                {convertToHours(recipe.cook)}
-                {' '}
+                <FontAwesomeIcon icon={faMitten} size="lg" />
+                {` Cook: ${convertToHours(recipe.cook)}`}
               </p>
             </div>
             <TagsDisplay recipe={recipe} />
