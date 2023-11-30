@@ -12,7 +12,7 @@ function EditRecipeContent(props) {
   };
 
   return (
-    <div className="flex flex-col mt-2 mb-4 ">
+    <div className="flex flex-col mt-2 mb-4">
       <textarea
         rows={rows + 2}
         ref={textareaRef}

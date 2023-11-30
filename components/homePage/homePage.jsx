@@ -33,7 +33,10 @@ function RecipeHomePage() {
           </h1>
           <div className="flex justify-center space-x-4">
             <Link href="/api/auth/login">
-              <button type="button" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
+              <button
+                type="button"
+                className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700"
+              >
                 {' '}
                 {/* Styling for the Login button */}
                 Login
@@ -43,7 +46,10 @@ function RecipeHomePage() {
               </button>
             </Link>
             <Link href="/recipeList/1">
-              <button type="button" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700 ml-4">
+              <button
+                type="button"
+                className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700 ml-4"
+              >
                 {' '}
                 {/* Styling for the Recipes button with margin */}
                 Recipes

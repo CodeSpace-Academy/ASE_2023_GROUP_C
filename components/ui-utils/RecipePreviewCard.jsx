@@ -15,6 +15,11 @@ export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
   const [currentImage, setCurrentImage] = useState(0);
 
+  // Check if recipe is undefined or null
+  if (!recipe || !recipe.images || !recipe.images.length) {
+    return null; // or handle the error in another way
+  }
+
   function nextSlide() {
     setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
   }
@@ -24,20 +29,25 @@ export default function RecipePreviewCard(props) {
   }
   //  Highlighting helper
   function highlightingMatchingWords(text) {
+    if (!searchQuery || searchQuery === '') {
+      return text; // Return original text if there's no search query
+    }
+  
     const regex = new RegExp(searchQuery, 'gi');
-
-    const segments = text.split(regex);
     const matches = text.match(regex);
-
+  
+    if (!matches) {
+      return text; // Return original text if there are no matches
+    }
+  
     return (
       <span>
-        {segments.map((segment) => (
-         
-          <span key={v4()}>
+        {text.split(regex).map((segment, index) => (
+          <span key={index}>
             {segment}
-            {matches && v4() < matches.length && (
+            {index < matches.length && (
               <span className="bg-green-500 text-white font-extrabold">
-                {matches[v4()]}
+                {matches[index]}
               </span>
             )}
           </span>
@@ -45,10 +55,10 @@ export default function RecipePreviewCard(props) {
       </span>
     );
   }
+  
 
   const title = highlightingMatchingWords(recipe.title, searchQuery);
 
- 
   return (
     <div className="group relative">
       <li
