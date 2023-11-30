@@ -46,7 +46,7 @@ export default function Favourite(props) {
 
     // Set the updated recipes
     setUpdatedRecipes(filteredRecipes);
-  }, [favouriteRecipes, removedFromFavourites]);
+  }, [removedFromFavourites, updatedRecipes]);
 
   return (
     <div className="p-12">

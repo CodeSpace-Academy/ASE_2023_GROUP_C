@@ -109,16 +109,13 @@ export default function RecipeListPage(props) {
   };
 
   // Create a set of favorite recipe IDs
-  // eslint-disable-next-line no-underscore-dangle
   const favouriteRecipeIds = new Set(
     favouriteRecipes.map((recipe) => { return recipe._id; }),
   );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
-    // eslint-disable-next-line no-underscore-dangle
     if (favouriteRecipeIds.has(recipe._id)) {
-      // eslint-disable-next-line no-underscore-dangle
       const favoriteRecipe = favouriteRecipes.find(
         (favRecipe) => { return favRecipe._id === recipe._id; },
       );
@@ -126,8 +123,6 @@ export default function RecipeListPage(props) {
     }
     return recipe; // Keep the original recipe
   });
-
-  console.log(updatedRecipes);
 
   return (
     <div className="p-12">

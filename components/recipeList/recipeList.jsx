@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
-import SortingForm from '../ui-utils/sortingForm';
 import { useRouter } from 'next/router';
+import RecipePreviewCard from '../ui-utils/RecipePreviewCard';
 import PaginationControls from '../ui-utils/PaginationControls';
 
 /**
@@ -15,13 +14,13 @@ import PaginationControls from '../ui-utils/PaginationControls';
 export default function RecipeList(props) {
   // Destructure props
   const { recipes, pageNumber, currentDocumentSize } = props;
-  const { query } = useRouter()
-  const { page } = query
-  const searchQuery = query.search ? JSON.parse(query.search) : ''
-  const parsedValue = parseInt(page, 10)
+  const { query } = useRouter();
+  const { page } = query;
+  const searchQuery = query.search ? JSON.parse(query.search) : '';
+  const parsedValue = parseInt(page, 10);
 
   // stateVariables
-  const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100))
+  const [recipeCount, setRecipeCount] = useState(currentDocumentSize - (parsedValue || 1 * 100));
 
   /**
    * Converts minutes to hours and minutes format.
@@ -40,21 +39,33 @@ export default function RecipeList(props) {
 
   return (
     <div>
-      <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount}/>
+      <PaginationControls
+        pageNumber={pageNumber}
+        currentDocumentSize={currentDocumentSize}
+        recipeCount={recipeCount}
+        setRecipeCount={setRecipeCount}
+      />
       <div className="bg-gray-900 text-white h-screen flex">
         <div className="flex-1 p-4">
           {/* This here is basically the list */}
           <ul className="grid pb-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {recipes.map((recipe) => (
-              <RecipePreviewCard
-                key={recipe._id}
-                recipe={recipe}
-                convertToHours={convertToHours}
-                searchQuery={searchQuery}
-              />
-            ))}
+            {recipes.map((recipe) => {
+              return (
+                <RecipePreviewCard
+                  key={recipe._id}
+                  recipe={recipe}
+                  convertToHours={convertToHours}
+                  searchQuery={searchQuery}
+                />
+              );
+            })}
           </ul>
-          <PaginationControls pageNumber={pageNumber} currentDocumentSize={currentDocumentSize} recipeCount={recipeCount} setRecipeCount={setRecipeCount} />
+          <PaginationControls
+            pageNumber={pageNumber}
+            currentDocumentSize={currentDocumentSize}
+            recipeCount={recipeCount}
+            setRecipeCount={setRecipeCount}
+          />
         </div>
       </div>
     </div>
