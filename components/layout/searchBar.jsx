@@ -16,13 +16,16 @@ export default function SearchBar(props) {
     // updating the query and triggering the search
     if (debouncedSearchValue !== '') {
       setQuery(debouncedSearchValue);
-      const queryString = `page=1&search=${JSON.stringify(debouncedSearchValue)}`;
+      const queryString = `page=1&search=${JSON.stringify(debouncedSearchValue)}&sortBy=Default`;
       const url = `recipes?${queryString}`;
       // Use router.replace instead of router.push to prevent
       // adding unnecessary entries to the browser's history
       router.replace(url);
     }
-  }, [debouncedSearchValue, router, setQuery]);
+    if (debouncedSearchValue === '') {
+      router.push('/recipes');
+    }
+  }, [debouncedSearchValue, setQuery]);
 
   /**
    * Handles the input change when the user types a search query.

@@ -142,12 +142,13 @@ export default function RecipeListPage(props) {
         isOpen={filterOverlay}
       />
       )}
-      <RecipeList
-        recipes={updatedRecipes}
-        totalRecipeInDb={totalRecipeInDb}
-        pageNumber={page}
-        currentDocumentSize={currentDocumentSize}
-      />
+  {updatedRecipes ?<RecipeList
+    recipes={updatedRecipes}
+    totalRecipeInDb={totalRecipeInDb}
+    pageNumber={page}
+    currentDocumentSize={currentDocumentSize}
+
+  />: <p>No Recipes Found that match the query!!</p>}
     </div>
   );
 }
