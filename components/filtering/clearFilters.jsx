@@ -2,10 +2,8 @@ import React from 'react';
 
 export default function ClearFilters({ onClearFilters }) {
   return (
-    <div>
-      <button type="button" onClick={onClearFilters} className="bg-blue-500">
-        Clear Filters
-      </button>
-    </div>
+    <button className="text-black bg-red-500" type="button" onClick={onClearFilters}>
+      Clear Filters
+    </button>
   );
 }

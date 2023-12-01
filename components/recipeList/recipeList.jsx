@@ -52,12 +52,6 @@ export default function RecipeList(props) {
 
   return (
     <div>
-      <PaginationControls
-        pageNumber={pageNumber}
-        currentDocumentSize={currentDocumentSize}
-        recipeCount={recipeCount}
-        setRecipeCount={setRecipeCount}
-      />
       <div className={`bg-${theme === 'night' ? 'rgb(16, 23, 42)' : 'rgb(100, 110, 140)'} text-${theme === 'night' ? 'black' : 'white'} h-screen flex`}>
         <div className="flex-1">
           {/* This here is basically the list */}
