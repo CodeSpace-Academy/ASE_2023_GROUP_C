@@ -13,7 +13,7 @@ function FilterByIngredients({ value, onChange }) {
       <h3>Search by Ingredients</h3>
       <input
         type="text"
-        className=" p-1 mb-4 bg-black-1000 rounded-l border-red-500  "
+        className="inputWithShadow p-1 mb-4 bg-black-1000 rounded-l border-red-500  "
         value={value}
         name="filterByIngredients"
         onChange={onChange}
