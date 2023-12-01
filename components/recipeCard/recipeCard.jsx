@@ -116,10 +116,7 @@ export default function RecipeCard(prop) {
                 {Object.keys(recipe.ingredients).map((ingredientKey) => {
                   return (
                     <li key={v4()}>
-                      {' '}
-                      {recipe.ingredients[ingredientKey]}
-                      of
-                      {ingredientKey}
+                      {`${recipe.ingredients[ingredientKey]} - ${ingredientKey}`}
                     </li>
                   );
                 })}
