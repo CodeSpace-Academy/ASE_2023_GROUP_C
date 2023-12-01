@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -18,12 +19,12 @@ export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
   const sortBy = context.query.sortBy || 'default';
-  const search = context.query.search;
+  const { search } = context.query;
 
   const mongoFilterObject = {};
 
-  if (search){
-    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' }
+  if (search) {
+    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' };
   } else {
     if (filter.categories) {
       mongoFilterObject.category = { $in: [...filter.categories] };
@@ -58,9 +59,9 @@ export async function getServerSideProps(context) {
     'recipes',
     sortingByFunction(sortBy),
     page,
-    mongoFilterObject
+    mongoFilterObject,
   );
-  const currentDocumentSize = await getDocumentSize('recipes', mongoFilterObject)
+  const currentDocumentSize = await getDocumentSize('recipes', mongoFilterObject);
   const favouriteRecipes = await getFavouriteRecipes('users-list', {
     userName: user,
   });
@@ -108,18 +109,15 @@ export default function RecipeListPage(props) {
   };
 
   // Create a set of favorite recipe IDs
-  // eslint-disable-next-line no-underscore-dangle
   const favouriteRecipeIds = new Set(
-    favouriteRecipes.map((recipe) => recipe._id)
+    favouriteRecipes.map((recipe) => { return recipe._id; }),
   );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
-    // eslint-disable-next-line no-underscore-dangle
     if (favouriteRecipeIds.has(recipe._id)) {
-      // eslint-disable-next-line no-underscore-dangle
       const favoriteRecipe = favouriteRecipes.find(
-        (favRecipe) => favRecipe._id === recipe._id,
+        (favRecipe) => { return favRecipe._id === recipe._id; },
       );
       return favoriteRecipe; // Replace with favorite recipe
     }
@@ -140,18 +138,18 @@ export default function RecipeListPage(props) {
       <FilteringModal
         categoriesArr={categoriesArr}
         arrayOfUnigueTags={arrayOfUnigueTags}
-        // eslint-disable-next-line react/jsx-no-bind
         handleCancelFiltering={handleCloseFiltering}
         isOpen={filterOverlay}
       />
       )}
-  {updatedRecipes ?<RecipeList
-    recipes={updatedRecipes}
-    totalRecipeInDb={totalRecipeInDb}
-    pageNumber={page}
-    currentDocumentSize={currentDocumentSize}
-
-  />: <p>No Recipes Found that match the query!!</p>}
+      {updatedRecipes ? (
+        <RecipeList
+          recipes={updatedRecipes}
+          totalRecipeInDb={totalRecipeInDb}
+          pageNumber={page}
+          currentDocumentSize={currentDocumentSize}
+        />
+      ) : <p>No Recipes Found that match the query!!</p>}
     </div>
   );
 }

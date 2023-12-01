@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -54,6 +51,7 @@ export async function getServerSideProps(context) {
 
     return { props: { recipeDocuments, allergensList } };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Getting recipes failed');
     return {
       notFound: true,

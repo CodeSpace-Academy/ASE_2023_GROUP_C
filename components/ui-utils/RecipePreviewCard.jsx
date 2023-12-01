@@ -28,7 +28,7 @@ export default function RecipePreviewCard(props) {
 
   // Check if recipe is undefined or null
   if (!recipe || !recipe.images || !recipe.images.length) {
-    return null; // or handle the error in another way
+    return null;
   }
 
   function nextSlide() {
@@ -63,6 +63,10 @@ export default function RecipePreviewCard(props) {
               <span className="bg-green-500 text-white font-extrabold">
                 {matches[index]}
               </span>
+              )}
+            </span>
+          );
+        })}
               )}
             </span>
           );

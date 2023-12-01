@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import ConfirmationDialog from '../customPrompt/prompt';
+import { useContext, useState } from 'react';
+import { AppContext } from '../context/recipeContext';
+import DeleteConfirmationModal from './overlay/deleteConfirmationModal';
 
 /**
  * FavoriteButton component for adding and removing recipes from favorites.
@@ -16,6 +17,7 @@ export default function FavoriteButton(props) {
   const [isFavourite, setIsFavourite] = useState(recipe.isFavourite);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const { setRemovedFromFavourites } = useContext(AppContext);
 
   /**
    * Handle the confirmation of removing the recipe from favorites.
@@ -29,6 +31,10 @@ export default function FavoriteButton(props) {
     setTimeout(() => {
       setMessage('');
     }, 2000);
+
+    // Set the global state that keeps trick of the recipe _id
+    // that was removed from the favourite list.
+    setRemovedFromFavourites(recipe._id);
 
     fetch('/api/unfavour', {
       method: 'POST',
@@ -83,10 +89,11 @@ export default function FavoriteButton(props) {
         )}
       </button>
       {isDialogOpen && (
-        <ConfirmationDialog
+        <DeleteConfirmationModal
           message="Are you sure you want to delete?"
           onConfirm={handleConfirm}
           onCancel={handleCancel}
+          isOpen={isDialogOpen}
         />
       )}
       <p>{message}</p>

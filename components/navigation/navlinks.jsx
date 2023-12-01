@@ -19,7 +19,7 @@ function NavLinks() {
 
       <ThemeChange />
 
-      <NavLink href="/favouriteRecipes">
+      <NavLink href="/recipes/favourites">
         <FontAwesomeIcon icon={faHeart} size="lg" className="pr-2" />
         Favorites
       </NavLink>
