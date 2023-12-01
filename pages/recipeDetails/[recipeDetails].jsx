@@ -28,14 +28,14 @@ export async function getServerSideProps(context) {
   // Creating a set of recipe Id.
   // eslint-disable-next-line no-underscore-dangle
   const favouriteRecipeIds = new Set(
-    usersFavouriteLists.map((recipe) => recipe._id),
+    usersFavouriteLists.map((recipe) => { return recipe._id; }),
   );
 
   // If the recipe ID in context is avaible in the favourite then that
   // recipe should be returned.
   if (favouriteRecipeIds.has(recipeId)) {
     recipeDocuments = usersFavouriteLists.find(
-      (favRecipe) => favRecipe._id === recipeId,
+      (favRecipe) => { return favRecipe._id === recipeId; },
     );
 
     allergens = await getAllergens('allergens');
@@ -65,10 +65,9 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
   const router = useRouter();
 
   return (
-    <div className='mt-20 md:ml-32 md:mr-32 '>
+    <div className="mt-20 md:ml-32 md:mr-32 ">
       <div className="flex font-bold p-5  bg-slate-900 text-white items-center">
-        {/* eslint-disable-next-line */}
-        <button type="button" onClick={() => router.back()}>
+        <button type="button" onClick={() => { return router.back(); }}>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
           prev
         </button>

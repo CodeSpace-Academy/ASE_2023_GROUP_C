@@ -127,8 +127,8 @@ export default function RecipeListPage(props) {
   });
 
   return (
-    <div className='p-12'>
-      <div >
+    <div className="p-12">
+      <div>
         <button type="button" onClick={handleOpenFilterModal}>
           <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
           Filters
