@@ -19,6 +19,12 @@ module.exports = {
         dinner:
           "url('https://images.unsplash.com/photo-1603073163308-9654c3fb70b5?q=80&w=1927&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
       },
+      colors: {
+        customPurple: '#DCBFFF',
+        customDark: '#B15EFF',
+        customGreen: '#e83e8c',
+        cutomDarkBlue: 'eee0c9',
+      },
     },
   },
   plugins: [],
