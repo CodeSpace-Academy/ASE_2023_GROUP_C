@@ -3,18 +3,18 @@ import {
   insertDocument,
   lookforDocument,
   updateUsersList,
-} from "../../utils/mongodb-utils";
+} from '../../utils/mongodb-util';
 
 // API route handler for updating or inserting a recipe into MongoDB
 export default async function handler(req, res) {
   // Destructure values from the request body
-  const { description, instructions, _id } = req.body;
+  const { description, instructions } = req.body;
 
   // Static username (To-Do: make it dynamic based on the user)
   const username = 'The User change'; // To-Do: make this a dynamic value of a user.
 
   // Check if the request method is POST
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     try {
       // Check if the user already exists in the database
       const userExist = await lookforDocument({ userName: username });
