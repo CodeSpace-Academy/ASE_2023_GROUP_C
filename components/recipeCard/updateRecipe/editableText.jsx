@@ -20,10 +20,18 @@ function EditRecipeContent(props) {
         className=" text-white p-2 bg-gray-500 rounded-xl shadow-lg"
       />
       <div className=" flex  mt-2 mb-4 gap-4">
-        <button type="button" onClick={handleSave}>
+        <button
+          type="button"
+          className="px-3 py-1 bg-gray-800 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-gray-900 hover:font-semibold hover:tracking-wider hover:bg-transparent hover:shadow-md"
+          onClick={handleSave}
+        >
           Save
         </button>
-        <button type="button" onClick={onCancel}>
+        <button
+          type="button"
+          className="px-3 py-1 bg-gray-800 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-gray-900 hover:font-semibold hover:tracking-wider hover:bg-transparent hover:shadow-md"
+          onClick={onCancel}
+        >
           Cancel
         </button>
       </div>

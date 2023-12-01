@@ -55,7 +55,11 @@ function RecipeInstruction(props) {
               );
             })}
           </ol>
-          <button type="button" onClick={() => { return setIsEditing(true); }}>
+          <button
+            type="button"
+            onClick={() => { return setIsEditing(true); }}
+            className="px-3 py-1 bg-green-500 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-white-900 hover:font-semibold hover:tracking-wider hover:bg-green-700 hover:shadow-md"
+          >
             Edit Instructions
           </button>
         </div>
