@@ -28,11 +28,13 @@ export default function Filtering({
 }) {
   // Handler function to update the selected values for all filters
   const handleFilterChange = (key, selectedValues) => {
-    const labels = selectedValues.map((item) => item.label);
-    setSelectedTagsAndCategories((prevSelectedValues) => ({
-      ...prevSelectedValues,
-      [key]: labels,
-    }));
+    const labels = selectedValues.map((item) => { return item.label; });
+    setSelectedTagsAndCategories((prevSelectedValues) => {
+      return {
+        ...prevSelectedValues,
+        [key]: labels,
+      };
+    });
   };
 
   return (
@@ -40,12 +42,12 @@ export default function Filtering({
       <FilterByCategory
         categoriesArr={categoriesArr}
         selectedValues={selectedValuesCategories}
-        onChange={(selectedValues) => handleFilterChange('categories', selectedValues)}
+        onChange={(selectedValues) => { return handleFilterChange('categories', selectedValues); }}
       />
       <FilterByTags
         arrayOfUnigueTags={arrayOfUnigueTags}
         selectedValues={selectedValuesTags}
-        onChange={(selectedValues) => handleFilterChange('tags', selectedValues)}
+        onChange={(selectedValues) => { return handleFilterChange('tags', selectedValues); }}
       />
       <FilterBySteps value={selectedStepsAndIngredients.numberOfSteps} onChange={onChange} />
       <FilterByIngredients
