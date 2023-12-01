@@ -20,9 +20,9 @@ export default function RecipePreviewCard(props) {
   useEffect(() => {
     const body = document.querySelector('body');
     if (theme === 'night') {
-      body.style.backgroundColor = 'bg-gray-800';
+      body.style.backgroundColor = '#1a202c'; // Replace with your desired bg color
     } else {
-      body.style.backgroundColor = 'bg-blue-400';
+      body.style.backgroundColor = '#4299e1'; // Replace with your desired bg color
     }
   }, [theme]);
 
@@ -40,7 +40,8 @@ export default function RecipePreviewCard(props) {
       return (prevImage - 1 + recipe.images.length) % recipe.images.length;
     });
   }
-  //  Highlighting helper
+
+  // Highlighting helper
   function highlightingMatchingWords(text) {
     if (!searchQuery || searchQuery === '') {
       return text; // Return original text if there's no search query
@@ -67,25 +68,20 @@ export default function RecipePreviewCard(props) {
             </span>
           );
         })}
-              )}
-            </span>
-          );
-        })}
       </span>
     );
   }
 
-  const title = highlightingMatchingWords(recipe.title, searchQuery);
+  const title = highlightingMatchingWords(recipe.title || '', searchQuery);
   const buttonColorClass = theme === 'night' ? 'bg-blue-500' : 'bg-gray-700';
 
   return (
     <div className={`group relative ${theme === 'night' ? 'bg-blue-400' : 'bg-gray-800'}`}>
       <li
-        // eslint-disable-next-line no-underscore-dangle
         key={recipe._id}
         className="relative p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1"
       >
-        <div className="w-full h-48 overflow-hidden">
+        <div className="w-full h-48 overflow-hidden relative">
           <img
             src={recipe.images[currentImage]}
             alt={recipe.title}
@@ -94,7 +90,7 @@ export default function RecipePreviewCard(props) {
           <button
             aria-label="button"
             type="button"
-            className="absolute left-0 top-28 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             onClick={prevSlide}
           >
             <FontAwesomeIcon icon={faCircleChevronLeft} />
@@ -102,13 +98,13 @@ export default function RecipePreviewCard(props) {
           <button
             aria-label="button"
             type="button"
-            className="absolute right-0 top-28 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             onClick={nextSlide}
           >
             <FontAwesomeIcon icon={faCircleChevronRight} />
           </button>
         </div>
-        <div className=" absolute opacity-70 group-hover:opacity-100">
+        <div className="absolute opacity-70 group-hover:opacity-100">
           <FavoriteButton recipe={recipe} />
         </div>
 
@@ -131,9 +127,14 @@ export default function RecipePreviewCard(props) {
           {convertToHours(recipe.prep + recipe.cook)}
         </p>
 
-        <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
-
-          <button aria-label="button" type="button" className={`${buttonColorClass} transition-transform transform hover:shake`}>View Recipe</button>
+        <Link href={`/recipeDetails/${recipe._id}`}>
+          <button
+            aria-label="button"
+            type="button"
+            className={`${buttonColorClass} transition-transform transform hover:shake mt-4`}
+          >
+            View Recipe
+          </button>
         </Link>
       </li>
     </div>
