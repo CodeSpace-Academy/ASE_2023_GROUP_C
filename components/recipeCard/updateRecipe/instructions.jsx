@@ -6,18 +6,20 @@ function RecipeInstruction(props) {
   const { recipe, onEdit } = props;
   const editedInstructionRef = useRef();
   const [isEditing, setIsEditing] = useState(false);
-  const [editedInstruction] = useState(
+  const [editedInstruction, setEditedInstruction] = useState(
     recipe.instructions,
   );
 
   const handleEditInstruction = async (newInstruction) => {
     const formattedInstructions = newInstruction
       .split('\n')
-      .map((instruction) => { return instruction.trim(); });
+      .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); });
 
     // Save the edited instruction to MongoDB
-    // eslint-disable-next-line no-use-before-define
     await saveEditedInstructionToMongoDB(formattedInstructions);
+
+    // Update local state
+    setEditedInstruction(formattedInstructions);
 
     // Trigger the onEdit callback
     onEdit();
@@ -44,12 +46,14 @@ function RecipeInstruction(props) {
       }
 
       // Handle the response as needed
-      const result = await response.json();
-      console.log(result);
     } catch (error) {
       console.error('Error:', error);
     }
   };
+
+  const numberedText = editedInstruction.map(
+    (instruction, index) => { return `${index + 1}. ${instruction}`; },
+  );
 
   // Smooth snap onto the editing title
   useEffect(() => {
@@ -60,10 +64,6 @@ function RecipeInstruction(props) {
       });
     }
   }, [isEditing]);
-
-  const numberedText = editedInstruction.map(
-    (instruction, index) => { return `${index + 1}. ${instruction}`; },
-  );
 
   return (
     <div>
@@ -82,9 +82,14 @@ function RecipeInstruction(props) {
           <ol>
             {editedInstruction.map((instruction, index) => {return (
               <li key={v4()}>{`${index + 1}. ${instruction}`}</li>
-            )})}
+            );
+            })}
           </ol>
-          <button type="button" onClick={() => {return setIsEditing(true)}}>
+          <button
+            type="button"
+            onClick={() => { return setIsEditing(true); }}
+            className="px-3 py-1 bg-green-500 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-white-900 hover:font-semibold hover:tracking-wider hover:bg-green-700 hover:shadow-md"
+          >
             Edit Instructions
           </button>
         </div>
