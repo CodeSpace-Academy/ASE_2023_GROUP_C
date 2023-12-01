@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTheme } from './themeContext';
 
 export default function PaginationControls(props) {
   const {
@@ -9,6 +10,7 @@ export default function PaginationControls(props) {
   const { query } = router;
   const { page, ...otherQueryParams } = query;
   const parsedValue = parseInt(page, 10);
+  const { theme } = useTheme();
 
   let prevDisplay;
   if (pageNumber === 1) {
@@ -44,7 +46,7 @@ export default function PaginationControls(props) {
           pathname: '/recipes',
           query: { page: pageNumber - 1, ...otherQueryParams }, // Update page parameter
         }}
-        className={` bg-cyan-400 m-5 p-3 text-white rounded-md ${prevDisplay}`}
+        className={` ${theme === 'night' ? 'bg-cyan-700' : 'bg-cyan-400'} m-5 p-3 text-white rounded-md ${prevDisplay}`}
         as={{
           pathname: '/recipes',
           query: { page: pageNumber - 1, ...otherQueryParams }, // Update page parameter
@@ -64,7 +66,7 @@ export default function PaginationControls(props) {
           pathname: '/recipes',
           query: { page: pageNumber + 1, ...otherQueryParams }, // Update page parameter
         }}
-        className={` bg-cyan-400 m-5 p-3 text-white rounded-md ${nextDisplay}`}
+        className={` ${theme === 'night' ? 'bg-cyan-700' : 'bg-cyan-400'} m-5 p-3 text-white rounded-md ${nextDisplay}`}
         as={{
           pathname: '/recipes',
           query: { page: pageNumber + 1, ...otherQueryParams }, // Update page parameter
