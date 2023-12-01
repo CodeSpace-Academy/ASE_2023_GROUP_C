@@ -40,13 +40,12 @@ export default function Favourite(props) {
 
   useEffect(() => {
     // Filter out the recipe with the specified _id
-    const filteredRecipes = updatedRecipes.filter(
-      (recipe) => { return recipe._id !== removedFromFavourites; },
-    );
-
-    // Set the updated recipes
-    setUpdatedRecipes(filteredRecipes);
-  }, [removedFromFavourites, updatedRecipes]);
+    setUpdatedRecipes((prevRecipes) => {
+      return prevRecipes.filter(
+        (recipe) => { return recipe._id !== removedFromFavourites; },
+      );
+    });
+  }, [removedFromFavourites]);
 
   return (
     <div className="p-12">
