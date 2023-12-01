@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
   const sortBy = context.query.sortBy || 'default';
-  const search = context.query.search;
+  const { search } = context.query;
 
   const mongoFilterObject = {};
 
@@ -101,10 +101,6 @@ export default function RecipeListPage(props) {
 
   const [filterOverlay, setFilterOverlay] = useState(false);
 
-  function handleCloseFiltering() {
-    setFilterOverlay(false);
-  }
-
   const handleOpenFilterModal = () => {
     setFilterOverlay(true);
   };
@@ -128,15 +124,14 @@ export default function RecipeListPage(props) {
 
   return (
     <div className="p-12">
-      {/* Add margin-bottom to create spacing */}
-      <div className="mb-12">
-        {' '}
+      {/* Add margin-top to create spacing */}
+      <div className="mt-12">
         <button
           type="button"
           onClick={handleOpenFilterModal}
           className="bg-blue-500 text-white py-2 px-4 rounded"
         >
-          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+          <FontAwesomeIcon icon={faFilter} size="lg - 5" className="pr-2" />
           Filters
         </button>
       </div>
@@ -144,7 +139,7 @@ export default function RecipeListPage(props) {
         <FilteringModal
           categoriesArr={categoriesArr}
           arrayOfUnigueTags={arrayOfUnigueTags}
-          handleCancelFiltering={handleCloseFiltering}
+          handleCancelFiltering={() => { return setFilterOverlay(false); }}
           isOpen={filterOverlay}
         />
       )}

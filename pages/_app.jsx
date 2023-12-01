@@ -12,8 +12,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider>
         <div>
           <RecipeProvider>
-            <NavBar className="mt-12" />
-            {' '}
+            <NavBar />
             <Layout />
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component {...pageProps} />
