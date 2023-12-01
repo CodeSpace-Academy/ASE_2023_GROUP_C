@@ -110,16 +110,14 @@ export default function RecipeListPage(props) {
   };
 
   // Create a set of favorite recipe IDs
-  
+
   const favouriteRecipeIds = new Set(
     favouriteRecipes.map((recipe) => recipe._id)
   );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
-    
     if (favouriteRecipeIds.has(recipe._id)) {
-      
       const favoriteRecipe = favouriteRecipes.find(
         (favRecipe) => favRecipe._id === recipe._id
       );
@@ -132,8 +130,14 @@ export default function RecipeListPage(props) {
 
   return (
     <div className='p-12'>
-      <div>
-        <button type='button' onClick={handleOpenFilterModal}>
+      {/* Add margin-bottom to create spacing */}
+      <div className='mb-12'>
+        {" "}
+        <button
+          type='button'
+          onClick={handleOpenFilterModal}
+          className='bg-blue-500 text-white py-2 px-4 rounded'
+        >
           <FontAwesomeIcon icon={faFilter} size='lg' className='pr-2' />
           Filters
         </button>
@@ -142,7 +146,6 @@ export default function RecipeListPage(props) {
         <FilteringModal
           categoriesArr={categoriesArr}
           arrayOfUnigueTags={arrayOfUnigueTags}
-          
           handleCancelFiltering={handleCloseFiltering}
           isOpen={filterOverlay}
         />
