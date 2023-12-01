@@ -10,15 +10,15 @@ FilterByIngredients component for searching by ingredients.
 function FilterByIngredients({ value, onChange, handleIngredientsChange }) {
   return (
     <div>
-      <h3>Search by Ingredients</h3>
+      <h3 className="text-black">Search by Ingredients:</h3>
       <input
         type="text"
-        className="text-black"
+        className="text-black inputWithShadow"
         value={value}
         name="filterByIngredients"
         onChange={onChange}
       />
-      <button type="button" onClick={handleIngredientsChange}>
+      <button type="button" onClick={handleIngredientsChange} className="text-black bg-blue-700">
         {' '}
         Set
         {' '}

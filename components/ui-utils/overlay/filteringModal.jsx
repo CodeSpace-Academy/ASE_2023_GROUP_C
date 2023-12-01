@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
-import styles from './overlay.module.css';
 import Modal from '../Modal';
 
 /**
@@ -38,8 +37,6 @@ export default function FilteringModal(props) {
   useEffect(() => {
     if (filterObject) {
       const parsedFilter = JSON.parse(filterObject);
-
-      console.log('parsedFilter:  ', parsedFilter);
 
       // Merge the existing state with the parsed filter object
       setSelectedTagsAndCategories({
@@ -98,31 +95,32 @@ export default function FilteringModal(props) {
     );
     const url = `/recipes?page=1&filter=${JSON.stringify(filteredFilter)}`;
     router.push(url);
+    handleCancelFiltering();
   };
 
-  const selectedValuesCategories = selectedTagsAndCategories.categories.map((category) => ({ label: category, value: category }));
-  const selectedValuesTags = selectedTagsAndCategories.tags.map((category) => ({ label: category, value: category }));
+  const selectedValuesCategories = selectedTagsAndCategories.categories.map((category) => { return { label: category, value: category }; });
+  const selectedValuesTags = selectedTagsAndCategories.tags.map((category) => { return { label: category, value: category }; });
 
   return (
-    <div className={styles.overlay}>
-      <Modal
-        title="Filter"
-        onSubmit={handleOkButtonClick}
-        onClose={handleCancelFiltering}
-        isOpen={isOpen}
-      >
-        <Filtering
-          categoriesArr={categoriesArr}
-          arrayOfUnigueTags={arrayOfUnigueTags}
-          selectedValuesTags={selectedValuesTags}
-          selectedValuesCategories={selectedValuesCategories}
-          setSelectedTagsAndCategories={setSelectedTagsAndCategories}
-          selectedStepsAndIngredients={selectedStepsAndIngredients}
-          onChange={handleInputChange}
+    <Modal
+      title="Filter"
+      onSubmit={handleOkButtonClick}
+      onClose={handleCancelFiltering}
+      isOpen={isOpen}
+      footer="Filter"
+      buttonColor="#3490dc"
+    >
+      <Filtering
+        categoriesArr={categoriesArr}
+        arrayOfUnigueTags={arrayOfUnigueTags}
+        selectedValuesTags={selectedValuesTags}
+        selectedValuesCategories={selectedValuesCategories}
+        setSelectedTagsAndCategories={setSelectedTagsAndCategories}
+        selectedStepsAndIngredients={selectedStepsAndIngredients}
+        onChange={handleInputChange}
           // eslint-disable-next-line react/jsx-no-bind
-          handleIngredientsChange={handleIngredientsChange}
-        />
-      </Modal>
-    </div>
+        handleIngredientsChange={handleIngredientsChange}
+      />
+    </Modal>
   );
 }

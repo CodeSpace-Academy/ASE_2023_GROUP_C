@@ -15,6 +15,7 @@ function RecipeInstruction(props) {
       newInstruction
         .split('\n')
         .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); }),
+        .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); }),
     ); // Split into an array
 
     setIsEditing(false);
