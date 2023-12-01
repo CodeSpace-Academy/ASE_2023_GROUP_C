@@ -55,7 +55,7 @@ export default function PaginationControls(props) {
       >
         Previous page
       </Link>
-      <div className=" bg-customDark m-5 p-3 text-white rounded-md">
+      <div className=" bg-cyan-700 m-5 p-3 text-white rounded-md">
         {recipeCount}
         {' '}
         recipes left to view
