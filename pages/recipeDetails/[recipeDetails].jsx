@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -54,6 +51,7 @@ export async function getServerSideProps(context) {
 
     return { props: { recipeDocuments, allergensList } };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Getting recipes failed');
     return {
       notFound: true,
@@ -67,12 +65,7 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
   return (
     <div className="mt-20 md:ml-32 md:mr-32 ">
       <div className="flex font-bold p-5  bg-slate-900 text-white items-center">
-        {/* eslint-disable-next-line */}
-        <button
-          type="button"
-          className="hover:text-green-500 transition-transform duration-300 transform-gpu motion-safe:hover:animate-bounce"
-          onClick={() => { return router.back(); }}
-        >
+        <button type="button" onClick={() => { return router.back(); }}>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
           Prev
         </button>
