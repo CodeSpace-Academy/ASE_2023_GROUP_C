@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
@@ -26,6 +25,7 @@ export default function FilteringModal(props) {
     numberOfSteps: '',
     filterByIngredients: '',
   });
+  const [closeResetModal, setCloseResetModal] = useState(false);
 
   // Use the useRouter hook to access params and query
   const router = useRouter();
@@ -49,15 +49,6 @@ export default function FilteringModal(props) {
       });
     }
   }, [filterObject]);
-
-  let arrayOfIngrerdients;
-  function handleIngredientsChange() {
-    const ingredientsValue = filter.filterByIngredients;
-
-    arrayOfIngrerdients = ingredientsValue.split(' ');
-    // eslint-disable-next-line no-console
-    console.log(arrayOfIngrerdients);
-  }
 
   /**
    * Handle input change for filtering options.
@@ -98,8 +89,35 @@ export default function FilteringModal(props) {
     handleCancelFiltering();
   };
 
-  const selectedValuesCategories = selectedTagsAndCategories.categories.map((category) => { return { label: category, value: category }; });
-  const selectedValuesTags = selectedTagsAndCategories.tags.map((category) => { return { label: category, value: category }; });
+  const selectedValuesCategories = selectedTagsAndCategories.categories.map(
+    (category) => {
+      return { label: category, value: category };
+    },
+  );
+  const selectedValuesTags = selectedTagsAndCategories.tags.map(
+    (category) => {
+      return { label: category, value: category };
+    },
+  );
+
+  const handleClearFilters = () => {
+    setFilter({
+      categories: [],
+      tags: [],
+      numberOfSteps: '',
+      filterByIngredients: '',
+    });
+    handleCancelFiltering();
+    const url = '/recipes';
+    router.push(url);
+  };
+
+  const handleCloseResetModal = () => {
+    setCloseResetModal(false);
+  };
+  const handleOpenResetModal = () => {
+    setCloseResetModal(true);
+  };
 
   return (
     <Modal
@@ -118,9 +136,23 @@ export default function FilteringModal(props) {
         setSelectedTagsAndCategories={setSelectedTagsAndCategories}
         selectedStepsAndIngredients={selectedStepsAndIngredients}
         onChange={handleInputChange}
-          // eslint-disable-next-line react/jsx-no-bind
-        handleIngredientsChange={handleIngredientsChange}
+        handleClearFilters={handleOpenResetModal}
       />
+      {
+        closeResetModal
+        && (
+        <Modal
+          title="Reset"
+          onSubmit={handleClearFilters}
+          onClose={handleCloseResetModal}
+          isOpen={handleOpenResetModal}
+          footer="Reset"
+          buttonColor="bg-red-600"
+        >
+          Are you sure you want reset filter?
+        </Modal>
+        )
+      }
     </Modal>
   );
 }

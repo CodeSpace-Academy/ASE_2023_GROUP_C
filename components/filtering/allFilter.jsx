@@ -55,7 +55,9 @@ export default function Filtering({
         value={selectedStepsAndIngredients.filterByIngredients}
         handleIngredientsChange={handleIngredientsChange}
       />
-      <ClearFilters onClearFilters={handleClearFilters} />
+      <ClearFilters
+        onClearFilters={handleClearFilters}
+      />
     </div>
   );
 }
