@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState, useMemo } from 'react';
 
 /**
  * Context for managing recipe filtering.
@@ -17,15 +17,15 @@ export const AppContext = createContext();
 export function RecipeProvider({ children }) {
   const [removedFromFavourites, setRemovedFromFavourites] = useState('');
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const valueObject = {
-    removedFromFavourites, setRemovedFromFavourites,
-  };
+  const valueObject = useMemo(() => {
+    return {
+      removedFromFavourites,
+      setRemovedFromFavourites,
+    };
+  }, [removedFromFavourites]);
 
   return (
     // Provide the FilterContext with the value object to its children.
-    <AppContext.Provider value={valueObject}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={valueObject}>{children}</AppContext.Provider>
   );
 }
