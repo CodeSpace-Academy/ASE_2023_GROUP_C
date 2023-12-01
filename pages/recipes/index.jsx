@@ -1,28 +1,28 @@
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import RecipeList from "../../components/recipeList/recipeList";
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import RecipeList from '../../components/recipeList/recipeList';
 import {
   fetchRecipes,
   getByAggregation,
   getCategories,
   getDocumentSize,
   getFavouriteRecipes,
-} from "../../utils/mongodb-utils";
-import user from "../../utils/dummyUser";
-import { pipelineForTags, sortingByFunction } from "../../utils/filteringUtils";
-import FilteringModal from "../../components/ui-utils/overlay/filteringModal";
+} from '../../utils/mongodb-utils';
+import user from '../../utils/dummyUser';
+import { pipelineForTags, sortingByFunction } from '../../utils/filteringUtils';
+import FilteringModal from '../../components/ui-utils/overlay/filteringModal';
 
 export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
-  const sortBy = context.query.sortBy || "default";
+  const sortBy = context.query.sortBy || 'default';
   const search = context.query.search;
 
   const mongoFilterObject = {};
 
   if (search) {
-    mongoFilterObject.title = { $regex: JSON.parse(search), $options: "i" };
+    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' };
   } else {
     if (filter.categories) {
       mongoFilterObject.category = { $in: [...filter.categories] };
@@ -54,26 +54,26 @@ export async function getServerSideProps(context) {
   // decide which one to be returned.
 
   const recipeDocuments = await fetchRecipes(
-    "recipes",
+    'recipes',
     sortingByFunction(sortBy),
     page,
-    mongoFilterObject
+    mongoFilterObject,
   );
   const currentDocumentSize = await getDocumentSize(
-    "recipes",
-    mongoFilterObject
+    'recipes',
+    mongoFilterObject,
   );
-  const favouriteRecipes = await getFavouriteRecipes("users-list", {
+  const favouriteRecipes = await getFavouriteRecipes('users-list', {
     userName: user,
   });
 
-  const recipeCategories = await getCategories("categories");
-  const uniqueTags = await getByAggregation("recipes", pipelineForTags);
+  const recipeCategories = await getCategories('categories');
+  const uniqueTags = await getByAggregation('recipes', pipelineForTags);
   const arrayOfUnigueTags = uniqueTags[0].uniqueTags;
 
   const categoriesArr = recipeCategories[0].categories;
 
-  const totalRecipeInDb = await getDocumentSize("recipes");
+  const totalRecipeInDb = await getDocumentSize('recipes');
 
   return {
     props: {
@@ -112,33 +112,31 @@ export default function RecipeListPage(props) {
   // Create a set of favorite recipe IDs
 
   const favouriteRecipeIds = new Set(
-    favouriteRecipes.map((recipe) => recipe._id)
+    favouriteRecipes.map((recipe) => { return recipe._id; }),
   );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
     if (favouriteRecipeIds.has(recipe._id)) {
       const favoriteRecipe = favouriteRecipes.find(
-        (favRecipe) => favRecipe._id === recipe._id
+        (favRecipe) => { return favRecipe._id === recipe._id; },
       );
       return favoriteRecipe; // Replace with favorite recipe
     }
     return recipe; // Keep the original recipe
   });
 
-  console.log(updatedRecipes);
-
   return (
-    <div className='p-12'>
+    <div className="p-12">
       {/* Add margin-bottom to create spacing */}
-      <div className='mb-12'>
-        {" "}
+      <div className="mb-12">
+        {' '}
         <button
-          type='button'
+          type="button"
           onClick={handleOpenFilterModal}
-          className='bg-blue-500 text-white py-2 px-4 rounded'
+          className="bg-blue-500 text-white py-2 px-4 rounded"
         >
-          <FontAwesomeIcon icon={faFilter} size='lg' className='pr-2' />
+          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
           Filters
         </button>
       </div>
@@ -150,12 +148,14 @@ export default function RecipeListPage(props) {
           isOpen={filterOverlay}
         />
       )}
-      <RecipeList
-        recipes={updatedRecipes}
-        totalRecipeInDb={totalRecipeInDb}
-        pageNumber={page}
-        currentDocumentSize={currentDocumentSize}
-      />
+      {updatedRecipes ? (
+        <RecipeList
+          recipes={updatedRecipes}
+          totalRecipeInDb={totalRecipeInDb}
+          pageNumber={page}
+          currentDocumentSize={currentDocumentSize}
+        />
+      ) : <p>No Recipes Found that match the query!!</p>}
     </div>
   );
 }

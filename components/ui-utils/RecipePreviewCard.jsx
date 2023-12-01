@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +11,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import FavoriteButton from './FavoriteButton';
-import { v4 } from 'uuid';
 
 export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
@@ -17,45 +18,49 @@ export default function RecipePreviewCard(props) {
 
   // Check if recipe is undefined or null
   if (!recipe || !recipe.images || !recipe.images.length) {
-    return null; // or handle the error in another way
+    return null;
   }
 
   function nextSlide() {
-    setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
+    setCurrentImage((prevImage) => { return (prevImage + 1) % recipe.images.length; });
   }
 
   function prevSlide() {
-    setCurrentImage((prevImage) => (prevImage - 1 + recipe.images.length) % recipe.images.length);
+    setCurrentImage((prevImage) => {
+      return (prevImage - 1 + recipe.images.length) % recipe.images.length;
+    });
   }
   //  Highlighting helper
   function highlightingMatchingWords(text) {
     if (!searchQuery || searchQuery === '') {
       return text; // Return original text if there's no search query
     }
-  
+
     const regex = new RegExp(searchQuery, 'gi');
     const matches = text.match(regex);
-  
+
     if (!matches) {
       return text; // Return original text if there are no matches
     }
-  
+
     return (
       <span>
-        {text.split(regex).map((segment, index) => (
-          <span key={index}>
-            {segment}
-            {index < matches.length && (
+        {text.split(regex).map((segment, index) => {
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <span key={index}>
+              {segment}
+              {index < matches.length && (
               <span className="bg-green-500 text-white font-extrabold">
                 {matches[index]}
               </span>
-            )}
-          </span>
-        ))}
+              )}
+            </span>
+          );
+        })}
       </span>
     );
   }
-  
 
   const title = highlightingMatchingWords(recipe.title, searchQuery);
 
@@ -109,10 +114,10 @@ export default function RecipePreviewCard(props) {
           Total:
           {convertToHours(recipe.prep + recipe.cook)}
         </p>
-       
+
         <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
-         
-          <button>View Recipe</button>
+
+          <button type="button">View Recipe</button>
         </Link>
       </li>
     </div>
