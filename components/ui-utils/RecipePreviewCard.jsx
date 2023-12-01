@@ -73,10 +73,10 @@ export default function RecipePreviewCard(props) {
   }
 
   const title = highlightingMatchingWords(recipe.title || '', searchQuery);
-  const buttonColorClass = theme === 'night' ? 'bg-blue-500' : 'bg-gray-700';
+  const buttonColorClass = theme === 'night' ? 'bg-customDark' : 'bg-gray-700';
 
   return (
-    <div className={`group relative ${theme === 'night' ? 'bg-blue-400' : 'bg-gray-800'}`}>
+    <div className={`group relative ${theme === 'night' ? 'bg-customPurple' : 'bg-gray-800'}`}>
       <li
         key={recipe._id}
         className="relative p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1"
@@ -113,25 +113,25 @@ export default function RecipePreviewCard(props) {
         </h2>
         <p className="mt-2">
           <FontAwesomeIcon icon={faUtensils} />
-          Prep:
-          {convertToHours(recipe.prep)}
+          {` Prep:
+          ${convertToHours(recipe.prep)}`}
         </p>
         <p>
           <FontAwesomeIcon icon={faKitchenSet} />
-          Cook:
-          {convertToHours(recipe.cook)}
+          {` Cook:
+          ${convertToHours(recipe.cook)}`}
         </p>
         <p>
           <FontAwesomeIcon icon={faSpoon} />
-          Total:
-          {convertToHours(recipe.prep + recipe.cook)}
+          {` Total:
+          ${convertToHours(recipe.prep + recipe.cook)}`}
         </p>
 
         <Link href={`/recipeDetails/${recipe._id}`}>
           <button
             aria-label="button"
             type="button"
-            className={`${buttonColorClass} transition-transform transform hover:shake mt-4`}
+            className={`${buttonColorClass} px-3 py-1 text-white font-thin rounded-lg inline-block transition-all duration-300 ease-in-out hover:text-sky-600 hover:font-semibold hover:tracking-wider hover:bg-transparent hover:shadow-md`}
           >
             View Recipe
           </button>
