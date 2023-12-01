@@ -1,28 +1,28 @@
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import RecipeList from '../../components/recipeList/recipeList';
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import RecipeList from "../../components/recipeList/recipeList";
 import {
   fetchRecipes,
   getByAggregation,
   getCategories,
   getDocumentSize,
   getFavouriteRecipes,
-} from '../../utils/mongodb-utils';
-import user from '../../utils/dummyUser';
-import { pipelineForTags, sortingByFunction } from '../../utils/filteringUtils';
-import FilteringModal from '../../components/ui-utils/overlay/filteringModal';
+} from "../../utils/mongodb-utils";
+import user from "../../utils/dummyUser";
+import { pipelineForTags, sortingByFunction } from "../../utils/filteringUtils";
+import FilteringModal from "../../components/ui-utils/overlay/filteringModal";
 
 export async function getServerSideProps(context) {
   const page = parseInt(context.query.page, 10) || 1;
   const filter = context.query.filter ? JSON.parse(context.query.filter) : {};
-  const sortBy = context.query.sortBy || 'default';
+  const sortBy = context.query.sortBy || "default";
   const search = context.query.search;
 
   const mongoFilterObject = {};
 
-  if (search){
-    mongoFilterObject.title = { $regex: JSON.parse(search), $options: 'i' }
+  if (search) {
+    mongoFilterObject.title = { $regex: JSON.parse(search), $options: "i" };
   } else {
     if (filter.categories) {
       mongoFilterObject.category = { $in: [...filter.categories] };
@@ -54,23 +54,26 @@ export async function getServerSideProps(context) {
   // decide which one to be returned.
 
   const recipeDocuments = await fetchRecipes(
-    'recipes',
+    "recipes",
     sortingByFunction(sortBy),
     page,
     mongoFilterObject
   );
-  const currentDocumentSize = await getDocumentSize('recipes', mongoFilterObject)
-  const favouriteRecipes = await getFavouriteRecipes('users-list', {
+  const currentDocumentSize = await getDocumentSize(
+    "recipes",
+    mongoFilterObject
+  );
+  const favouriteRecipes = await getFavouriteRecipes("users-list", {
     userName: user,
   });
 
-  const recipeCategories = await getCategories('categories');
-  const uniqueTags = await getByAggregation('recipes', pipelineForTags);
+  const recipeCategories = await getCategories("categories");
+  const uniqueTags = await getByAggregation("recipes", pipelineForTags);
   const arrayOfUnigueTags = uniqueTags[0].uniqueTags;
 
   const categoriesArr = recipeCategories[0].categories;
 
-  const totalRecipeInDb = await getDocumentSize('recipes');
+  const totalRecipeInDb = await getDocumentSize("recipes");
 
   return {
     props: {
@@ -107,18 +110,18 @@ export default function RecipeListPage(props) {
   };
 
   // Create a set of favorite recipe IDs
-  // eslint-disable-next-line no-underscore-dangle
+  
   const favouriteRecipeIds = new Set(
     favouriteRecipes.map((recipe) => recipe._id)
   );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
-    // eslint-disable-next-line no-underscore-dangle
+    
     if (favouriteRecipeIds.has(recipe._id)) {
-      // eslint-disable-next-line no-underscore-dangle
+      
       const favoriteRecipe = favouriteRecipes.find(
-        (favRecipe) => favRecipe._id === recipe._id,
+        (favRecipe) => favRecipe._id === recipe._id
       );
       return favoriteRecipe; // Replace with favorite recipe
     }
@@ -129,22 +132,20 @@ export default function RecipeListPage(props) {
 
   return (
     <div className='p-12'>
-      <div >
-        <button type="button" onClick={handleOpenFilterModal}>
-          <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
+      <div>
+        <button type='button' onClick={handleOpenFilterModal}>
+          <FontAwesomeIcon icon={faFilter} size='lg' className='pr-2' />
           Filters
         </button>
-      
       </div>
-      { filterOverlay
-      && (
-      <FilteringModal
-        categoriesArr={categoriesArr}
-        arrayOfUnigueTags={arrayOfUnigueTags}
-        // eslint-disable-next-line react/jsx-no-bind
-        handleCancelFiltering={handleCloseFiltering}
-        isOpen={filterOverlay}
-      />
+      {filterOverlay && (
+        <FilteringModal
+          categoriesArr={categoriesArr}
+          arrayOfUnigueTags={arrayOfUnigueTags}
+          
+          handleCancelFiltering={handleCloseFiltering}
+          isOpen={filterOverlay}
+        />
       )}
       <RecipeList
         recipes={updatedRecipes}

@@ -1,7 +1,6 @@
 import React from "react";
 import {
   faBook,
-  faHeart,
   faSun,
   faMoon,
   faFilter,
@@ -20,15 +19,9 @@ function NavLinks() {
       </NavLink>
 
       <NavLink href='/' className='mr-4'>
-        <FontAwesomeIcon icon={faSun} size='lg' className='pr-2' />
-        <FontAwesomeIcon icon={faMoon} size='lg' className='pr-2' />
-      </NavLink>
-
-      <NavLink href='/' className='mr-4'>
         <FontAwesomeIcon icon={faFilter} size='lg' className='pr-2' />
         Filter
       </NavLink>
-
       <SortingForm className='mr-5' />
       <DropdownButton />
     </div>
