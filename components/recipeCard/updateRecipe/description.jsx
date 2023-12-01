@@ -8,7 +8,7 @@ function RecipeDescription(props) {
   // State variables
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(
-    localStorage.getItem('editedDescription') || recipe.description
+    localStorage.getItem('editedDescription') || recipe.description,
   );
 
   // useEffect to update localStorage whenever editedDescription changes

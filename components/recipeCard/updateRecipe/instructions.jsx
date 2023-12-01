@@ -16,6 +16,7 @@ function RecipeInstruction(props) {
       .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); });
 
     // Save the edited instruction to MongoDB
+    // eslint-disable-next-line no-use-before-define
     await saveEditedInstructionToMongoDB(formattedInstructions);
 
     // Update local state
@@ -80,9 +81,10 @@ function RecipeInstruction(props) {
       ) : (
         <div>
           <ol>
-            {editedInstruction.map((instruction, index) => {return (
-              <li key={v4()}>{`${index + 1}. ${instruction}`}</li>
-            );
+            {editedInstruction.map((instruction, index) => {
+              return (
+                <li key={v4()}>{`${index + 1}. ${instruction}`}</li>
+              );
             })}
           </ol>
           <button
