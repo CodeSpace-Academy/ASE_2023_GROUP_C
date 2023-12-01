@@ -9,8 +9,8 @@ export default function Modal ({
   title,
   children,
   footer,
+  buttonColor
 }) {
-//   const [showModal, setShowModal] = useState(isOpen);
 
   return (
     <>
@@ -26,6 +26,8 @@ export default function Modal ({
           z-50 
           outline-none 
           focus:outline-none
+          bg-slate-500
+          bg-opacity-50
         "
       >
         <div
@@ -82,23 +84,10 @@ export default function Modal ({
                 border-b-[1px]
                 "
               >
-                <button
-                  className="
-                    p-1
-                    border-0 
-                    hover:opacity-70
-                    transition
-                    absolute
-                    left-9
-                  "
-                  onClick={onClose}
-                >
-                  Close
-                </button>
-                <div className="text-lg font-semibold">{title}</div>
+                <div className="text-lg text-black font-semibold">{title}</div>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto">{children}</div>
+              <div className="text-black relative p-6 flex-auto">{children}</div>
               {/*footer*/}
               <div className="flex flex-col gap-2 p-6 border-t-[1px]">
                 <div
@@ -116,21 +105,22 @@ export default function Modal ({
                       border-0 
                       hover:opacity-70
                       transition
+                      text-red
                     "
                     onClick={onClose}
                   >
                     Cancel
                   </button>
                   <button
-                    className="
+                    className={`
                       p-1
                       border-0 
                       hover:opacity-70
-                    "
+                      ${buttonColor}                      
+                    `}
                     onClick={onSubmit}
-                  >Filter</button>
+                  >{footer}</button>
                 </div>
-                {footer}
               </div>
             </div>
           </div>
