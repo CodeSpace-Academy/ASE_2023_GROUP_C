@@ -25,12 +25,12 @@ function RecipeDescription(props) {
           <EditRecipeContent
             initialValue={editedDescription}
             onSave={handleEditDescription}
-            onCancel={() => setIsEditing(false)}
+            onCancel={() => { return setIsEditing(false); }}
           />
         ) : (
           <div>
             <p>{editedDescription}</p>
-            <button type="button" className=" mt-5 mb-8" onClick={() => setIsEditing(true)}>
+            <button type="button" className=" mt-5 mb-8" onClick={() => { return setIsEditing(true); }}>
               Edit Description
             </button>
           </div>

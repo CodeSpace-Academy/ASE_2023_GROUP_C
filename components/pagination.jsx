@@ -32,7 +32,7 @@ function Pagination(props) {
       {centerPage !== firstPage && (
         <Link
           href={`/recipeList/${centerPage - 1}`}
-          onClick={() => handlePageClick('prev')}
+          onClick={() => { return handlePageClick('prev'); }}
         >
           &laquo;
         </Link>
@@ -40,7 +40,7 @@ function Pagination(props) {
       {centerPage - 1 >= 1 && (
         <Link
           href={`/recipeList/${firstPage}`}
-          onClick={() => handlePageClick(firstPage)}
+          onClick={() => { return handlePageClick(firstPage); }}
           className={`${styles.page}`}
         >
           {firstPage}
@@ -48,7 +48,7 @@ function Pagination(props) {
       )}
       <Link
         href={`/recipeList/${centerPage}`}
-        onClick={() => handlePageClick(centerPage)}
+        onClick={() => { return handlePageClick(centerPage); }}
         className={`${styles.page} ${styles.active}`}
       >
         {centerPage}
@@ -56,7 +56,7 @@ function Pagination(props) {
       {centerPage < totalPages && (
         <Link
           href={`/recipeList/${totalPages}`}
-          onClick={() => handlePageClick(totalPages)}
+          onClick={() => { return handlePageClick(totalPages); }}
           className={`${styles.page}`}
         >
           {totalPages}
@@ -65,7 +65,7 @@ function Pagination(props) {
       {centerPage !== totalPages && (
         <Link
           href={`/recipeList/${centerPage + 1}`}
-          onClick={() => handlePageClick('next')}
+          onClick={() => { return handlePageClick('next'); }}
         >
           &raquo;
         </Link>

@@ -100,8 +100,8 @@ export default function FilteringModal(props) {
     router.push(url);
   };
 
-  const selectedValuesCategories = selectedTagsAndCategories.categories.map((category) => ({ label: category, value: category }));
-  const selectedValuesTags = selectedTagsAndCategories.tags.map((category) => ({ label: category, value: category }));
+  const selectedValuesCategories = selectedTagsAndCategories.categories.map((category) => { return { label: category, value: category }; });
+  const selectedValuesTags = selectedTagsAndCategories.tags.map((category) => { return { label: category, value: category }; });
 
   return (
     <div className={styles.overlay}>

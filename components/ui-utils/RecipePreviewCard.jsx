@@ -8,8 +8,8 @@ import {
   faCircleChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import FavoriteButton from './FavoriteButton';
 import { v4 } from 'uuid';
+import FavoriteButton from './FavoriteButton';
 
 export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
@@ -21,41 +21,42 @@ export default function RecipePreviewCard(props) {
   }
 
   function nextSlide() {
-    setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
+    setCurrentImage((prevImage) => { return (prevImage + 1) % recipe.images.length; });
   }
 
   function prevSlide() {
-    setCurrentImage((prevImage) => (prevImage - 1 + recipe.images.length) % recipe.images.length);
+    setCurrentImage((prevImage) => { return (prevImage - 1 + recipe.images.length) % recipe.images.length; });
   }
   //  Highlighting helper
   function highlightingMatchingWords(text) {
     if (!searchQuery || searchQuery === '') {
       return text; // Return original text if there's no search query
     }
-  
+
     const regex = new RegExp(searchQuery, 'gi');
     const matches = text.match(regex);
-  
+
     if (!matches) {
       return text; // Return original text if there are no matches
     }
-  
+
     return (
       <span>
-        {text.split(regex).map((segment, index) => (
-          <span key={index}>
-            {segment}
-            {index < matches.length && (
+        {text.split(regex).map((segment, index) => {
+          return (
+            <span key={index}>
+              {segment}
+              {index < matches.length && (
               <span className="bg-green-500 text-white font-extrabold">
                 {matches[index]}
               </span>
-            )}
-          </span>
-        ))}
+              )}
+            </span>
+          );
+        })}
       </span>
     );
   }
-  
 
   const title = highlightingMatchingWords(recipe.title, searchQuery);
 
@@ -109,9 +110,9 @@ export default function RecipePreviewCard(props) {
           Total:
           {convertToHours(recipe.prep + recipe.cook)}
         </p>
-       
+
         <Link href={`/recipeDetails/${recipe._id}`} className="mt-4">
-         
+
           <button>View Recipe</button>
         </Link>
       </li>

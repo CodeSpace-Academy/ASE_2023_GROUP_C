@@ -65,17 +65,19 @@ export default function RecipeCard(prop) {
             className=" md:max-w-2xl md:border-r-2 md:border-gray-400 md:pr-5"
             showArrows
           >
-            {recipe.images.map((image) => (
-              <div key={v4()} className=" max-h-80">
-                <img
-                  src={image}
-                  alt={recipe.title}
-                  width={350}
-                  height={250}
-                  loading="lazy"
-                />
-              </div>
-            ))}
+            {recipe.images.map((image) => {
+              return (
+                <div key={v4()} className=" max-h-80">
+                  <img
+                    src={image}
+                    alt={recipe.title}
+                    width={350}
+                    height={250}
+                    loading="lazy"
+                  />
+                </div>
+              );
+            })}
           </Carousel>
 
           <Card className=" md:w-96">
@@ -116,14 +118,16 @@ export default function RecipeCard(prop) {
                 Ingredients:
               </h3>
               <ul>
-                {Object.keys(recipe.ingredients).map((ingredientKey) => (
-                  <li key={v4()}>
-                    {' '}
-                    {recipe.ingredients[ingredientKey]}
-                    of
-                    {ingredientKey}
-                  </li>
-                ))}
+                {Object.keys(recipe.ingredients).map((ingredientKey) => {
+                  return (
+                    <li key={v4()}>
+                      {' '}
+                      {recipe.ingredients[ingredientKey]}
+                      of
+                      {ingredientKey}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}

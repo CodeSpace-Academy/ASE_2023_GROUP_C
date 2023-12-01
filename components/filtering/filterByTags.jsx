@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 
 export default function FilterByCategory({ arrayOfUnigueTags, onChange, selectedValues }) {
   // Map categories array to objects with 'label' and 'value'
-  const options = arrayOfUnigueTags.map((tags) => ({ label: tags, value: v4() }));
+  const options = arrayOfUnigueTags.map((tags) => { return { label: tags, value: v4() }; });
 
   return (
     <div className="text-black">

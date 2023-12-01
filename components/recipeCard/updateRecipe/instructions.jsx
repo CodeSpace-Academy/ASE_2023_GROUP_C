@@ -14,14 +14,14 @@ function RecipeInstruction(props) {
     setEditedInstruction(
       newInstruction
         .split('\n')
-        .map((instruction, index) => instruction.replace(`${index + 1}.`, '').trim()),
+        .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); }),
     ); // Split into an array
 
     setIsEditing(false);
     onEdit();
   };
   const numberedText = editedInstruction.map(
-    (instruction, index) => `${index + 1}. ${instruction}`,
+    (instruction, index) => { return `${index + 1}. ${instruction}`; },
   );
 
   // smooth snap onto the editing title
@@ -41,7 +41,7 @@ function RecipeInstruction(props) {
           <EditRecipeContent
             initialValue={numberedText.join('\n')} // Join the array with line breaks
             onSave={handleEditInstruction}
-            onCancel={() => setIsEditing(false)}
+            onCancel={() => { return setIsEditing(false); }}
             rows={editedInstruction.length || 2}
             isOpen={isEditing}
           />
@@ -49,11 +49,13 @@ function RecipeInstruction(props) {
       ) : (
         <div>
           <ol>
-            {editedInstruction.map((instruction, index) => (
-              <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
-            ))}
+            {editedInstruction.map((instruction, index) => {
+              return (
+                <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
+              );
+            })}
           </ol>
-          <button type="button" onClick={() => setIsEditing(true)}>
+          <button type="button" onClick={() => { return setIsEditing(true); }}>
             Edit Instructions
           </button>
         </div>
