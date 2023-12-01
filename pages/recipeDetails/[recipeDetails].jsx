@@ -65,11 +65,11 @@ export default function RecipeDetails({ recipeDocuments, allergensList }) {
   return (
     <div className="mt-20 md:ml-32 md:mr-32 ">
       <div className="flex font-bold p-5  bg-slate-900 text-white items-center">
-        {/* eslint-disable-next-line */}
-        <button type="button" onClick={() => router.back()}>
+        <button type="button" onClick={() => { return router.back(); }}>
           <FontAwesomeIcon icon={faChevronLeft} size="xl" />
-          prev
+          Prev
         </button>
+
         <h1 className=" text-center font-bold p-5 text-xl bg-slate-900 text-white">
           RecipeDetails
         </h1>
