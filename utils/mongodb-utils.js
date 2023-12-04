@@ -101,7 +101,6 @@ export async function lookforDocument(filter) {
   return result;
 }
 
-
 /**
  * Inserts a document into a MongoDB collection.
  * @param {string} collection - The name of the collection to insert into.
@@ -163,7 +162,6 @@ export async function insertDetailChangeDocument(collection, document) {
 
   return result;
 }
-
 
 /**
  * Retrieve a fovourite recipe into a MongoDB collection.
