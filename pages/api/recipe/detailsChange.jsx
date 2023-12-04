@@ -3,7 +3,7 @@ import {
   insertDocument,
   lookforDocument,
   updateUsersList,
-} from '../../utils/mongodb-util';
+} from '../../../utils/mongodb-utils';
 
 // API route handler for updating or inserting a recipe into MongoDB
 export default async function handler(req, res) {
