@@ -101,13 +101,13 @@ export async function lookforDocument(filter) {
   return result;
 }
 
+
 /**
  * Inserts a document into a MongoDB collection.
  * @param {string} collection - The name of the collection to insert into.
  * @param {object} document - The document to be inserted.
  * @returns {Promise} A Promise that resolves when the insertion is complete.
  */
-
 export async function insertDocument(collection, document) {
   const db = client.db(mongodb);
 
@@ -117,13 +117,12 @@ export async function insertDocument(collection, document) {
 }
 
 /**
- * Inserts a document into a MongoDB collection.
- * @param {string} collection - The name of the collection to insert into.
- * @param {string} username - The name of the collection to insert into.
- * @param {object} filter - The document to be inserted.
- * @returns {Promise} A Promise that resolves when the insertion is complete.
+ * Updates a document in a MongoDB collection.
+ * @param {string} collection - The name of the collection to update.
+ * @param {string} username - The username to identify the document.
+ * @param {object} filter - The update operation to perform.
+ * @returns {Promise} A Promise that resolves when the update is complete.
  */
-
 export async function updateUsersList(collection, username, filter) {
   const db = client.db(mongodb);
 
@@ -133,6 +132,38 @@ export async function updateUsersList(collection, username, filter) {
 
   return result;
 }
+
+/**
+ * Updates a document in a MongoDB collection named 'detailChange'.
+ * @param {string} collection - The name of the collection to update.
+ * @param {string} username - The username to identify the document.
+ * @param {object} filter - The update operation to perform.
+ * @returns {Promise} A Promise that resolves when the update is complete.
+ */
+export async function updateDetailChange(collection, username, filter) {
+  const db = client.db(mongodb);
+
+  const result = await db
+    .collection(collection)
+    .updateOne({ userName: username }, filter);
+
+  return result;
+}
+
+/**
+ * Inserts a document into a MongoDB collection named 'detailChange'.
+ * @param {string} collection - The name of the collection to insert into.
+ * @param {object} document - The document to be inserted.
+ * @returns {Promise} A Promise that resolves when the insertion is complete.
+ */
+export async function insertDetailChangeDocument(collection, document) {
+  const db = client.db(mongodb);
+
+  const result = await db.collection(collection).insertOne(document);
+
+  return result;
+}
+
 
 /**
  * Retrieve a fovourite recipe into a MongoDB collection.
