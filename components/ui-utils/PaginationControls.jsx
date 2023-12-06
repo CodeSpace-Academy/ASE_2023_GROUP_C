@@ -1,79 +1,76 @@
+import { parse } from 'dotenv';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function PaginationControls(props) {
-  const {
-    pageNumber, currentDocumentSize, recipeCount, setRecipeCount,
-  } = props;
-  const router = useRouter();
-  const { query } = router;
-  const { page, ...otherQueryParams } = query;
-  const parsedValue = parseInt(page, 10);
+  const { pageNumber, currentDocumentSize, recipeCount, setRecipeCount } = props;
+  const router = useRouter()
+  const { query } = router
+  const { page, ...otherQueryParams } = query
+  const parsedValue = parseInt(page, 10)
+  
 
-  let prevDisplay;
+  let prevDisplay
   if (pageNumber === 1) {
-    prevDisplay = 'hidden';
-  } else {
-    prevDisplay = '';
+    prevDisplay = 'hidden'
+    } else {
+    prevDisplay = ''
   }
-  let nextDisplay;
+  let nextDisplay
   if (pageNumber === 164959) {
-    nextDisplay = 'hidden';
-  } else {
-    nextDisplay = '';
+    nextDisplay = 'hidden'
+    } else {
+    nextDisplay = ''
   }
-  let controlsDisplay;
-  if (currentDocumentSize - 100 <= 0) {
-    controlsDisplay = 'hidden';
+  let controlsDisplay 
+  if (currentDocumentSize - 100<=0){
+    controlsDisplay = 'hidden' 
   } else {
-    controlsDisplay = '';
+    controlsDisplay = ''
   }
 
   const increaseCounter = () => {
     setRecipeCount(currentDocumentSize + (parsedValue * 100));
   };
-
+  
   const decreaseCounter = () => {
     setRecipeCount(currentDocumentSize - 100);
-  };
-
+  }
   return (
     <div className={` flex justify-center ${controlsDisplay}`}>
       <Link
         onClick={increaseCounter}
         href={{
           pathname: '/recipes',
-          query: { page: pageNumber - 1, ...otherQueryParams }, // Update page parameter
+          query: { page: pageNumber - 1, ...otherQueryParams,  }, // Update page parameter
         }}
-        className="m-5 p-3 text-white rounded-md bg-cyan-400"
+        className={` bg-cyan-400 m-5 p-3 text-white rounded-md ${prevDisplay}`}
         as={{
           pathname: '/recipes',
-          query: { page: pageNumber - 1, ...otherQueryParams }, // Update page parameter
+          query: { page: pageNumber - 1, ...otherQueryParams,  }, // Update page parameter
         }}
         aria-label="pagination"
       >
         Previous page
       </Link>
-      <div className="m-5 p-3 text-white rounded-md bg-customDark">
-        {recipeCount}
-        {' '}
-        recipes left to view
-      </div>
+      <div className={` bg-cyan-700 m-5 p-3 text-white rounded-md`}>{recipeCount} recipes left to view</div>
       <Link
         onClick={decreaseCounter}
         href={{
           pathname: '/recipes',
-          query: { page: pageNumber + 1, ...otherQueryParams }, // Update page parameter
+          query: { page: pageNumber + 1, ...otherQueryParams,  }, // Update page parameter
         }}
-        className="m-5 p-3 text-white rounded-md bg-cyan-400"
+        className={` bg-cyan-400 m-5 p-3 text-white rounded-md ${nextDisplay}`}
         as={{
           pathname: '/recipes',
-          query: { page: pageNumber + 1, ...otherQueryParams }, // Update page parameter
+          query: { page: pageNumber + 1, ...otherQueryParams,  }, // Update page parameter
         }}
         aria-label="pagination"
       >
         Next page
       </Link>
+      
     </div>
   );
 }
