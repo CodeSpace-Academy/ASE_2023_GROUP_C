@@ -44,7 +44,7 @@ export default function RecipeList(props) {
   useEffect(() => {
     const body = document.querySelector('body');
     if (theme === 'night') {
-      body.style.backgroundColor = 'rgb(241, 234, 255)';
+      body.style.backgroundColor = 'rgb(100, 110, 140)';
     } else {
       body.style.backgroundColor = 'rgb(16, 23, 42)';
     }
@@ -52,7 +52,13 @@ export default function RecipeList(props) {
 
   return (
     <div>
-      <div className={`bg-${theme === 'night' ? 'rgb(16, 23, 42)' : 'rgb(241, 234, 255)'} text-${theme === 'night' ? 'black' : 'white'} h-screen flex`}>
+      <PaginationControls
+        pageNumber={pageNumber}
+        currentDocumentSize={currentDocumentSize}
+        recipeCount={recipeCount}
+        setRecipeCount={setRecipeCount}
+      />
+      <div className={`bg-${theme === 'night' ? 'rgb(16, 23, 42)' : 'rgb(100, 110, 140)'} text-${theme === 'night' ? 'black' : 'white'} h-screen flex`}>
         <div className="flex-1">
           {/* This here is basically the list */}
           <ul className="grid pb-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
