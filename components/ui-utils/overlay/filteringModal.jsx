@@ -1,8 +1,6 @@
-/* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Filtering from '../../filtering/allFilter';
-import styles from './overlay.module.css';
 import Modal from '../Modal';
 
 /**
@@ -27,6 +25,7 @@ export default function FilteringModal(props) {
     numberOfSteps: '',
     filterByIngredients: '',
   });
+  const [closeResetModal, setCloseResetModal] = useState(false);
 
   // Use the useRouter hook to access params and query
   const router = useRouter();
@@ -39,8 +38,6 @@ export default function FilteringModal(props) {
     if (filterObject) {
       const parsedFilter = JSON.parse(filterObject);
 
-      console.log('parsedFilter:  ', parsedFilter);
-
       // Merge the existing state with the parsed filter object
       setSelectedTagsAndCategories({
         categories: parsedFilter.categories || [],
@@ -52,15 +49,6 @@ export default function FilteringModal(props) {
       });
     }
   }, [filterObject]);
-
-  let arrayOfIngrerdients;
-  function handleIngredientsChange() {
-    const ingredientsValue = filter.filterByIngredients;
-
-    arrayOfIngrerdients = ingredientsValue.split(' ');
-    // eslint-disable-next-line no-console
-    console.log(arrayOfIngrerdients);
-  }
 
   /**
    * Handle input change for filtering options.
@@ -98,31 +86,73 @@ export default function FilteringModal(props) {
     );
     const url = `/recipes?page=1&filter=${JSON.stringify(filteredFilter)}`;
     router.push(url);
+    handleCancelFiltering();
   };
 
-  const selectedValuesCategories = selectedTagsAndCategories.categories.map((category) => { return { label: category, value: category }; });
-  const selectedValuesTags = selectedTagsAndCategories.tags.map((category) => { return { label: category, value: category }; });
+  const selectedValuesCategories = selectedTagsAndCategories.categories.map(
+    (category) => {
+      return { label: category, value: category };
+    },
+  );
+  const selectedValuesTags = selectedTagsAndCategories.tags.map(
+    (category) => {
+      return { label: category, value: category };
+    },
+  );
+
+  const handleClearFilters = () => {
+    setFilter({
+      categories: [],
+      tags: [],
+      numberOfSteps: '',
+      filterByIngredients: '',
+    });
+    handleCancelFiltering();
+    const url = '/recipes';
+    router.push(url);
+  };
+
+  const handleCloseResetModal = () => {
+    setCloseResetModal(false);
+  };
+  const handleOpenResetModal = () => {
+    setCloseResetModal(true);
+  };
 
   return (
-    <div className={styles.overlay}>
-      <Modal
-        title="Filter"
-        onSubmit={handleOkButtonClick}
-        onClose={handleCancelFiltering}
-        isOpen={isOpen}
-      >
-        <Filtering
-          categoriesArr={categoriesArr}
-          arrayOfUnigueTags={arrayOfUnigueTags}
-          selectedValuesTags={selectedValuesTags}
-          selectedValuesCategories={selectedValuesCategories}
-          setSelectedTagsAndCategories={setSelectedTagsAndCategories}
-          selectedStepsAndIngredients={selectedStepsAndIngredients}
-          onChange={handleInputChange}
-          // eslint-disable-next-line react/jsx-no-bind
-          handleIngredientsChange={handleIngredientsChange}
-        />
-      </Modal>
-    </div>
+    <Modal
+      title="Filter"
+      onSubmit={handleOkButtonClick}
+      onClose={handleCancelFiltering}
+      isOpen={isOpen}
+      footer="Filter"
+      buttonColor="#3490dc"
+    >
+      <Filtering
+        categoriesArr={categoriesArr}
+        arrayOfUnigueTags={arrayOfUnigueTags}
+        selectedValuesTags={selectedValuesTags}
+        selectedValuesCategories={selectedValuesCategories}
+        setSelectedTagsAndCategories={setSelectedTagsAndCategories}
+        selectedStepsAndIngredients={selectedStepsAndIngredients}
+        onChange={handleInputChange}
+        handleClearFilters={handleOpenResetModal}
+      />
+      {
+        closeResetModal
+        && (
+        <Modal
+          title="Reset"
+          onSubmit={handleClearFilters}
+          onClose={handleCloseResetModal}
+          isOpen={handleOpenResetModal}
+          footer="Reset"
+          buttonColor="bg-red-600"
+        >
+          Are you sure you want reset filter?
+        </Modal>
+        )
+      }
+    </Modal>
   );
 }

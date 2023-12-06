@@ -41,7 +41,7 @@ function NavBar() {
           {/* Home button */}
           <HomeButton />
           {/* Search icon and search bar */}
-          <div className="flex items-center space-x-2 text-white p-2 flex flex-wrap justify-center gap-1 border-slate-500 border rounded-lg items-center md:justify-between">
+          <div className="items-center space-x-2 text-white p-2 flex flex-wrap justify-center gap-1 border-slate-500 border rounded-lg md:justify-between">
             {
               isSearchBarVisible
               && <SearchBar setQuery={setQuery} />

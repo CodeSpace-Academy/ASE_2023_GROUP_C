@@ -4,7 +4,7 @@ import { createContext, useState } from 'react';
  * Context for managing recipe filtering.
  * @type {React.Context<{ filter: object, setFilter: Function }>}
  */
-export const FilterContext = createContext();
+export const AppContext = createContext();
 
 /**
  * Provides a context to manage recipe filtering for child components.
@@ -15,20 +15,17 @@ export const FilterContext = createContext();
  */
 
 export function RecipeProvider({ children }) {
-  const [filterOverlay, setFilterOverlay] = useState(false);
+  const [removedFromFavourites, setRemovedFromFavourites] = useState('');
 
-  const [selectedOption, setSelectedOption] = useState('');
-
-  // Create a value object that contains the filter state and the setFilter function.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const valueObject = {
-    selectedOption, setSelectedOption, filterOverlay, setFilterOverlay,
+    removedFromFavourites, setRemovedFromFavourites,
   };
 
   return (
     // Provide the FilterContext with the value object to its children.
-    <FilterContext.Provider value={valueObject}>
+    <AppContext.Provider value={valueObject}>
       {children}
-    </FilterContext.Provider>
+    </AppContext.Provider>
   );
 }

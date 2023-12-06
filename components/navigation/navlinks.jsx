@@ -1,8 +1,14 @@
+'client side';
+
 import React from 'react';
-import { faBook, faHeart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBook,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NavLink from '../ui-utils/navLink';
 import DropdownButton from './dropdownButton';
+import ThemeChange from './themeChange';
+import SortingForm from '../ui-utils/sortingForm';
 
 function NavLinks() {
   return (
@@ -12,11 +18,8 @@ function NavLinks() {
         Recipes
       </NavLink>
 
-      <NavLink href="/favouriteRecipes">
-        <FontAwesomeIcon icon={faHeart} size="lg" className="pr-2" />
-        Favorites
-      </NavLink>
-
+      <ThemeChange />
+      <SortingForm />
       <DropdownButton />
     </>
   );

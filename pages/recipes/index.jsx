@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +12,6 @@ import {
 } from '../../utils/mongodb-utils';
 import user from '../../utils/dummyUser';
 import { pipelineForTags, sortingByFunction } from '../../utils/filteringUtils';
-import SortingForm from '../../components/ui-utils/sortingForm';
 import FilteringModal from '../../components/ui-utils/overlay/filteringModal';
 
 export async function getServerSideProps(context) {
@@ -38,16 +38,11 @@ export async function getServerSideProps(context) {
     }
     if (filter.filterByIngredients) {
       // The filterArray generate a list of object that searches in mongodb.
-      const filterArray = filter.filterByIngredients
-        .slice(1)
-        .map((ingredient) => {
-          const key = `ingredients.${ingredient}`;
-          return { [key]: { $exists: true } };
-        });
 
-      if (filterArray.length > 0) {
-        mongoFilterObject.$and = filterArray;
-      }
+      const ingredient = filter.filterByIngredients;
+      const key = `ingredients.${ingredient}`;
+
+      mongoFilterObject.$and = [{ [key]: { $exists: true } }];
     }
   }
 
@@ -108,16 +103,13 @@ export default function RecipeListPage(props) {
   };
 
   // Create a set of favorite recipe IDs
-  // eslint-disable-next-line no-underscore-dangle
   const favouriteRecipeIds = new Set(
     favouriteRecipes.map((recipe) => { return recipe._id; }),
   );
 
   // Create a new array with favorite recipes replaced
   const updatedRecipes = recipes.map((recipe) => {
-    // eslint-disable-next-line no-underscore-dangle
     if (favouriteRecipeIds.has(recipe._id)) {
-      // eslint-disable-next-line no-underscore-dangle
       const favoriteRecipe = favouriteRecipes.find(
         (favRecipe) => { return favRecipe._id === recipe._id; },
       );
@@ -126,33 +118,32 @@ export default function RecipeListPage(props) {
     return recipe; // Keep the original recipe
   });
 
-  console.log(updatedRecipes);
-
   return (
     <div className="p-12">
-      <div>
+      <div className="mt-12">
+        {' '}
         <button type="button" onClick={handleOpenFilterModal}>
           <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
           Filters
         </button>
-        <SortingForm />
       </div>
       { filterOverlay
       && (
       <FilteringModal
         categoriesArr={categoriesArr}
         arrayOfUnigueTags={arrayOfUnigueTags}
-        // eslint-disable-next-line react/jsx-no-bind
         handleCancelFiltering={handleCloseFiltering}
         isOpen={filterOverlay}
       />
       )}
-      <RecipeList
-        recipes={updatedRecipes}
-        totalRecipeInDb={totalRecipeInDb}
-        pageNumber={page}
-        currentDocumentSize={currentDocumentSize}
-      />
+      {updatedRecipes ? (
+        <RecipeList
+          recipes={updatedRecipes}
+          totalRecipeInDb={totalRecipeInDb}
+          pageNumber={page}
+          currentDocumentSize={currentDocumentSize}
+        />
+      ) : <p>No Recipes Found that match the query!!</p>}
     </div>
   );
 }

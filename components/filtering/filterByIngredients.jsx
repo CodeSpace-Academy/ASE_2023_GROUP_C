@@ -7,22 +7,17 @@ FilterByIngredients component for searching by ingredients.
 @returns {JSX.Element} - FilterByIngredients component.
 */
 
-function FilterByIngredients({ value, onChange, handleIngredientsChange }) {
+function FilterByIngredients({ value, onChange }) {
   return (
-    <div>
+    <div className="text-black">
       <h3>Search by Ingredients</h3>
       <input
         type="text"
-        className="text-black"
+        className="inputWithShadow p-1 mb-4 bg-black-1000 rounded-l border-red-500  "
         value={value}
         name="filterByIngredients"
         onChange={onChange}
       />
-      <button type="button" onClick={handleIngredientsChange}>
-        {' '}
-        Set
-        {' '}
-      </button>
     </div>
   );
 }

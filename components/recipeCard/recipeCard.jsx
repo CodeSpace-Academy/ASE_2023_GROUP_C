@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -17,7 +18,7 @@ import FavoriteButton from '../ui-utils/FavoriteButton';
 export default function RecipeCard(prop) {
   const { recipe, allergensList } = prop;
 
-  const [isEdited, setIsEdited] = useState(false);
+  const [, setIsEdited] = useState(false);
 
   const handleDescriptionEdit = () => {
     setIsEdited(true);
@@ -86,20 +87,14 @@ export default function RecipeCard(prop) {
               <FavoriteButton recipe={recipe} />
             </h2>
 
-            <div className="flex mt-4 space-x-4 justify-center gap-8 mb-2">
+            <div className="flex mt-4 space-x-4 gap-8 mb-2">
               <p>
-                <FontAwesomeIcon icon={faUtensils} size="xl" />
-                Prep:
-                {' '}
-                {convertToHours(recipe.prep)}
-                {' '}
+                <FontAwesomeIcon icon={faUtensils} size="lg" />
+                {` Prep: ${convertToHours(recipe.prep)}`}
               </p>
               <p>
-                <FontAwesomeIcon icon={faMitten} size="xl" />
-                Cook:
-                {' '}
-                {convertToHours(recipe.cook)}
-                {' '}
+                <FontAwesomeIcon icon={faMitten} size="lg" />
+                {` Cook: ${convertToHours(recipe.cook)}`}
               </p>
             </div>
             <TagsDisplay recipe={recipe} />
@@ -121,10 +116,7 @@ export default function RecipeCard(prop) {
                 {Object.keys(recipe.ingredients).map((ingredientKey) => {
                   return (
                     <li key={v4()}>
-                      {' '}
-                      {recipe.ingredients[ingredientKey]}
-                      of
-                      {ingredientKey}
+                      {`${recipe.ingredients[ingredientKey]} - ${ingredientKey}`}
                     </li>
                   );
                 })}

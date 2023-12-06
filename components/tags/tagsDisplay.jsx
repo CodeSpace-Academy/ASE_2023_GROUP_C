@@ -31,7 +31,7 @@ export default function TagsDisplay(prop) {
               {/* Display a tags icon (e.g., a small tag icon) */}
               <FontAwesomeIcon icon={faTags} />
               {/* Display the actual tag text */}
-              {tag}
+              {` ${tag}`}
             </div>
           );
         })}
