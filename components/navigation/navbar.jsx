@@ -35,8 +35,8 @@ function NavBar() {
   };
 
   return (
-    <div className="relative z-50">
-      <div className="bg-gray-800 p-4 fixed w-full top-0">
+    <div className="relative z-50 mt-4">
+      <div className="bg-gray-800 fixed w-full top-0">
         <div className="flex items-center justify-between">
           {/* Home button */}
           <HomeButton />
