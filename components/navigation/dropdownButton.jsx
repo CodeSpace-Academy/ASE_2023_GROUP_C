@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { faUser, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBars, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function DropdownButton() {
@@ -37,8 +37,14 @@ function DropdownButton() {
         {/* Login option */}
         <Link href="/api/auth/login">
           <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
-            {' '}
             Login
+          </div>
+        </Link>
+        {/* Favorite button */}
+        <Link href="/recipes/favourites">
+          <div className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700">
+            <FontAwesomeIcon icon={faHeart} size="lg" className="pr-2" />
+            Favorite
           </div>
         </Link>
       </div>
