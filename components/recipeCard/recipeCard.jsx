@@ -63,7 +63,7 @@ export default function RecipeCard(prop) {
       <div className="p-4 flex flex-col  gap-3 bg-slate-900 text-red-100 justify-center">
         <div className="p-4 flex flex-col md:flex-row md:gap-10 bg-slate-900 text-red-100 ">
           <Carousel
-            className=" md:max-w-2xl md:border-r-2 md:border-gray-400 md:pr-5"
+            className=" md:max-w-2xl md:border-r-2 md:border-gray-400 md:pr-5 rounded-md "
             showArrows
           >
             {recipe.images.map((image) => {
