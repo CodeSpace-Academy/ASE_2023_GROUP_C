@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUtensils,
@@ -10,21 +10,10 @@ import {
 import Link from 'next/link';
 import { v4 } from 'uuid';
 import FavoriteButton from './FavoriteButton';
-import { useTheme } from './themeContext';
 
 export default function RecipePreviewCard(props) {
   const { recipe, convertToHours, searchQuery } = props;
   const [currentImage, setCurrentImage] = useState(0);
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    const body = document.querySelector('body');
-    if (theme === 'night') {
-      body.style.backgroundColor = '#1a202c'; // Replace with your desired bg color
-    } else {
-      body.style.backgroundColor = '#4299e1'; // Replace with your desired bg color
-    }
-  }, [theme]);
 
   // Check if recipe is undefined or null
   if (!recipe || !recipe.images || !recipe.images.length) {
@@ -32,13 +21,11 @@ export default function RecipePreviewCard(props) {
   }
 
   function nextSlide() {
-    setCurrentImage((prevImage) => { return (prevImage + 1) % recipe.images.length; });
+    setCurrentImage((prevImage) => (prevImage + 1) % recipe.images.length);
   }
 
   function prevSlide() {
-    setCurrentImage((prevImage) => {
-      return (prevImage - 1 + recipe.images.length) % recipe.images.length;
-    });
+    setCurrentImage((prevImage) => (prevImage - 1 + recipe.images.length) % recipe.images.length);
   }
 
   // Highlighting helper
@@ -56,27 +43,25 @@ export default function RecipePreviewCard(props) {
 
     return (
       <span>
-        {text.split(regex).map((segment, index) => {
-          return (
-            <span key={v4()}>
-              {segment}
-              {index < matches.length && (
+        {text.split(regex).map((segment, index) => (
+          <span key={v4()}>
+            {segment}
+            {index < matches.length && (
               <span className="bg-green-500 text-white font-extrabold">
                 {matches[index]}
               </span>
-              )}
-            </span>
-          );
-        })}
+            )}
+          </span>
+        ))}
       </span>
     );
   }
 
   const title = highlightingMatchingWords(recipe.title || '', searchQuery);
-  const buttonColorClass = theme === 'night' ? 'bg-customDark' : 'bg-gray-700';
+  const buttonColorClass = 'bg-gray-700'; // Replace with your desired background color
 
   return (
-    <div className={`group relative ${theme === 'night' ? 'bg-customPurple' : 'bg-gray-800'}`}>
+    <div className="group relative bg-gray-800 text-white">
       <li
         key={recipe._id}
         className="relative p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1"
@@ -113,18 +98,15 @@ export default function RecipePreviewCard(props) {
         </h2>
         <p className="mt-2">
           <FontAwesomeIcon icon={faUtensils} />
-          {` Prep:
-          ${convertToHours(recipe.prep)}`}
+          {` Prep: ${convertToHours(recipe.prep)}`}
         </p>
         <p>
           <FontAwesomeIcon icon={faKitchenSet} />
-          {` Cook:
-          ${convertToHours(recipe.cook)}`}
+          {` Cook: ${convertToHours(recipe.cook)}`}
         </p>
         <p>
           <FontAwesomeIcon icon={faSpoon} />
-          {` Total:
-          ${convertToHours(recipe.prep + recipe.cook)}`}
+          {` Total: ${convertToHours(recipe.prep + recipe.cook)}`}
         </p>
 
         <Link href={`/recipeDetails/${recipe._id}`}>

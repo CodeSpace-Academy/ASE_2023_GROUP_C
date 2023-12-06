@@ -3,12 +3,10 @@ import { RecipeProvider } from '../components/context/recipeContext';
 import Layout from '../components/layout/layout';
 import '../styles/globals.css';
 import NavBar from '../components/navigation/navbar';
-import { ThemeProvider } from '../components/ui-utils/themeContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
-      <ThemeProvider>
         <div>
           <RecipeProvider>
             <NavBar />
@@ -17,7 +15,6 @@ function MyApp({ Component, pageProps }) {
             <Component {...pageProps} />
           </RecipeProvider>
         </div>
-      </ThemeProvider>
     </UserProvider>
   );
 }

@@ -16,7 +16,7 @@ body,
 html {
   height: 100%;
   font-family: 'Roboto', sans-serif;
-  background-color: rgb(16, 23, 42);
+  background-color:rgb(16, 23, 42);
 }
 
 :root {
@@ -31,13 +31,6 @@ html {
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
-
-.dark-mode {
-  background-color:rgb(16, 23, 42);
-}
-.light-mode {
-  background-color:purple;
 }
 
 button {
