@@ -55,7 +55,7 @@ export default function PaginationControls(props) {
       >
         Previous page
       </Link>
-      <div className=" bg-cyan-700 m-5 p-3 text-white rounded-md">
+      <div className=" bg-customDark m-5 p-3 text-white rounded-md">
         {recipeCount}
         {' '}
         recipes left to view
@@ -66,7 +66,7 @@ export default function PaginationControls(props) {
           pathname: '/recipes',
           query: { page: pageNumber + 1, ...otherQueryParams }, // Update page parameter
         }}
-        className={` ${theme === 'night' ? 'bg-cyan-700' : 'bg-cyan-400'} m-5 p-3 text-white rounded-md ${nextDisplay}`}
+        className={` ${theme === 'night' ? 'bg-customDark' : 'bg-cyan-400'} m-5 p-3 text-white rounded-md ${nextDisplay}`}
         as={{
           pathname: '/recipes',
           query: { page: pageNumber + 1, ...otherQueryParams }, // Update page parameter
