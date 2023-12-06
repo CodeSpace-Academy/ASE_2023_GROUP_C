@@ -90,7 +90,7 @@ export default function FavoriteButton(props) {
       </button>
       {isDialogOpen && (
         <DeleteConfirmationModal
-          message="Are you sure you want to delete?"
+          message="Are you sure you want to delete!?"
           onConfirm={handleConfirm}
           onCancel={handleCancel}
           isOpen={isDialogOpen}
