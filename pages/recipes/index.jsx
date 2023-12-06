@@ -12,7 +12,6 @@ import {
 } from '../../utils/mongodb-utils';
 import user from '../../utils/dummyUser';
 import { pipelineForTags, sortingByFunction } from '../../utils/filteringUtils';
-import SortingForm from '../../components/ui-utils/sortingForm';
 import FilteringModal from '../../components/ui-utils/overlay/filteringModal';
 
 export async function getServerSideProps(context) {
@@ -39,16 +38,11 @@ export async function getServerSideProps(context) {
     }
     if (filter.filterByIngredients) {
       // The filterArray generate a list of object that searches in mongodb.
-      const filterArray = filter.filterByIngredients
-        .slice(1)
-        .map((ingredient) => {
-          const key = `ingredients.${ingredient}`;
-          return { [key]: { $exists: true } };
-        });
 
-      if (filterArray.length > 0) {
-        mongoFilterObject.$and = filterArray;
-      }
+      const ingredient = filter.filterByIngredients;
+      const key = `ingredients.${ingredient}`;
+
+      mongoFilterObject.$and = [{ [key]: { $exists: true } }];
     }
   }
 
@@ -126,12 +120,12 @@ export default function RecipeListPage(props) {
 
   return (
     <div className="p-12">
-      <div>
+      <div className="mt-12">
+        {' '}
         <button type="button" onClick={handleOpenFilterModal}>
           <FontAwesomeIcon icon={faFilter} size="lg" className="pr-2" />
           Filters
         </button>
-        <SortingForm />
       </div>
       { filterOverlay
       && (

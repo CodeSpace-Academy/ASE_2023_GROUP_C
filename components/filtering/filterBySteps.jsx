@@ -8,8 +8,11 @@
 
 export default function FilterBySteps({ value, onChange }) {
   return (
-    <div>
-      <h3 className="text-black">Number of Steps</h3>
+    <div className="text-black pt-4">
+      <h3>
+        Number of Steps:
+        {value}
+      </h3>
       <input
         type="range"
         min="1"
@@ -18,10 +21,6 @@ export default function FilterBySteps({ value, onChange }) {
         name="numberOfSteps"
         onChange={onChange}
       />
-      <p className="text-black">
-        Selected value:
-        {value}
-      </p>
     </div>
   );
 }
