@@ -10,21 +10,53 @@ function RecipeInstruction(props) {
     recipe.instructions,
   );
 
-  const handleEditInstruction = (newInstruction) => {
-    setEditedInstruction(
-      newInstruction
-        .split('\n')
-        .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); }),
-    ); // Split into an array
+  const handleEditInstruction = async (newInstruction) => {
+    const formattedInstructions = newInstruction
+      .split('\n')
+      .map((instruction, index) => { return instruction.replace(`${index + 1}.`, '').trim(); });
 
-    setIsEditing(false);
+    // Save the edited instruction to MongoDB
+    // eslint-disable-next-line no-use-before-define
+    await saveEditedInstructionToMongoDB(formattedInstructions);
+
+    // Update local state
+    setEditedInstruction(formattedInstructions);
+
+    // Trigger the onEdit callback
     onEdit();
+    setIsEditing(false);
   };
+
+  const saveEditedInstructionToMongoDB = async (formattedInstructions) => {
+    const data = {
+      instructions: formattedInstructions,
+      _id: recipe._id,
+    };
+
+    try {
+      const response = await fetch('/api/favourite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save edited instruction');
+      }
+
+      // Handle the response as needed
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const numberedText = editedInstruction.map(
     (instruction, index) => { return `${index + 1}. ${instruction}`; },
   );
 
-  // smooth snap onto the editing title
+  // Smooth snap onto the editing title
   useEffect(() => {
     if (isEditing && editedInstructionRef.current) {
       editedInstructionRef.current.scrollIntoView({
@@ -39,7 +71,7 @@ function RecipeInstruction(props) {
       {isEditing ? (
         <div ref={editedInstructionRef}>
           <EditRecipeContent
-            initialValue={numberedText.join('\n')} // Join the array with line breaks
+            initialValue={numberedText.join('\n')}
             onSave={handleEditInstruction}
             onCancel={() => { return setIsEditing(false); }}
             rows={editedInstruction.length || 2}
@@ -51,7 +83,7 @@ function RecipeInstruction(props) {
           <ol>
             {editedInstruction.map((instruction, index) => {
               return (
-                <li key={v4()}>{`${index + 1}. ${instruction}`}</li> // Manually increment the index
+                <li key={v4()}>{`${index + 1}. ${instruction}`}</li>
               );
             })}
           </ol>
