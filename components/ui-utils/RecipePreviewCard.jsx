@@ -77,7 +77,7 @@ export default function RecipePreviewCard(props) {
   const buttonColorClass = theme === 'night' ? 'bg-customDark' : 'bg-gray-700';
 
   return (
-    <div className={`group relative ${theme === 'night' ? 'bg-customPurple' : 'bg-gray-800'}`}>
+    <div className={`group relative  rounded-md ${theme === 'night' ? 'bg-customPurple' : 'bg-gray-800'}`}>
       <li
         key={recipe._id}
         className="relative p-4 rounded-lg transition flex flex-col flex-grow-1 flex-basis-1"
@@ -114,7 +114,8 @@ export default function RecipePreviewCard(props) {
         </h2>
         <p className="mt-2">
           <FontAwesomeIcon icon={faUtensils} />
-          {` Prep:
+          {' '}
+          {` Prep: 
           ${convertToHours(recipe.prep)}`}
         </p>
         <p>
